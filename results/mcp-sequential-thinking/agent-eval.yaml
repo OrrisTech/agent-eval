@@ -1,0 +1,11 @@
+
+agent:
+  name: "mcp-sequential-thinking"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y @modelcontextprotocol/server-sequential-thinking"
+  capabilities:
+    - reasoning
+
+eval:
+  runs: 2

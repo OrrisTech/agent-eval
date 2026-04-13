@@ -1,0 +1,11 @@
+
+agent:
+  name: "playwright-mcp"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y @playwright/mcp --headless"
+  capabilities:
+    - browser-automation
+
+eval:
+  runs: 2

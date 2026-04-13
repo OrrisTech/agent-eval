@@ -1,0 +1,11 @@
+
+agent:
+  name: "mcp-puppeteer"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y @modelcontextprotocol/server-puppeteer"
+  capabilities:
+    - browser-automation
+
+eval:
+  runs: 2

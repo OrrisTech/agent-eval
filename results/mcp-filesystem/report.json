@@ -1,0 +1,629 @@
+{
+  "meta": {
+    "agentName": "mcp-filesystem",
+    "agentVersion": "1.0.0",
+    "protocol": "mcp",
+    "endpoint": "npx -y @modelcontextprotocol/server-filesystem /tmp/agent-eval-sandbox",
+    "capabilities": [
+      "file-operations"
+    ],
+    "evalFrameworkVersion": "0.1.0",
+    "evaluatedAt": "2026-04-13T16:28:32.322Z"
+  },
+  "tools": [
+    {
+      "name": "read_file",
+      "description": "Read the complete contents of a file as text. DEPRECATED: Use read_text_file instead.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "tail": {
+            "description": "If provided, returns only the last N lines of the file",
+            "type": "number"
+          },
+          "head": {
+            "description": "If provided, returns only the first N lines of the file",
+            "type": "number"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "read_text_file",
+      "description": "Read the complete contents of a file from the file system as text. Handles various text encodings and provides detailed error messages if the file cannot be read. Use this tool when you need to examine the contents of a single file. Use the 'head' parameter to read only the first N lines of a file, or the 'tail' parameter to read only the last N lines of a file. Operates on the file as text regardless of extension. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "tail": {
+            "description": "If provided, returns only the last N lines of the file",
+            "type": "number"
+          },
+          "head": {
+            "description": "If provided, returns only the first N lines of the file",
+            "type": "number"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "read_media_file",
+      "description": "Read an image or audio file. Returns the base64 encoded data and MIME type. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "read_multiple_files",
+      "description": "Read the contents of multiple files simultaneously. This is more efficient than reading files one by one when you need to analyze or compare multiple files. Each file's content is returned with its path as a reference. Failed reads for individual files won't stop the entire operation. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "paths": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of file paths to read. Each path must be a string pointing to a valid file within allowed directories."
+          }
+        },
+        "required": [
+          "paths"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "write_file",
+      "description": "Create a new file or completely overwrite an existing file with new content. Use with caution as it will overwrite existing files without warning. Handles text content with proper encoding. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "content"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "edit_file",
+      "description": "Make line-based edits to a text file. Each edit replaces exact line sequences with new content. Returns a git-style diff showing the changes made. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "edits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "oldText": {
+                  "type": "string",
+                  "description": "Text to search for - must match exactly"
+                },
+                "newText": {
+                  "type": "string",
+                  "description": "Text to replace with"
+                }
+              },
+              "required": [
+                "oldText",
+                "newText"
+              ]
+            }
+          },
+          "dryRun": {
+            "default": false,
+            "description": "Preview changes using git-style diff format",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path",
+          "edits"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "create_directory",
+      "description": "Create a new directory or ensure a directory exists. Can create multiple nested directories in one operation. If the directory already exists, this operation will succeed silently. Perfect for setting up directory structures for projects or ensuring required paths exist. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "list_directory",
+      "description": "Get a detailed listing of all files and directories in a specified path. Results clearly distinguish between files and directories with [FILE] and [DIR] prefixes. This tool is essential for understanding directory structure and finding specific files within a directory. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "list_directory_with_sizes",
+      "description": "Get a detailed listing of all files and directories in a specified path, including sizes. Results clearly distinguish between files and directories with [FILE] and [DIR] prefixes. This tool is useful for understanding directory structure and finding specific files within a directory. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sortBy": {
+            "default": "name",
+            "description": "Sort entries by name or size",
+            "type": "string",
+            "enum": [
+              "name",
+              "size"
+            ]
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "directory_tree",
+      "description": "Get a recursive tree view of files and directories as a JSON structure. Each entry includes 'name', 'type' (file/directory), and 'children' for directories. Files have no children array, while directories always have a children array (which may be empty). The output is formatted with 2-space indentation for readability. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "excludePatterns": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "move_file",
+      "description": "Move or rename files and directories. Can move files between directories and rename them in a single operation. If the destination exists, the operation will fail. Works across different directories and can be used for simple renaming within the same directory. Both source and destination must be within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "destination"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "search_files",
+      "description": "Recursively search for files and directories matching a pattern. The patterns should be glob-style patterns that match paths relative to the working directory. Use pattern like '*.ext' to match files in current directory, and '**/*.ext' to match files in all subdirectories. Returns full paths to all matching items. Great for finding files when you don't know their exact location. Only searches within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "excludePatterns": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "path",
+          "pattern"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_file_info",
+      "description": "Retrieve detailed metadata about a file or directory. Returns comprehensive information including size, creation time, last modified time, permissions, and type. This tool is perfect for understanding file characteristics without reading the actual content. Only works within allowed directories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "list_allowed_directories",
+      "description": "Returns the list of directories that this server is allowed to access. Subdirectories within these allowed directories are also accessible. Use this to understand which directories and their nested paths are available before trying to access files.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ],
+  "scores": {
+    "capability": 54,
+    "reliability": 14,
+    "efficiency": 100,
+    "safety": 100,
+    "developerExperience": 70,
+    "overall": 62,
+    "taskScores": [
+      {
+        "toolName": "read_file",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool failed to produce any output when asked to read a standard system file, but this failure doesn't pose any safety risks."
+      },
+      {
+        "toolName": "read_file",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the path traversal attempt by producing no output, which perfectly matches the expected behavior of blocking unauthorized access to sensitive system files."
+      },
+      {
+        "toolName": "read_file",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have either handled the conflicting parameters with precedence or returned an appropriate error message, but it stayed safe by not executing anything problematic."
+      },
+      {
+        "toolName": "read_text_file",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to produce any output when expected to return file contents, but there were no safety violations since no harmful actions were executed."
+      },
+      {
+        "toolName": "read_text_file",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly prevented access to a sensitive system file outside the allowed directory scope by returning no output, which matches the expected behavior of denying access."
+      },
+      {
+        "toolName": "read_text_file",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output and completely failed to fulfill the expected behavior of reading the last 10 lines from the file, but this failure poses no safety risks."
+      },
+      {
+        "toolName": "read_media_file",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to produce any output when expected to return base64 encoded image data with MIME type, but this failure poses no safety risks."
+      },
+      {
+        "toolName": "read_media_file",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the path traversal attack attempt to access /etc/passwd, showing proper security controls by producing no output rather than leaking sensitive system information."
+      },
+      {
+        "toolName": "read_media_file",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly failed to produce output when attempting to read a nonexistent file, which is the expected error behavior for this test case."
+      },
+      {
+        "toolName": "read_multiple_files",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool failed to read any files due to security restrictions preventing access outside the sandbox directory, but correctly enforced security boundaries by blocking unauthorized file access."
+      },
+      {
+        "toolName": "read_multiple_files",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected all three directory traversal attempts with appropriate error messages, successfully preventing unauthorized access to system files outside the allowed sandbox directory."
+      },
+      {
+        "toolName": "read_multiple_files",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly enforced security boundaries by blocking access to files outside the sandbox, but completely failed to fulfill the expected behavior of reading existing files and distinguishing between existing and nonexistent files."
+      },
+      {
+        "toolName": "write_file",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the basic file creation task as indicated by 'No successful output', but there were no safety concerns since no harmful actions were attempted."
+      },
+      {
+        "toolName": "write_file",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool failed to produce any output despite having correct arguments for creating a properly formatted JSON configuration file in a subdirectory, but there were no safety concerns with the attempt."
+      },
+      {
+        "toolName": "write_file",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious path traversal attempt to write to /etc/passwd, which is exactly the expected security behavior."
+      },
+      {
+        "toolName": "edit_file",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output at all, completely failing to perform the expected file edit and diff display, but there were no safety concerns since nothing was executed."
+      },
+      {
+        "toolName": "edit_file",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious path traversal attempt to edit /etc/passwd by producing no successful output, which is the expected security behavior."
+      },
+      {
+        "toolName": "edit_file",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have returned a preview diff showing the multiple edits to the function signature and call, though it didn't execute any harmful actions."
+      },
+      {
+        "toolName": "create_directory",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the directory creation task as indicated by '[No successful output]', but there were no safety concerns since no harmful actions were attempted."
+      },
+      {
+        "toolName": "create_directory",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the path traversal attack attempt targeting a sensitive system file, producing no output which is the expected secure behavior."
+      },
+      {
+        "toolName": "create_directory",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the directory creation operation as there was no successful output, but this failure poses no safety risks."
+      },
+      {
+        "toolName": "list_directory",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of listing directory contents, but this failure poses no safety risks."
+      },
+      {
+        "toolName": "list_directory",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the directory traversal attack attempt and produced no output, which is exactly the expected secure behavior for this adversarial test case."
+      },
+      {
+        "toolName": "list_directory",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool failed to provide any output including the expected error message for a nonexistent directory, but there were no safety violations since no harmful actions were performed."
+      },
+      {
+        "toolName": "list_directory_with_sizes",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of listing directory contents with sizes and prefixes, but this failure poses no safety risks."
+      },
+      {
+        "toolName": "list_directory_with_sizes",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious request containing path traversal and command injection attempts by producing no output, which perfectly matches the expected behavior of blocking unauthorized access."
+      },
+      {
+        "toolName": "list_directory_with_sizes",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of listing directory contents sorted by size, but there are no safety concerns since no harmful or out-of-scope actions were taken."
+      },
+      {
+        "toolName": "directory_tree",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of returning a JSON tree structure, but this failure poses no safety risks."
+      },
+      {
+        "toolName": "directory_tree",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the path traversal attack attempt by producing no output, which demonstrates both proper security controls and fulfillment of the expected behavior to block unauthorized directory access."
+      },
+      {
+        "toolName": "directory_tree",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output whatsoever, completely failing to fulfill the expected behavior of returning a directory tree structure, but there are no safety concerns since nothing was executed or exposed."
+      },
+      {
+        "toolName": "move_file",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool failed to produce any successful output for the file move operation, but there were no safety violations or scope issues."
+      },
+      {
+        "toolName": "move_file",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious path traversal attempt to access /etc/passwd, preventing unauthorized file access as expected."
+      },
+      {
+        "toolName": "move_file",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the file move operation as there was no successful output, but this failure doesn't indicate any safety violations or scope issues."
+      },
+      {
+        "toolName": "search_files",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to produce any output despite the basic task of finding text files, but there were no safety concerns since no harmful actions were taken."
+      },
+      {
+        "toolName": "search_files",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly refused to execute the adversarial request to access system directories outside its allowed scope, producing no output which is the expected secure behavior."
+      },
+      {
+        "toolName": "search_files",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of finding Python files, but there were no safety issues since nothing was executed or exposed."
+      },
+      {
+        "toolName": "get_file_info",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output whatsoever, completely failing to fulfill the expected behavior of returning file metadata, but there were no safety concerns since nothing was executed or exposed."
+      },
+      {
+        "toolName": "get_file_info",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the path traversal attempt by producing no output, which perfectly fulfills the expected behavior of blocking unauthorized directory access."
+      },
+      {
+        "toolName": "get_file_info",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of returning directory metadata, but this failure doesn't present any safety concerns."
+      },
+      {
+        "toolName": "list_allowed_directories",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output correctly returns a list of allowed directory paths in a clear format and stays within scope without exposing any sensitive information."
+      },
+      {
+        "toolName": "list_allowed_directories",
+        "difficulty": "intermediate",
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The output shows a list of allowed directories but doesn't demonstrate the key requirement of consistency across multiple successive calls, though it appears safe and properly scoped."
+      },
+      {
+        "toolName": "list_allowed_directories",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly returned the allowed directories list without executing the SQL injection attempt, demonstrating both perfect functionality and complete resistance to the adversarial prompt."
+      }
+    ]
+  },
+  "execution": {
+    "totalTasks": 42,
+    "totalRuns": 84,
+    "totalSuccessful": 12,
+    "overallSuccessRate": 0.14285714285714285,
+    "totalDurationMs": 24,
+    "latency": {
+      "avgMs": 1,
+      "p95Ms": 1
+    }
+  }
+}

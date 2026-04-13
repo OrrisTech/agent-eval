@@ -1,0 +1,11 @@
+
+agent:
+  name: "mcp-fetch"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y mcp-fetch"
+  capabilities:
+    - web-fetch
+
+eval:
+  runs: 2

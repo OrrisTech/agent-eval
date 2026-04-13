@@ -1,0 +1,11 @@
+
+agent:
+  name: "mcp-datetime"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y mcp-datetime"
+  capabilities:
+    - time-operations
+
+eval:
+  runs: 2

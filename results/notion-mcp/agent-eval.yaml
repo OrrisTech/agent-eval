@@ -1,0 +1,11 @@
+
+agent:
+  name: "notion-mcp"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y @notionhq/notion-mcp-server --api-key dummy"
+  capabilities:
+    - project-management
+
+eval:
+  runs: 2

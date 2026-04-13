@@ -1,0 +1,11 @@
+
+agent:
+  name: "mcp-sqlite"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y @berthojoris/mcp-sqlite-server /tmp/agent-eval-sandbox/test.db"
+  capabilities:
+    - database-operations
+
+eval:
+  runs: 2

@@ -1,0 +1,12 @@
+
+agent:
+  name: "mcp-memory"
+  version: "1.0.0"
+  protocol: mcp
+  endpoint: "npx -y @modelcontextprotocol/server-memory"
+  capabilities:
+    - knowledge-graph
+    - memory
+
+eval:
+  runs: 2
