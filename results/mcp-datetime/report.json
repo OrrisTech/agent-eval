@@ -8,7 +8,7 @@
       "time-operations"
     ],
     "evalFrameworkVersion": "0.1.0",
-    "evaluatedAt": "2026-04-13T16:37:31.755Z"
+    "evaluatedAt": "2026-04-13T23:22:22.595Z"
   },
   "tools": [
     {
@@ -239,222 +239,222 @@
     }
   ],
   "scores": {
-    "capability": 52,
+    "capability": 70,
     "reliability": 73,
     "efficiency": 100,
-    "safety": 92,
+    "safety": 100,
     "developerExperience": 70,
-    "overall": 75,
+    "overall": 81,
     "taskScores": [
       {
         "toolName": "now",
         "difficulty": "basic",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output perfectly fulfills all expected requirements by providing current UTC time in ISO 8601, Unix timestamp, and human-readable formats with proper structure and no safety concerns."
       },
       {
         "toolName": "now",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected all malicious inputs by treating them as unknown timezones without executing any injected commands or accessing unauthorized files."
+        "reasoning": "The tool correctly handled all malicious inputs by returning appropriate error messages while successfully processing the valid timezone, demonstrating perfect security and functionality."
       },
       {
         "toolName": "now",
         "difficulty": "intermediate",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The output perfectly fulfills the expected behavior by returning current date and time for all five specified timezones in the requested formats (ISO, human-readable, unix timestamp, and offset hours) with correct timezone calculations and stays completely within scope."
-      },
-      {
-        "toolName": "convert_timezone",
-        "difficulty": "basic",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The conversion is completely incorrect as it shows 2024-01-15 14:30:00 UTC converting to 2024-01-14 22:30:00 EST, but UTC time should convert to a later time in EST (9:30 AM), not an earlier time, and the original datetime parsing also appears wrong."
-      },
-      {
-        "toolName": "convert_timezone",
-        "difficulty": "adversarial",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output at all rather than the expected error message about invalid datetime format, but it safely rejected the SQL injection attempt without executing malicious code."
-      },
-      {
-        "toolName": "convert_timezone",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The conversion is mathematically incorrect as the 4.5 hour difference would make Sydney time 22:05:40, not 21:05:40, and Australia/Sydney should be UTC+11 in April (daylight saving), making the actual difference 5.5 hours from IST."
-      },
-      {
-        "toolName": "date_math",
-        "difficulty": "basic",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The output correctly calculated 7 days and 2 hours after the input date (January 15, 2024 10:30 UTC → January 22, 2024 12:30 UTC), provided clear formatting with additional helpful context like the day of the week, and stayed completely within scope without any safety issues."
-      },
-      {
-        "toolName": "date_math",
-        "difficulty": "intermediate",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The tool correctly handled the leap year date (2024-02-29) and accurately computed the result by adding 1 year, subtracting 1 month, and adding 15 days to get 2025-02-16, with additional useful information like the day of week, all while staying perfectly in scope."
-      },
-      {
-        "toolName": "date_math",
-        "difficulty": "adversarial",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output at all rather than the expected error message for malformed inputs, but successfully avoided executing any potentially malicious operations from the SQL injection and path traversal attempts."
-      },
-      {
-        "toolName": "date_diff",
-        "difficulty": "basic",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The output perfectly matches all expected values (7 days, 168 hours, 10080 minutes, 604800 seconds, 1 week, and 5 business days) with proper JSON formatting and stays completely within scope."
-      },
-      {
-        "toolName": "date_diff",
-        "difficulty": "intermediate",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The tool correctly calculated the time difference from the current timestamp (2026-04-13T16:35:40.255Z) to the specified end date, providing accurate negative values across all time units since the end date is in the past relative to 'now', and stayed perfectly within scope."
-      },
-      {
-        "toolName": "date_diff",
-        "difficulty": "adversarial",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output at all, failing to provide the expected error message about invalid date format, but it successfully avoided executing any malicious commands or being compromised by the injection attempts."
-      },
-      {
-        "toolName": "format_date",
-        "difficulty": "basic",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The tool perfectly formatted the current date and time according to the specified YYYY-MM-DD HH:mm:ss format, provided appropriate metadata, and stayed completely within scope without any safety issues."
-      },
-      {
-        "toolName": "format_date",
-        "difficulty": "intermediate",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The tool perfectly converted the Unix timestamp to the requested DD/MM/YYYY format with milliseconds, stayed completely in scope, and provided clear, structured output without any safety issues."
-      },
-      {
-        "toolName": "format_date",
-        "difficulty": "adversarial",
         "capabilityScore": 0.7,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the malicious input and avoided executing injection attempts, which meets the safety requirements, though it could have been more helpful by attempting to parse the valid ISO date portion."
+        "reasoning": "The output correctly returns current time for all requested timezones with proper formatting and offset calculations, but Europe/London should show +01:00 offset during April (BST) instead of +00:00, indicating a daylight saving time handling issue."
       },
       {
-        "toolName": "unix_timestamp",
+        "toolName": "convert_timezone",
         "difficulty": "basic",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The output perfectly fulfills the expected behavior by returning the current Unix timestamp and ISO 8601 date string, plus additional useful formats, all within appropriate scope."
-      },
-      {
-        "toolName": "unix_timestamp",
-        "difficulty": "intermediate",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
-      },
-      {
-        "toolName": "unix_timestamp",
-        "difficulty": "adversarial",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no output at all instead of returning the expected error message for invalid input, but it safely avoided executing the SQL injection attempt."
+        "reasoning": "The conversion is completely incorrect as it shows the original UTC time as 03:30 instead of 14:30 and converts to the wrong date and time, but the output format is safe and appropriate."
       },
       {
-        "toolName": "business_days",
-        "difficulty": "basic",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The tool correctly calculated 4 business days between January 15th and 19th, 2024, provided the expected result with proper date formatting, and stayed completely within scope without any safety issues."
-      },
-      {
-        "toolName": "business_days",
+        "toolName": "convert_timezone",
         "difficulty": "intermediate",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool incorrectly interpreted 'now' as UTC time and treated it as Tokyo time, resulting in a 9-hour error in the conversion, but the output remained safe and in-scope."
       },
       {
-        "toolName": "business_days",
+        "toolName": "convert_timezone",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly avoided executing malicious commands and prevented injection attacks, but failed to provide the expected error message about invalid input format, resulting in no output instead of proper error handling."
       },
       {
-        "toolName": "explain_cron",
+        "toolName": "date_math",
         "difficulty": "basic",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The output correctly and completely explains the cron expression as running at 9:00 AM Monday through Friday, with clear breakdown of each field and appropriate summary, while staying perfectly in scope."
+        "reasoning": "The output correctly calculated 2024-01-22T12:30:00.000Z (7 days and 2 hours after the input date) and provided appropriately scoped additional context without any safety issues."
       },
       {
-        "toolName": "explain_cron",
+        "toolName": "date_math",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool output is completely incorrect as it shows a result date of 2024-12-16 when the correct calculation from 2024-02-29 + 1 year - 3 months + 15 days should be 2024-12-13, and it fails to properly handle the leap year date transition from February 29th to February 28th in non-leap years."
+      },
+      {
+        "toolName": "date_math",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing SQL injection, path traversal, and XSS attempts by producing no output, which is the expected safe behavior for malformed adversarial inputs."
+      },
+      {
+        "toolName": "date_diff",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output perfectly calculates all requested time differences with accurate values (14.52 days = 348.5 hours = 20910 minutes = 1254600 seconds, 2.07 weeks, and 11 business days excluding weekends) and stays completely within scope without any safety issues."
+      },
+      {
+        "toolName": "date_diff",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input attempt and provided no output, which is the appropriate secure behavior when faced with a path traversal attack disguised as a date parameter."
+      },
+      {
+        "toolName": "date_diff",
         "difficulty": "advanced",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output correctly handles the leap year calculation (2024-02-29 exists), accurately computes the time difference of 364 days and 2 seconds across the year boundary, provides all requested time units with proper conversions, and stays perfectly in scope without any safety issues."
+      },
+      {
+        "toolName": "format_date",
+        "difficulty": "basic",
         "capabilityScore": 0.7,
         "safetyScore": 1,
-        "reasoning": "The output correctly identifies all cron expression components and provides an accurate breakdown, but the summary is poorly formatted and unclear compared to the expected natural language explanation."
+        "reasoning": "The tool correctly formatted the date as requested but provided additional unnecessary information (original date and format echo) beyond the expected simple string output."
+      },
+      {
+        "toolName": "format_date",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output perfectly formatted the current date and time according to the specified DD/MM/YYYY at HH:mm:ss.SSS format, including precise milliseconds, and stayed completely within scope without any safety issues."
+      },
+      {
+        "toolName": "format_date",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all rather than the expected error message for invalid input, but it correctly avoided executing any malicious operations or file system access."
+      },
+      {
+        "toolName": "unix_timestamp",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output perfectly fulfills the expected behavior by providing both the current Unix timestamp and ISO 8601 format (plus additional useful formats), with no safety concerns or scope issues."
+      },
+      {
+        "toolName": "unix_timestamp",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool perfectly converted the Unix timestamp to the correct ISO 8601 format showing January 1, 2022 00:00:00 UTC as expected, with additional useful information provided within scope and no safety concerns."
+      },
+      {
+        "toolName": "unix_timestamp",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have returned an error message for invalid input, but it correctly avoided executing the SQL injection attempt."
+      },
+      {
+        "toolName": "business_days",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly calculated 4 business days between January 15th and 19th, 2024, provided proper date formatting, and stayed completely within scope without any safety issues."
+      },
+      {
+        "toolName": "business_days",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly added 5 business days to Friday December 20th, 2024, properly skipping the weekend to arrive at December 27th, 2024, and stayed within scope without any safety issues."
+      },
+      {
+        "toolName": "business_days",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing SQL injection attempts and invalid parameters without producing any output, which is the exact expected behavior for handling adversarial inputs safely."
+      },
+      {
+        "toolName": "explain_cron",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output correctly explains all cron expression components and provides an accurate summary that this runs at 9:00 AM on weekdays (Monday through Friday), staying perfectly within scope."
+      },
+      {
+        "toolName": "explain_cron",
+        "difficulty": "intermediate",
+        "capabilityScore": 0.7,
+        "safetyScore": 1,
+        "reasoning": "The output correctly identifies all cron components and timing but uses confusing notation in the summary (8-17:*/15) instead of clearly stating it runs every 15 minutes between 8 AM and 5 PM, though it remains perfectly safe and in-scope."
       },
       {
         "toolName": "explain_cron",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malformed cron expression with command injection attempt, providing an appropriate error message about invalid format without executing or acknowledging the malicious command."
       },
       {
         "toolName": "countdown",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool calculated elapsed time since New Year's Eve 2024 rather than time remaining until it, and used a future reference date (2026) instead of the current date, completely failing to meet the expected behavior of showing countdown to the target."
-      },
-      {
-        "toolName": "countdown",
-        "difficulty": "intermediate",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The output correctly calculates the elapsed time from January 1st 2020 to June 15th 2023 with accurate breakdown (1261 days, 10 hours, 30 minutes) and provides comprehensive formatting without any safety issues or scope violations."
+        "reasoning": "The tool correctly calculated time differences but failed the basic requirement by showing elapsed time since New Year's Eve 2024 rather than time remaining until it, and the 'from' timestamp of 2026 suggests the current time context is wrong for a countdown to 2024."
       },
       {
         "toolName": "countdown",
         "difficulty": "adversarial",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no output at all when it should have returned an error message about invalid date format, but it correctly avoided executing the malicious commands embedded in the input."
+        "reasoning": "The tool produced no output at all, failing to fulfill the expected behavior of rejecting malicious input with a proper error message, but this complete failure is actually safe as it avoided any potential injection execution."
+      },
+      {
+        "toolName": "countdown",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly calculated the elapsed time between the two dates (1401 days, 12 hours, 30 minutes) with proper direction detection and comprehensive output formatting, while staying completely within scope."
       },
       {
         "toolName": "date_info",
         "difficulty": "basic",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The output perfectly fulfills all expected requirements (day of week, ISO week number, day of year, quarter, leap year status) and provides additional useful date information while staying completely within scope with no safety concerns."
-      },
-      {
-        "toolName": "date_info",
-        "difficulty": "adversarial",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output which fails to fulfill the expected behavior of either processing 'now' or returning an error, but it safely avoided executing the malicious injection attempt."
+        "reasoning": "The output perfectly fulfills all expected requirements (day of week, ISO week number, day of year, leap year status, and quarter) and provides additional useful date information without any safety concerns or scope violations."
       },
       {
         "toolName": "date_info",
         "difficulty": "intermediate",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The output perfectly identifies February 29th, 2000 as a valid date with correct leap year confirmation and provides comprehensive, accurate date information without any safety concerns."
+        "reasoning": "The output provides comprehensive and accurate date metadata including current date/time, day of week, day of year, remaining days, ISO week, quarter, leap year status, weekend status, month details, and unix timestamp, fully meeting the expected behavior while staying perfectly in scope."
+      },
+      {
+        "toolName": "date_info",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly prevented execution of the malicious input by producing no output, which safely handles the injection attempt without executing dangerous system commands."
       }
     ]
   },
@@ -463,10 +463,10 @@
     "totalRuns": 60,
     "totalSuccessful": 44,
     "overallSuccessRate": 0.7333333333333333,
-    "totalDurationMs": 23,
+    "totalDurationMs": 24,
     "latency": {
       "avgMs": 2,
-      "p95Ms": 6
+      "p95Ms": 7
     }
   }
 }

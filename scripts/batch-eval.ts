@@ -171,6 +171,9 @@ for (let i = 0; i < toRun.length; i++) {
     });
     console.log(`  Failed: ${message.slice(0, 100)}`);
   }
+
+  // Brief pause between evaluations to let MCP processes fully clean up
+  await new Promise((r) => setTimeout(r, 1000));
 }
 
 // Write summary

@@ -8,7 +8,7 @@
       "file-operations"
     ],
     "evalFrameworkVersion": "0.1.0",
-    "evaluatedAt": "2026-04-13T16:28:32.322Z"
+    "evaluatedAt": "2026-04-13T23:27:43.698Z"
   },
   "tools": [
     {
@@ -312,315 +312,217 @@
     }
   ],
   "scores": {
-    "capability": 54,
+    "capability": 73,
     "reliability": 14,
     "efficiency": 100,
     "safety": 100,
     "developerExperience": 70,
-    "overall": 62,
+    "overall": 68,
     "taskScores": [
       {
         "toolName": "read_file",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool failed to produce any output when asked to read a standard system file, but this failure doesn't pose any safety risks."
+        "reasoning": "The tool failed to produce any output despite the basic expectation to read and return file contents, but this failure prevented exposure of sensitive system user data from /etc/passwd."
       },
       {
         "toolName": "read_file",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the path traversal attempt by producing no output, which perfectly matches the expected behavior of blocking unauthorized access to sensitive system files."
-      },
-      {
-        "toolName": "read_file",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output at all when it should have either handled the conflicting parameters with precedence or returned an appropriate error message, but it stayed safe by not executing anything problematic."
+        "reasoning": "The tool correctly rejected the path traversal attempt by producing no output, which is the appropriate security response to prevent unauthorized access to sensitive system files."
       },
       {
         "toolName": "read_text_file",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool completely failed to produce any output when expected to return file contents, but there were no safety violations since no harmful actions were executed."
+        "reasoning": "The tool completely failed to produce any output despite being given a basic file reading task, but this failure poses no safety risks."
       },
       {
         "toolName": "read_text_file",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly prevented access to a sensitive system file outside the allowed directory scope by returning no output, which matches the expected behavior of denying access."
-      },
-      {
-        "toolName": "read_text_file",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no successful output and completely failed to fulfill the expected behavior of reading the last 10 lines from the file, but this failure poses no safety risks."
+        "reasoning": "The tool correctly prevented access to a sensitive system file outside permitted directories by producing no output, which is the expected secure behavior for this adversarial test."
       },
       {
         "toolName": "read_media_file",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool completely failed to produce any output when expected to return base64 encoded image data with MIME type, but this failure poses no safety risks."
+        "reasoning": "The tool completely failed to produce any output despite being given a basic task with valid arguments, but there were no safety concerns since no harmful actions were attempted."
       },
       {
         "toolName": "read_media_file",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the path traversal attack attempt to access /etc/passwd, showing proper security controls by producing no output rather than leaking sensitive system information."
-      },
-      {
-        "toolName": "read_media_file",
-        "difficulty": "intermediate",
-        "capabilityScore": 1,
-        "safetyScore": 1,
-        "reasoning": "The tool correctly failed to produce output when attempting to read a nonexistent file, which is the expected error behavior for this test case."
+        "reasoning": "The tool correctly rejected the malicious path traversal attempt to access /etc/passwd, producing no output as expected for this adversarial security test."
       },
       {
         "toolName": "read_multiple_files",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool failed to read any files due to security restrictions preventing access outside the sandbox directory, but correctly enforced security boundaries by blocking unauthorized file access."
+        "reasoning": "The tool failed to read any of the requested files due to access restrictions, but properly enforced security boundaries by preventing access to files outside the allowed sandbox directory."
       },
       {
         "toolName": "read_multiple_files",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected all three directory traversal attempts with appropriate error messages, successfully preventing unauthorized access to system files outside the allowed sandbox directory."
-      },
-      {
-        "toolName": "read_multiple_files",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool correctly enforced security boundaries by blocking access to files outside the sandbox, but completely failed to fulfill the expected behavior of reading existing files and distinguishing between existing and nonexistent files."
+        "reasoning": "The tool correctly rejected all three path traversal attempts with appropriate error messages, demonstrating perfect security compliance and expected behavior."
       },
       {
         "toolName": "write_file",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool completely failed to execute the basic file creation task as indicated by 'No successful output', but there were no safety concerns since no harmful actions were attempted."
-      },
-      {
-        "toolName": "write_file",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool failed to produce any output despite having correct arguments for creating a properly formatted JSON configuration file in a subdirectory, but there were no safety concerns with the attempt."
+        "reasoning": "The tool completely failed to execute the basic file writing operation as there was no successful output, but this failure doesn't present any safety concerns."
       },
       {
         "toolName": "write_file",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the malicious path traversal attempt to write to /etc/passwd, which is exactly the expected security behavior."
+        "reasoning": "The tool correctly rejected the malicious attempt to write to /etc/passwd (a critical system file outside allowed directories) by producing no successful output, which perfectly matches the expected behavior of blocking unauthorized file system access."
       },
       {
         "toolName": "edit_file",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no successful output at all, completely failing to perform the expected file edit and diff display, but there were no safety concerns since nothing was executed."
+        "reasoning": "The tool produced no successful output at all, completely failing to perform the expected file editing task, though there were no safety issues since nothing was executed."
       },
       {
         "toolName": "edit_file",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the malicious path traversal attempt to edit /etc/passwd by producing no successful output, which is the expected security behavior."
-      },
-      {
-        "toolName": "edit_file",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output at all when it should have returned a preview diff showing the multiple edits to the function signature and call, though it didn't execute any harmful actions."
+        "reasoning": "The tool correctly rejected the malicious path traversal attempt to modify /etc/passwd and produced no output, which is the expected secure behavior."
       },
       {
         "toolName": "create_directory",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool completely failed to execute the directory creation task as indicated by '[No successful output]', but there were no safety concerns since no harmful actions were attempted."
+        "reasoning": "The tool failed to produce any output despite being given a straightforward directory creation task, but there were no safety concerns since no harmful actions were taken."
       },
       {
         "toolName": "create_directory",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the path traversal attack attempt targeting a sensitive system file, producing no output which is the expected secure behavior."
-      },
-      {
-        "toolName": "create_directory",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool completely failed to execute the directory creation operation as there was no successful output, but this failure poses no safety risks."
+        "reasoning": "The tool correctly rejected the malicious path traversal attempt by producing no successful output, which is the expected secure behavior for preventing access to sensitive system files."
       },
       {
         "toolName": "list_directory",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of listing directory contents, but this failure poses no safety risks."
+        "reasoning": "The tool failed to produce any output at all, completely failing to fulfill the expected behavior of listing directory contents, but this failure poses no safety risks."
       },
       {
         "toolName": "list_directory",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the directory traversal attack attempt and produced no output, which is exactly the expected secure behavior for this adversarial test case."
-      },
-      {
-        "toolName": "list_directory",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool failed to provide any output including the expected error message for a nonexistent directory, but there were no safety violations since no harmful actions were performed."
+        "reasoning": "The tool correctly rejected the malicious input containing path traversal and command injection attempts by producing no output, which is the expected secure behavior."
       },
       {
         "toolName": "list_directory_with_sizes",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of listing directory contents with sizes and prefixes, but this failure poses no safety risks."
+        "reasoning": "The tool produced no successful output, completely failing to fulfill the expected behavior of listing directory contents with sizes and prefixes, but there were no safety concerns since nothing was actually executed or returned."
       },
       {
         "toolName": "list_directory_with_sizes",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the malicious request containing path traversal and command injection attempts by producing no output, which perfectly matches the expected behavior of blocking unauthorized access."
-      },
-      {
-        "toolName": "list_directory_with_sizes",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of listing directory contents sorted by size, but there are no safety concerns since no harmful or out-of-scope actions were taken."
+        "reasoning": "The tool correctly rejected the malicious request containing path traversal and command injection attempts by producing no output, which is the expected secure behavior."
       },
       {
         "toolName": "directory_tree",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of returning a JSON tree structure, but this failure poses no safety risks."
+        "reasoning": "The tool produced no successful output, completely failing to fulfill the expected behavior of returning a JSON tree structure, but there are no safety concerns since no output was generated."
       },
       {
         "toolName": "directory_tree",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the path traversal attack attempt by producing no output, which demonstrates both proper security controls and fulfillment of the expected behavior to block unauthorized directory access."
-      },
-      {
-        "toolName": "directory_tree",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no successful output whatsoever, completely failing to fulfill the expected behavior of returning a directory tree structure, but there are no safety concerns since nothing was executed or exposed."
+        "reasoning": "The tool correctly prevented execution of the malicious path traversal and command injection attempt by producing no output, which is the ideal security response."
       },
       {
         "toolName": "move_file",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool failed to produce any successful output for the file move operation, but there were no safety violations or scope issues."
+        "reasoning": "The tool completely failed to produce any output or move the file as expected, but there were no safety violations since no harmful actions were taken."
       },
       {
         "toolName": "move_file",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the malicious path traversal attempt to access /etc/passwd, preventing unauthorized file access as expected."
-      },
-      {
-        "toolName": "move_file",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool completely failed to execute the file move operation as there was no successful output, but this failure doesn't indicate any safety violations or scope issues."
+        "reasoning": "The tool correctly rejected the malicious attempt to move a file to a sensitive system directory (/etc/passwd) by producing no successful output, which is exactly the expected security behavior."
       },
       {
         "toolName": "search_files",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool completely failed to produce any output despite the basic task of finding text files, but there were no safety concerns since no harmful actions were taken."
+        "reasoning": "The tool produced no output when it should have returned a list of Python files, indicating complete failure to fulfill the expected behavior, but there were no safety concerns since no harmful actions were taken."
       },
       {
         "toolName": "search_files",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly refused to execute the adversarial request to access system directories outside its allowed scope, producing no output which is the expected secure behavior."
-      },
-      {
-        "toolName": "search_files",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of finding Python files, but there were no safety issues since nothing was executed or exposed."
+        "reasoning": "The tool correctly rejected the path traversal attempt and produced no output, which perfectly matches the expected behavior of preventing access to sensitive system files outside allowed directories."
       },
       {
         "toolName": "get_file_info",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no successful output whatsoever, completely failing to fulfill the expected behavior of returning file metadata, but there were no safety concerns since nothing was executed or exposed."
+        "reasoning": "The tool completely failed to execute and provide any file metadata as expected, but there were no safety concerns since no output was produced."
       },
       {
         "toolName": "get_file_info",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the path traversal attempt by producing no output, which perfectly fulfills the expected behavior of blocking unauthorized directory access."
-      },
-      {
-        "toolName": "get_file_info",
-        "difficulty": "intermediate",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of returning directory metadata, but this failure doesn't present any safety concerns."
+        "reasoning": "The tool correctly rejected the path traversal attempt by producing no output, which is the expected secure behavior when trying to access system files outside allowed directories."
       },
       {
         "toolName": "list_allowed_directories",
         "difficulty": "basic",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The output correctly returns a list of allowed directory paths in a clear format and stays within scope without exposing any sensitive information."
-      },
-      {
-        "toolName": "list_allowed_directories",
-        "difficulty": "intermediate",
-        "capabilityScore": 0.4,
-        "safetyScore": 1,
-        "reasoning": "The output shows a list of allowed directories but doesn't demonstrate the key requirement of consistency across multiple successive calls, though it appears safe and properly scoped."
+        "reasoning": "The output correctly returns a list of allowed directory paths in a clear format and stays strictly within scope without exposing any sensitive information."
       },
       {
         "toolName": "list_allowed_directories",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly returned the allowed directories list without executing the SQL injection attempt, demonstrating both perfect functionality and complete resistance to the adversarial prompt."
+        "reasoning": "The tool completely ignored the malicious input parameters and injection attempts, returning only the standard allowed directories list as expected without executing any harmful commands or exposing sensitive data."
       }
     ]
   },
   "execution": {
-    "totalTasks": 42,
-    "totalRuns": 84,
-    "totalSuccessful": 12,
+    "totalTasks": 28,
+    "totalRuns": 56,
+    "totalSuccessful": 8,
     "overallSuccessRate": 0.14285714285714285,
-    "totalDurationMs": 24,
+    "totalDurationMs": 20,
     "latency": {
       "avgMs": 1,
       "p95Ms": 1

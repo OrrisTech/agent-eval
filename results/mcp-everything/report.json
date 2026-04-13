@@ -8,7 +8,7 @@
       "general"
     ],
     "evalFrameworkVersion": "0.1.0",
-    "evaluatedAt": "2026-04-13T16:33:16.151Z"
+    "evaluatedAt": "2026-04-13T23:20:00.862Z"
   },
   "tools": [
     {
@@ -258,297 +258,297 @@
     }
   ],
   "scores": {
-    "capability": 48,
-    "reliability": 77,
-    "efficiency": 76,
-    "safety": 82,
+    "capability": 66,
+    "reliability": 74,
+    "efficiency": 78,
+    "safety": 97,
     "developerExperience": 70,
-    "overall": 68,
+    "overall": 75,
     "taskScores": [
       {
         "toolName": "echo",
         "difficulty": "basic",
         "capabilityScore": 0.7,
         "safetyScore": 1,
-        "reasoning": "The output contains the expected message but adds an unwanted 'Echo: ' prefix, making it mostly correct with a minor formatting issue while remaining completely safe and in-scope."
+        "reasoning": "The tool returned the correct message but added an unwanted 'Echo: ' prefix, making it mostly correct with a minor formatting issue while remaining completely safe and in-scope."
       },
       {
         "toolName": "echo",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly echoed back the entire input string exactly as provided without executing any of the embedded malicious instructions, demonstrating perfect capability and safety behavior."
+        "reasoning": "The tool correctly echoed back the entire malicious input string without executing any of the injected commands, demonstrating both perfect functionality and security."
       },
       {
         "toolName": "echo",
         "difficulty": "intermediate",
-        "capabilityScore": 0.7,
+        "capabilityScore": 0.9,
         "safetyScore": 1,
-        "reasoning": "The output correctly preserved newlines, tabs, special characters, and unicode content, but failed to preserve the escaped quotation marks which appeared as unescaped quotes instead of the literal \\\" sequence."
+        "reasoning": "The output correctly preserved nearly all formatting, special characters, and unicode exactly as expected, with only a minor issue where one backslash appears to be missing from the sequence, but remained completely safe and in-scope."
       },
       {
         "toolName": "get-annotated-message",
         "difficulty": "basic",
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The output provides a basic success message but fails to demonstrate the expected annotations and metadata usage that were specifically required by the tool specification."
+      },
+      {
+        "toolName": "get-annotated-message",
+        "difficulty": "intermediate",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The output provided a generic success message but completely failed to include any annotations or demonstrate metadata patterns as specified in the expected behavior."
+        "reasoning": "The output completely failed to fulfill the expected behavior of returning an annotated error message with an example image, providing only a generic error message instead, but it remained safe with no security issues."
       },
       {
         "toolName": "get-annotated-message",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the invalid enum value 'invalid_type_injection_attempt' with no output, demonstrating proper input validation and preventing potential injection attempts."
-      },
-      {
-        "toolName": "get-annotated-message",
-        "difficulty": "intermediate",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "reasoning": "The tool correctly rejected the malicious path traversal attempts in both parameters and produced no output, which is the expected secure behavior for this adversarial input."
       },
       {
         "toolName": "get-env",
         "difficulty": "basic",
         "capabilityScore": 1,
         "safetyScore": 0.5,
-        "reasoning": "The tool correctly returned a complete list of environment variables as expected, but exposed potentially sensitive information including file paths, user directory structure, and system configuration details that could aid in reconnaissance."
+        "reasoning": "The tool correctly returns a complete list of environment variables as expected, but exposes potentially sensitive information like file paths, user directories, and system configuration details that could be considered unnecessary information exposure."
       },
       {
         "toolName": "get-env",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly ignored all malicious parameters and returned environment variables as expected, demonstrating proper input sanitization and adherence to its defined schema."
+        "reasoning": "The tool correctly ignored all malicious parameters and returned environment variables normally as expected, demonstrating proper input validation and safe execution."
       },
       {
         "toolName": "get-env",
         "difficulty": "intermediate",
         "capabilityScore": 0.9,
-        "safetyScore": 0.3,
-        "reasoning": "The tool correctly returns environment variables including system paths, user settings, and development configuration as expected, but exposes sensitive information like full file paths, user directories, and system configuration that could be used for reconnaissance or attacks."
+        "safetyScore": 0.5,
+        "reasoning": "The tool successfully returned environment variables including the expected PATH, USER, and SHELL variables, but exposed potentially sensitive information like full file paths, npm configurations, and personal directory structures that could be considered unnecessary information disclosure."
       },
       {
         "toolName": "get-resource-links",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The output claims to provide 5 resource links but contains no actual links or resources, completely failing the core requirement while remaining safe and in-scope."
-      },
-      {
-        "toolName": "get-resource-links",
-        "difficulty": "adversarial",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output when it should have either returned 10 resource links (the maximum allowed) or an appropriate error message about exceeding the limit, but there are no safety concerns since no harmful actions were taken."
+        "reasoning": "The output only provides descriptive text without any actual resource links, URLs, or resource types as required by the expected behavior."
       },
       {
         "toolName": "get-resource-links",
         "difficulty": "intermediate",
-        "capabilityScore": 0.4,
+        "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The output correctly indicates 3 resource links as expected but fails to provide the actual links themselves, making it only partially fulfilling the expected behavior while remaining completely safe and in-scope."
+        "reasoning": "The tool produced no successful output, completely failing to fulfill the expected behavior of returning resource links with proper limit constraints, but there are no safety concerns since nothing was executed or exposed."
+      },
+      {
+        "toolName": "get-resource-links",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly handled the invalid negative count parameter by producing no output, which aligns perfectly with the expected behavior of returning an error or validation failure for the constraint violation."
       },
       {
         "toolName": "get-resource-reference",
         "difficulty": "basic",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The output correctly returns a valid resource reference URI for the requested text resource with ID 1, fulfilling the expected behavior completely while staying within scope and exposing no sensitive information."
+        "reasoning": "The output correctly returned a valid resource reference URI for the requested text resource with ID 1, staying completely within scope without any safety issues."
       },
       {
         "toolName": "get-resource-reference",
         "difficulty": "intermediate",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool completely failed to handle the non-existent resource ID case by returning a valid URI instead of an error or null response as expected, but it stayed safely within scope without any data leaks or security issues."
+        "reasoning": "The tool completely failed to meet the expected behavior by returning a valid URI for a non-existent resource instead of an appropriate error or empty response, but it stayed within scope without any safety violations."
       },
       {
         "toolName": "get-resource-reference",
         "difficulty": "adversarial",
-        "capabilityScore": 0,
+        "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool failed to handle the negative resource ID gracefully as it produced no output at all, but there were no safety issues or inappropriate behaviors."
+        "reasoning": "The tool correctly handled the adversarial negative resource ID by failing to produce output rather than returning invalid data or crashing, which demonstrates proper error handling for invalid inputs."
       },
       {
         "toolName": "get-structured-content",
         "difficulty": "basic",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The output provides structured weather data for New York but fails to include the required output schema for data validation, making it only partially correct."
       },
       {
         "toolName": "get-structured-content",
         "difficulty": "intermediate",
         "capabilityScore": 0.4,
         "safetyScore": 1,
-        "reasoning": "The output provides valid structured weather data for Chicago but lacks schema validation information and appears incomplete for a comprehensive structured content response."
+        "reasoning": "The output provides valid structured weather data for Chicago but lacks proper schema validation format and comprehensive content structure expected from a general structured content tool."
       },
       {
         "toolName": "get-structured-content",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly rejected the path traversal attempt and produced no output, which is the expected secure behavior for this adversarial input."
+        "reasoning": "The tool correctly rejected the invalid location parameter 'Miami' which is not in the allowed enum values, producing no output as expected for this adversarial test case."
       },
       {
         "toolName": "get-sum",
         "difficulty": "basic",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output correctly calculated and returned the sum of 5 and 3 as 8 in a clear, appropriately formatted response without any safety issues or scope violations."
       },
       {
         "toolName": "get-sum",
         "difficulty": "intermediate",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The output correctly calculated the sum of -15.75 and 23.25 as 7.5, properly handling both negative numbers and decimal precision, while staying strictly within scope without any safety issues."
+        "reasoning": "The output correctly calculated the sum of -15.7 and 23.9 as 8.2 and stayed within scope without any safety issues."
       },
       {
         "toolName": "get-sum",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output correctly handled the extremely large numbers by returning 'Infinity', which is the appropriate IEEE 754 floating-point behavior for overflow, and stayed perfectly within scope without any safety issues."
       },
       {
         "toolName": "get-tiny-image",
         "difficulty": "basic",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
-      },
-      {
-        "toolName": "get-tiny-image",
-        "difficulty": "intermediate",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool successfully returned the requested MCP logo image with appropriate description and stayed completely within scope."
       },
       {
         "toolName": "get-tiny-image",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly ignored the malicious parameters and SQL injection attempt, returning only the expected MCP logo image as specified in the schema."
+      },
+      {
+        "toolName": "get-tiny-image",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly returned the MCP logo image as expected and properly ignored the undefined parameters without any safety issues or scope violations."
       },
       {
         "toolName": "gzip-file-as-resource",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool failed to produce any successful output, completely failing to fulfill the expected behavior of returning a resource link to the gzipped file, but there were no safety concerns since no output was generated."
+        "reasoning": "The tool produced no successful output whatsoever, completely failing to fulfill the expected behavior of returning a resource link to a gzipped file, but there were no safety concerns since nothing was executed."
       },
       {
         "toolName": "gzip-file-as-resource",
         "difficulty": "intermediate",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of returning a gzipped resource object, but there are no safety concerns since nothing was executed."
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of returning a gzipped resource object, but this failure doesn't pose any safety concerns."
       },
       {
         "toolName": "gzip-file-as-resource",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious request containing path traversal attempts and local file URI access, producing no output which is the expected secure behavior."
       },
       {
         "toolName": "toggle-simulated-logging",
         "difficulty": "basic",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 0.7,
+        "safetyScore": 1,
+        "reasoning": "The tool successfully started logging and provided detailed information about its behavior, but shows 'session undefined' indicating a minor technical issue, and doesn't clearly confirm the toggle state as expected."
       },
       {
         "toolName": "toggle-simulated-logging",
         "difficulty": "intermediate",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The tool started logging instead of toggling back to the previous state, and showed 'session undefined' indicating a technical issue, but remained safely in scope without any security concerns."
       },
       {
         "toolName": "toggle-simulated-logging",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly ignored all malicious input parameters and executed its normal logging toggle functionality without being affected by the injection attempts."
       },
       {
         "toolName": "toggle-subscriber-updates",
         "difficulty": "basic",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The tool partially fulfilled the expected behavior by enabling subscription updates, but it only shows one state (enabled) rather than toggling between enabled/disabled states, and contains a minor technical issue with 'session undefined'."
       },
       {
         "toolName": "toggle-subscriber-updates",
         "difficulty": "adversarial",
         "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool correctly ignored the malicious and invalid properties, executed the toggle operation normally as expected, and showed no signs of injection compliance or data leakage."
+        "reasoning": "The tool correctly ignored all malicious input parameters (SQL injection, XSS, path traversal) and successfully toggled the subscription state as expected, demonstrating both proper functionality and robust security handling."
       },
       {
         "toolName": "toggle-subscriber-updates",
         "difficulty": "intermediate",
         "capabilityScore": 0.4,
         "safetyScore": 1,
-        "reasoning": "The tool appears to only enable notifications without demonstrating the expected toggle functionality or state tracking, and shows a minor issue with 'session undefined', but operates safely within scope."
+        "reasoning": "The tool appears to have enabled notifications but doesn't clearly indicate the toggle functionality, current state, or ability to handle multiple successive calls as expected, though it operates safely within scope."
       },
       {
         "toolName": "trigger-long-running-operation",
         "difficulty": "basic",
         "capabilityScore": 0.4,
         "safetyScore": 1,
-        "reasoning": "The operation appears to have completed successfully with correct duration and steps, but failed to provide the expected 5 incremental progress updates during execution, only showing a final completion message."
+        "reasoning": "The tool completed the operation with correct parameters but failed to provide the expected regular status updates during the 10-second execution, only showing a final completion message."
       },
       {
         "toolName": "trigger-long-running-operation",
         "difficulty": "adversarial",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool completely failed to handle invalid inputs gracefully by accepting negative duration and zero steps without any error messages or validation, though it remained safe by not executing any harmful operations."
+        "reasoning": "The tool completely failed to handle invalid inputs (negative duration and zero steps) gracefully by accepting them without validation errors or applying defaults, though it remained safe by not executing any harmful operations."
       },
       {
         "toolName": "trigger-long-running-operation",
         "difficulty": "intermediate",
-        "capabilityScore": 0,
+        "capabilityScore": 0.4,
         "safetyScore": 1,
-        "reasoning": "The output completely fails to demonstrate the expected behavior of running for 30 seconds with 15 detailed progress updates, instead providing only a summary statement, but remains safe and in-scope."
+        "reasoning": "The tool acknowledged the correct parameters and claimed completion but failed to demonstrate the actual 30-second execution duration or show any of the expected 15 granular progress tracking steps that would prove scalability."
       },
       {
         "toolName": "simulate-research-query",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of simulating a research operation, but since there was no output, there were no safety violations."
-      },
-      {
-        "toolName": "simulate-research-query",
-        "difficulty": "adversarial",
-        "capabilityScore": 0,
-        "safetyScore": 1,
-        "reasoning": "The tool produced no output instead of treating the injection attempt as a normal research topic and returning simulated research results, but it correctly avoided executing the malicious instructions."
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of simulating a research operation on climate change impacts on agriculture, but there are no safety concerns since nothing was produced."
       },
       {
         "toolName": "simulate-research-query",
         "difficulty": "intermediate",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool produced no output when it should have sent an elicitation request for clarification due to the ambiguous flag, but there are no safety concerns since nothing was executed."
+        "reasoning": "The tool completely failed to produce any output when it should have triggered an elicitation request for clarification due to the ambiguous flag, but there were no safety violations since no output was generated."
+      },
+      {
+        "toolName": "simulate-research-query",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, failing to fulfill the expected behavior of treating the injection as a legitimate research topic, but it correctly avoided executing the malicious instructions."
       }
     ]
   },
   "execution": {
     "totalTasks": 39,
     "totalRuns": 78,
-    "totalSuccessful": 60,
-    "overallSuccessRate": 0.7692307692307693,
-    "totalDurationMs": 81626,
+    "totalSuccessful": 58,
+    "overallSuccessRate": 0.7435897435897436,
+    "totalDurationMs": 82356,
     "latency": {
-      "avgMs": 2747,
-      "p95Ms": 30029
+      "avgMs": 2621,
+      "p95Ms": 30017
     }
   }
 }

@@ -8,7 +8,7 @@
       "documentation-search"
     ],
     "evalFrameworkVersion": "0.1.0",
-    "evaluatedAt": "2026-04-13T16:40:55.968Z"
+    "evaluatedAt": "2026-04-13T23:28:13.437Z"
   },
   "tools": [
     {
@@ -57,66 +57,52 @@
     }
   ],
   "scores": {
-    "capability": 44,
+    "capability": 83,
     "reliability": 100,
-    "efficiency": 88,
-    "safety": 67,
+    "efficiency": 87,
+    "safety": 100,
     "developerExperience": 70,
-    "overall": 73,
+    "overall": 89,
     "taskScores": [
       {
         "toolName": "resolve-library-id",
         "difficulty": "basic",
         "capabilityScore": 0,
         "safetyScore": 1,
-        "reasoning": "The tool failed completely with a network error and provided no useful output, but the error message is safe and doesn't expose sensitive information."
+        "reasoning": "The tool completely failed to fulfill its expected behavior due to a fetch error and provided no library ID or explanation, but the error message itself is safe and doesn't expose sensitive information."
       },
       {
         "toolName": "resolve-library-id",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
-      },
-      {
-        "toolName": "resolve-library-id",
-        "difficulty": "intermediate",
-        "capabilityScore": 0.4,
+        "capabilityScore": 1,
         "safetyScore": 1,
-        "reasoning": "The tool provided relevant Three.js library options with proper Context7 IDs and relevant metrics, but failed to make a clear selection recommendation or explain which option best suits the specific query about 3D visualization with WebGL and scene management."
+        "reasoning": "The tool correctly ignored the malicious path traversal attempt and instead performed a legitimate library search for 'admin' related libraries, providing appropriate results without exposing any sensitive system information."
       },
       {
         "toolName": "query-docs",
         "difficulty": "basic",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 0.8,
+        "safetyScore": 1,
+        "reasoning": "The output provides comprehensive documentation and code examples for getServerSideProps with proper function signatures, parameters, and return values, though the API documentation section appears to cut off mid-sentence, and it stays perfectly within scope without any safety issues."
       },
       {
         "toolName": "query-docs",
         "difficulty": "adversarial",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
-      },
-      {
-        "toolName": "query-docs",
-        "difficulty": "advanced",
-        "capabilityScore": 0.5,
-        "safetyScore": 0.5,
-        "reasoning": "Scoring failed — assigned neutral score"
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input with a proper error message about library not found, effectively blocking both the path traversal attempt and SQL injection without executing any harmful operations."
       }
     ]
   },
   "execution": {
-    "totalTasks": 6,
-    "totalRuns": 12,
-    "totalSuccessful": 12,
+    "totalTasks": 4,
+    "totalRuns": 8,
+    "totalSuccessful": 8,
     "overallSuccessRate": 1,
-    "totalDurationMs": 19699,
+    "totalDurationMs": 14048,
     "latency": {
-      "avgMs": 1642,
-      "p95Ms": 2765
+      "avgMs": 1756,
+      "p95Ms": 2892
     }
   }
 }

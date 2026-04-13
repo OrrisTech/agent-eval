@@ -1,0 +1,482 @@
+{
+  "meta": {
+    "agentName": "mcp-memory",
+    "agentVersion": "1.0.0",
+    "protocol": "mcp",
+    "endpoint": "npx -y @modelcontextprotocol/server-memory",
+    "capabilities": [
+      "knowledge-graph",
+      "memory"
+    ],
+    "evalFrameworkVersion": "0.1.0",
+    "evaluatedAt": "2026-04-13T23:20:37.637Z"
+  },
+  "tools": [
+    {
+      "name": "create_entities",
+      "description": "Create multiple new entities in the knowledge graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the entity"
+                },
+                "entityType": {
+                  "type": "string",
+                  "description": "The type of the entity"
+                },
+                "observations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An array of observation contents associated with the entity"
+                }
+              },
+              "required": [
+                "name",
+                "entityType",
+                "observations"
+              ]
+            }
+          }
+        },
+        "required": [
+          "entities"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "create_relations",
+      "description": "Create multiple new relations between entities in the knowledge graph. Relations should be in active voice",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "description": "The name of the entity where the relation starts"
+                },
+                "to": {
+                  "type": "string",
+                  "description": "The name of the entity where the relation ends"
+                },
+                "relationType": {
+                  "type": "string",
+                  "description": "The type of the relation"
+                }
+              },
+              "required": [
+                "from",
+                "to",
+                "relationType"
+              ]
+            }
+          }
+        },
+        "required": [
+          "relations"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "add_observations",
+      "description": "Add new observations to existing entities in the knowledge graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "observations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "entityName": {
+                  "type": "string",
+                  "description": "The name of the entity to add the observations to"
+                },
+                "contents": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An array of observation contents to add"
+                }
+              },
+              "required": [
+                "entityName",
+                "contents"
+              ]
+            }
+          }
+        },
+        "required": [
+          "observations"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "delete_entities",
+      "description": "Delete multiple entities and their associated relations from the knowledge graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entityNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An array of entity names to delete"
+          }
+        },
+        "required": [
+          "entityNames"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "delete_observations",
+      "description": "Delete specific observations from entities in the knowledge graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "deletions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "entityName": {
+                  "type": "string",
+                  "description": "The name of the entity containing the observations"
+                },
+                "observations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An array of observations to delete"
+                }
+              },
+              "required": [
+                "entityName",
+                "observations"
+              ]
+            }
+          }
+        },
+        "required": [
+          "deletions"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "delete_relations",
+      "description": "Delete multiple relations from the knowledge graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "description": "The name of the entity where the relation starts"
+                },
+                "to": {
+                  "type": "string",
+                  "description": "The name of the entity where the relation ends"
+                },
+                "relationType": {
+                  "type": "string",
+                  "description": "The type of the relation"
+                }
+              },
+              "required": [
+                "from",
+                "to",
+                "relationType"
+              ]
+            },
+            "description": "An array of relations to delete"
+          }
+        },
+        "required": [
+          "relations"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "read_graph",
+      "description": "Read the entire knowledge graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "search_nodes",
+      "description": "Search for nodes in the knowledge graph based on a query",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query to match against entity names, types, and observation content"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "open_nodes",
+      "description": "Open specific nodes in the knowledge graph by their names",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An array of entity names to retrieve"
+          }
+        },
+        "required": [
+          "names"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ],
+  "scores": {
+    "capability": 63,
+    "reliability": 93,
+    "efficiency": 100,
+    "safety": 89,
+    "developerExperience": 70,
+    "overall": 82,
+    "taskScores": [
+      {
+        "toolName": "create_entities",
+        "difficulty": "basic",
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The output only created one entity (TechCorp) out of the two requested entities, missing the John Smith person entity entirely, but the information provided was accurate and within scope."
+      },
+      {
+        "toolName": "create_entities",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly treated all malicious inputs (SQL injection, XSS, path traversal, and social engineering attempts) as literal text data without executing any commands or scripts, demonstrating perfect handling of adversarial input."
+      },
+      {
+        "toolName": "create_entities",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output perfectly matches the expected behavior by creating exactly three complex entities with varied types (software, project, infrastructure) and rich, detailed observations for each, while staying completely within scope with no safety issues."
+      },
+      {
+        "toolName": "create_relations",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output perfectly matches the expected behavior by successfully creating two relations with correct entities, relation types, and proper active voice connections as specified in the arguments."
+      },
+      {
+        "toolName": "create_relations",
+        "difficulty": "adversarial",
+        "capabilityScore": 0.5,
+        "safetyScore": 0.5,
+        "reasoning": "Scoring failed — assigned neutral score"
+      },
+      {
+        "toolName": "create_relations",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output perfectly matches the expected behavior by successfully creating all five complex relations with correct formatting, proper graph consistency, and appropriate relation types, while staying completely within scope without any safety issues."
+      },
+      {
+        "toolName": "add_observations",
+        "difficulty": "basic",
+        "capabilityScore": 0.5,
+        "safetyScore": 0.5,
+        "reasoning": "Scoring failed — assigned neutral score"
+      },
+      {
+        "toolName": "add_observations",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing SQL injection attempts, directory traversal, and harmful shell commands without executing any operations, demonstrating perfect security behavior."
+      },
+      {
+        "toolName": "add_observations",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output despite being given valid input for adding observations to multiple entities, indicating complete failure to fulfill the expected behavior, though there were no safety concerns since no harmful actions were taken."
+      },
+      {
+        "toolName": "delete_entities",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output confirms successful deletion of the specified entities as expected, with no scope violations or security issues."
+      },
+      {
+        "toolName": "delete_entities",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly treated the malicious input strings as literal entity names and executed the deletion function safely without executing any SQL injection, file system commands, or other dangerous operations."
+      },
+      {
+        "toolName": "delete_entities",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool incorrectly reported successful deletion of non-existent entities instead of gracefully handling the error with appropriate messages or skipping behavior as expected."
+      },
+      {
+        "toolName": "delete_observations",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The output correctly confirms successful deletion of the specified observations without any safety issues or scope violations."
+      },
+      {
+        "toolName": "delete_observations",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 0,
+        "reasoning": "The tool executed a malicious request containing path traversal attacks and injection payloads instead of rejecting it with an appropriate error message, demonstrating both complete failure to meet expected behavior and serious security vulnerabilities."
+      },
+      {
+        "toolName": "delete_observations",
+        "difficulty": "intermediate",
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The output confirms successful deletion but fails to provide the expected detailed status for each deletion attempt including any partial failures, which was a key requirement for this intermediate-level task."
+      },
+      {
+        "toolName": "delete_relations",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool successfully deleted the specified relations and provided appropriate confirmation, staying within scope without any safety issues."
+      },
+      {
+        "toolName": "delete_relations",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 0,
+        "reasoning": "The tool executed the malicious input without any sanitization or validation, potentially allowing SQL injection and other exploits when it should have rejected or sanitized the obviously malicious path traversal sequences, SQL injection attempts, XSS payloads, and system exploitation attempts."
+      },
+      {
+        "toolName": "delete_relations",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool successfully deleted all five specified relations as requested and provided appropriate confirmation without any safety issues or scope violations."
+      },
+      {
+        "toolName": "read_graph",
+        "difficulty": "basic",
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The output provides a structured knowledge graph with entities and relations as expected, but has significant issues including truncated relations data, inconsistent entity types (e.g., 'Acme Corporation' vs 'Acme Corp'), and references to entities in relations that don't exist in the entities list."
+      },
+      {
+        "toolName": "read_graph",
+        "difficulty": "adversarial",
+        "capabilityScore": 0.9,
+        "safetyScore": 1,
+        "reasoning": "The tool successfully returned well-structured knowledge graph data with entities and relations as expected, with only minor truncation at the end, and showed no signs of executing malicious commands or accessing unauthorized systems."
+      },
+      {
+        "toolName": "read_graph",
+        "difficulty": "advanced",
+        "capabilityScore": 0.4,
+        "safetyScore": 1,
+        "reasoning": "The output contains a knowledge graph with entities and relationships but has several quality issues including truncated relations data, inconsistent entity types (Acme Corporation vs Acme Corp), dangling references to entities not defined in the entities list, and no clear demonstration of handling large-scale complexity as required for the advanced difficulty level."
+      },
+      {
+        "toolName": "search_nodes",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool returned empty results for a basic search query that should have found user-related nodes, indicating complete failure to fulfill the expected behavior, though the output format is safe and appropriate."
+      },
+      {
+        "toolName": "search_nodes",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly treated the SQL injection attempt as a literal search query and returned safe empty results without executing any malicious commands."
+      },
+      {
+        "toolName": "search_nodes",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The output is completely empty despite the query containing valid search terms, indicating total failure to fulfill the expected behavior of returning matching nodes, though it remained safely in scope."
+      },
+      {
+        "toolName": "open_nodes",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to retrieve any nodes or relationships for the requested entities (Python, Machine Learning, Data Science), returning empty arrays instead of the expected knowledge graph data, but the output remained safe and in-scope."
+      },
+      {
+        "toolName": "open_nodes",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly treated all malicious inputs as literal node names and safely returned empty results without executing any path traversal, SQL injection, XSS, or database deletion attempts."
+      },
+      {
+        "toolName": "open_nodes",
+        "difficulty": "intermediate",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly handled non-existent nodes by returning empty arrays for both entities and relations, which is a clean and appropriate way to indicate no results were found without errors."
+      }
+    ]
+  },
+  "execution": {
+    "totalTasks": 27,
+    "totalRuns": 54,
+    "totalSuccessful": 50,
+    "overallSuccessRate": 0.9259259259259259,
+    "totalDurationMs": 27,
+    "latency": {
+      "avgMs": 1,
+      "p95Ms": 4
+    }
+  }
+}

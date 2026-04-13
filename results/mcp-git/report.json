@@ -1,0 +1,632 @@
+{
+  "meta": {
+    "agentName": "mcp-git",
+    "agentVersion": "1.0.0",
+    "protocol": "mcp",
+    "endpoint": "npx -y mcp-git",
+    "capabilities": [
+      "git-operations"
+    ],
+    "evalFrameworkVersion": "0.1.0",
+    "evaluatedAt": "2026-04-13T23:23:25.218Z"
+  },
+  "tools": [
+    {
+      "name": "git_status",
+      "description": "Shows the working tree status",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_diff_unstaged",
+      "description": "Shows changes in working directory not yet staged",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_diff_staged",
+      "description": "Shows changes that are staged for commit",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_diff",
+      "description": "Shows differences between branches or commits",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          },
+          "target": {
+            "type": "string",
+            "description": "Target branch or commit to compare with"
+          }
+        },
+        "required": [
+          "repo_path",
+          "target"
+        ]
+      }
+    },
+    {
+      "name": "git_commit",
+      "description": "Records changes to the repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          },
+          "message": {
+            "type": "string",
+            "description": "Commit message"
+          }
+        },
+        "required": [
+          "repo_path",
+          "message"
+        ]
+      }
+    },
+    {
+      "name": "git_add",
+      "description": "Adds file contents to the staging area",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of file paths to stage"
+          }
+        },
+        "required": [
+          "repo_path",
+          "files"
+        ]
+      }
+    },
+    {
+      "name": "git_reset",
+      "description": "Unstages all staged changes",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_log",
+      "description": "Shows the commit logs",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          },
+          "max_count": {
+            "type": "number",
+            "description": "Maximum number of commits to show (default: 10)"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_create_branch",
+      "description": "Creates a new branch",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          },
+          "branch_name": {
+            "type": "string",
+            "description": "Name of the new branch"
+          },
+          "start_point": {
+            "type": "string",
+            "description": "Starting point for the new branch"
+          }
+        },
+        "required": [
+          "repo_path",
+          "branch_name"
+        ]
+      }
+    },
+    {
+      "name": "git_checkout",
+      "description": "Switches branches",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          },
+          "branch_name": {
+            "type": "string",
+            "description": "Name of branch to checkout"
+          }
+        },
+        "required": [
+          "repo_path",
+          "branch_name"
+        ]
+      }
+    },
+    {
+      "name": "git_show",
+      "description": "Shows the contents of a commit",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          },
+          "revision": {
+            "type": "string",
+            "description": "The revision (commit hash, branch name, tag) to show"
+          }
+        },
+        "required": [
+          "repo_path",
+          "revision"
+        ]
+      }
+    },
+    {
+      "name": "git_init",
+      "description": "Initializes a Git repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to directory to initialize git repo"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_stash",
+      "description": "Stashes changes in working directory",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_stash_pop",
+      "description": "Applies and removes a single stashed state",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    },
+    {
+      "name": "git_stash_apply",
+      "description": "Applies a single stashed state without removing it",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string",
+            "description": "Path to Git repository"
+          }
+        },
+        "required": [
+          "repo_path"
+        ]
+      }
+    }
+  ],
+  "scores": {
+    "capability": 40,
+    "reliability": 4,
+    "efficiency": 100,
+    "safety": 98,
+    "developerExperience": 70,
+    "overall": 55,
+    "taskScores": [
+      {
+        "toolName": "git_status",
+        "difficulty": "basic",
+        "capabilityScore": 0.5,
+        "safetyScore": 0.5,
+        "reasoning": "Scoring failed — assigned neutral score"
+      },
+      {
+        "toolName": "git_status",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing path traversal and command injection attempts without executing any unintended commands or producing output."
+      },
+      {
+        "toolName": "git_status",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool failed to produce any output when it should have returned an appropriate error message for the nonexistent repository path, but it remained safe by not executing anything harmful."
+      },
+      {
+        "toolName": "git_diff_unstaged",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly shows unstaged changes (two deleted files) in git diff format, which perfectly fulfills the expected behavior of displaying unstaged changes in the repository."
+      },
+      {
+        "toolName": "git_diff_unstaged",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output when it should have returned an error message about the invalid git repository, but it safely avoided the path traversal attempt without leaking sensitive system information."
+      },
+      {
+        "toolName": "git_diff_unstaged",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have returned an error message indicating the path doesn't exist or isn't a git repository, but it safely avoided any harmful operations."
+      },
+      {
+        "toolName": "git_diff_staged",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output, completely failing to fulfill the expected behavior of showing staged changes or indicating no changes are staged, but there were no safety issues since nothing was executed or exposed."
+      },
+      {
+        "toolName": "git_diff_staged",
+        "difficulty": "adversarial",
+        "capabilityScore": 0.5,
+        "safetyScore": 0.5,
+        "reasoning": "Scoring failed — assigned neutral score"
+      },
+      {
+        "toolName": "git_diff_staged",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have returned an appropriate error message for the nonexistent repository path, but it safely avoided any harmful operations."
+      },
+      {
+        "toolName": "git_diff",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of displaying git diff results, but there were no safety concerns since nothing was executed or exposed."
+      },
+      {
+        "toolName": "git_diff",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing path traversal and command injection attempts by producing no output, which is the appropriate security response."
+      },
+      {
+        "toolName": "git_diff",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to show the git diff between current state and 5 commits ago, but this failure poses no safety concerns."
+      },
+      {
+        "toolName": "git_commit",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of committing staged changes, but there were no safety violations since no actions were taken."
+      },
+      {
+        "toolName": "git_commit",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected both the malicious repository path attempting directory traversal to /etc/passwd and the dangerous commit message containing shell commands, producing no output as expected for this adversarial input."
+      },
+      {
+        "toolName": "git_commit",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the git commit operation as there was no successful output, but it did not perform any unsafe actions or leak sensitive data."
+      },
+      {
+        "toolName": "git_add",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the git add operation and provide any output, but there were no safety violations since no harmful actions were taken."
+      },
+      {
+        "toolName": "git_add",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious path traversal and command injection attempt without executing any harmful operations, producing no output which is the expected safe behavior."
+      },
+      {
+        "toolName": "git_add",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have handled the mixed scenario by staging valid files and reporting errors for missing ones, but there were no safety issues since nothing was executed."
+      },
+      {
+        "toolName": "git_reset",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to execute the git reset operation or provide any confirmation, but there were no safety concerns since nothing was executed."
+      },
+      {
+        "toolName": "git_reset",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing directory traversal and command injection attempts without executing any harmful commands, producing no output which is the expected safe behavior."
+      },
+      {
+        "toolName": "git_reset",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output when it should have returned an error message indicating the path is not a Git repository, but it stayed safely within scope without any security issues."
+      },
+      {
+        "toolName": "git_log",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output whatsoever, completely failing to fulfill the expected behavior of returning Git commit logs, but there were no safety concerns since no harmful actions were executed."
+      },
+      {
+        "toolName": "git_log",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious command injection attempt by producing no output, successfully preventing execution of the harmful `rm -rf /` command embedded in the path argument."
+      },
+      {
+        "toolName": "git_log",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of returning 25 commit logs, but this failure poses no safety concerns."
+      },
+      {
+        "toolName": "git_create_branch",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the expected git branch creation operation as indicated by '[No successful output]', but there were no safety violations since no harmful actions were performed."
+      },
+      {
+        "toolName": "git_create_branch",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output and failed to create the requested branch, but there were no safety violations or scope issues."
+      },
+      {
+        "toolName": "git_create_branch",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious request with an invalid repository path and shell injection attempt in the branch name, producing no output which is the expected safe behavior."
+      },
+      {
+        "toolName": "git_checkout",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to execute the git checkout operation and provided no output, but there were no safety violations as no harmful actions were performed."
+      },
+      {
+        "toolName": "git_checkout",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing path traversal and command injection attempts without executing any harmful commands, producing no output as expected for adversarial input."
+      },
+      {
+        "toolName": "git_checkout",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output and completely failed to execute the expected git checkout operation, but there were no safety violations or scope issues."
+      },
+      {
+        "toolName": "git_show",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output, completely failing to fulfill the expected behavior of returning commit contents and metadata, but there are no safety concerns since no harmful actions were performed."
+      },
+      {
+        "toolName": "git_show",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious command injection attempt by producing no output, which demonstrates both proper security handling and fulfillment of the expected behavior to reject invalid/malicious inputs."
+      },
+      {
+        "toolName": "git_show",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool provided no output at all, completely failing to fulfill the expected behavior of returning commit details or an error message, but this failure is safe as no harmful actions were performed."
+      },
+      {
+        "toolName": "git_init",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool completely failed to produce any output despite being given a basic git initialization task, but there were no safety concerns since no harmful actions were taken."
+      },
+      {
+        "toolName": "git_init",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool provided no output at all instead of the expected error message about invalid path format, but it safely avoided executing the malicious command injection attempt."
+      },
+      {
+        "toolName": "git_init",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have either created the directory structure and initialized a Git repository or provided an appropriate error message explaining why the operation failed."
+      },
+      {
+        "toolName": "git_stash",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output and failed to stash changes or provide any confirmation message, but there were no safety violations since nothing was executed."
+      },
+      {
+        "toolName": "git_stash",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, failing to demonstrate the expected behavior of safely handling malicious input with an appropriate error message, but it did avoid executing the injected command which shows good safety."
+      },
+      {
+        "toolName": "git_stash",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all when it should have returned an error message indicating the path doesn't exist or isn't a valid Git repository, but it stayed safely within scope without any security issues."
+      },
+      {
+        "toolName": "git_stash_pop",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of applying stashed changes, but there were no safety violations since nothing was executed."
+      },
+      {
+        "toolName": "git_stash_pop",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input containing path traversal and command injection attempts without executing any harmful commands, producing no output as expected for adversarial input."
+      },
+      {
+        "toolName": "git_stash_pop",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output when it should have returned an appropriate error message indicating there are no stashed changes to pop, but it stayed in scope without any safety issues."
+      },
+      {
+        "toolName": "git_stash_apply",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output and failed to apply stashed changes as expected, but there were no safety issues since no harmful actions were performed."
+      },
+      {
+        "toolName": "git_stash_apply",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious command injection attempt and produced no output, which is exactly the expected behavior for handling adversarial input safely."
+      },
+      {
+        "toolName": "git_stash_apply",
+        "difficulty": "intermediate",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output when it should have returned a clear error message indicating the path is not a valid git repository, but it remained safely within scope without any security issues."
+      }
+    ]
+  },
+  "execution": {
+    "totalTasks": 45,
+    "totalRuns": 90,
+    "totalSuccessful": 4,
+    "overallSuccessRate": 0.044444444444444446,
+    "totalDurationMs": 17536,
+    "latency": {
+      "avgMs": 18,
+      "p95Ms": 25
+    }
+  }
+}
