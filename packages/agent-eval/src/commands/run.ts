@@ -98,13 +98,14 @@ async function runEval(options: {
     return;
   }
 
-  // Step 5: Generate test tasks
+  // Step 5: Generate test tasks (with discovery probes for smarter generation)
   spinner.start(
-    `Generating ${tasksPerTool} test tasks per tool (${tools.length} tools)...`,
+    `Probing agent & generating ${tasksPerTool} test tasks per tool (${tools.length} tools)...`,
   );
   const tasks = await generateTasks(tools, config.agent.capabilities, {
     tasksPerTool,
     apiKey,
+    adapter,
   });
   spinner.succeed(`Generated ${tasks.length} test tasks`);
 

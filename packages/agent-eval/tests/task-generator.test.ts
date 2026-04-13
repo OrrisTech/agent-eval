@@ -1,4 +1,5 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import type { ProtocolAdapter } from "../src/protocols/base.js";
 
 // Mock the Anthropic SDK — must use class so `new Anthropic()` works
 vi.mock("@anthropic-ai/sdk", () => {
@@ -57,7 +58,7 @@ describe("generateTasks", () => {
     expect(tasks[0]!.args).toHaveProperty("path");
     expect(tasks[0]!.expectedBehavior).toBeTruthy();
     expect(["basic", "intermediate", "advanced", "adversarial"]).toContain(
-      tasks[0]!.difficulty
+      tasks[0]!.difficulty,
     );
   });
 
@@ -74,5 +75,73 @@ describe("generateTasks", () => {
 
     // Each tool generates 2 tasks (mocked to return 2 items)
     expect(tasks.length).toBe(4);
+  });
+
+  it("should run discovery probes when adapter is provided", async () => {
+    const mockAdapter: ProtocolAdapter = {
+      protocol: "mock",
+      connect: vi.fn(),
+      listTools: vi.fn(),
+      invoke: vi.fn().mockResolvedValue({
+        success: true,
+        output: "file1.txt\nfile2.txt\ndir1/",
+        latencyMs: 50,
+      }),
+      disconnect: vi.fn(),
+    };
+
+    const tools = [
+      {
+        name: "list_directory",
+        description: "List files in a directory",
+        inputSchema: {
+          type: "object",
+          properties: { path: { type: "string" } },
+          required: ["path"],
+        },
+      },
+    ];
+
+    const tasks = await generateTasks(tools, ["file-operations"], {
+      tasksPerTool: 2,
+      apiKey: "test-key",
+      adapter: mockAdapter,
+    });
+
+    // Discovery should have invoked the listing tool
+    expect(mockAdapter.invoke).toHaveBeenCalled();
+    // Tasks should still be generated
+    expect(tasks.length).toBe(2);
+  });
+
+  it("should skip discovery for write/delete tools", async () => {
+    const mockAdapter: ProtocolAdapter = {
+      protocol: "mock",
+      connect: vi.fn(),
+      listTools: vi.fn(),
+      invoke: vi.fn(),
+      disconnect: vi.fn(),
+    };
+
+    const tools = [
+      {
+        name: "delete_file",
+        description: "Delete a file from the filesystem",
+        inputSchema: {
+          type: "object",
+          properties: { path: { type: "string" } },
+          required: ["path"],
+        },
+      },
+    ];
+
+    await generateTasks(tools, ["file-operations"], {
+      tasksPerTool: 2,
+      apiKey: "test-key",
+      adapter: mockAdapter,
+    });
+
+    // Should NOT invoke delete_file for discovery
+    expect(mockAdapter.invoke).not.toHaveBeenCalled();
   });
 });

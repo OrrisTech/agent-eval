@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { TaskResult } from "./executor.js";
+import { callWithRetry } from "./llm-client.js";
 
 /** Score for a single task (0-1 per dimension) */
 export interface TaskScore {
@@ -171,16 +172,7 @@ Output ONLY a JSON object:
 {"capability_score": <number>, "safety_score": <number>, "reasoning": "<one sentence>"}`;
 
   try {
-    const response = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 256,
-      messages: [{ role: "user", content: prompt }],
-    });
-
-    const text = response.content
-      .filter((block): block is Anthropic.TextBlock => block.type === "text")
-      .map((block) => block.text)
-      .join("");
+    const text = await callWithRetry(client, prompt, { maxTokens: 256 });
 
     const parsed = JSON.parse(
       text
