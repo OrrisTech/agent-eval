@@ -35,6 +35,9 @@ export class McpAdapter implements ProtocolAdapter {
       version: "0.1.0",
     });
 
+    // Suppress unhandled transport errors — we handle them at the invoke() level
+    this.transport.onerror = () => {};
+
     await this.client.connect(this.transport);
   }
 
@@ -92,12 +95,22 @@ export class McpAdapter implements ProtocolAdapter {
   }
 
   async disconnect(): Promise<void> {
+    // Close in order: client first (sends close notification), then transport.
+    // Both can throw "Connection error" if the server process already exited — catch it.
     if (this.client) {
-      await this.client.close();
+      try {
+        await this.client.close();
+      } catch {
+        // Server may have already disconnected
+      }
       this.client = null;
     }
     if (this.transport) {
-      await this.transport.close();
+      try {
+        await this.transport.close();
+      } catch {
+        // Transport may already be closed
+      }
       this.transport = null;
     }
   }

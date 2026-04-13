@@ -24,23 +24,41 @@ export interface TestTask {
  *
  * This dramatically improves task validity compared to blind generation.
  */
+/**
+ * Run discovery probes against the agent — exported so it can be called
+ * separately from task generation (with its own connection lifecycle).
+ */
+export async function runDiscoveryProbes(
+  tools: ToolInfo[],
+  adapter: ProtocolAdapter,
+): Promise<string> {
+  return runDiscovery(tools, adapter);
+}
+
 export async function generateTasks(
   tools: ToolInfo[],
   capabilities: string[],
   options: {
     tasksPerTool?: number;
     apiKey: string;
-    /** Optional adapter for running discovery probes before generating tasks */
+    /** Pre-computed discovery context string (from runDiscoveryProbes) */
+    discoveryContext?: string;
+    /** Optional adapter for running discovery probes inline (legacy) */
     adapter?: ProtocolAdapter;
   },
 ): Promise<TestTask[]> {
   const tasksPerTool = options.tasksPerTool ?? 5;
   const client = new Anthropic({ apiKey: options.apiKey });
 
-  // Phase 1: Discovery — probe the agent to understand its environment
-  const discoveryContext = options.adapter
-    ? await runDiscovery(tools, options.adapter)
-    : "";
+  // Use pre-computed discovery context, or run inline if adapter provided
+  let discoveryContext = options.discoveryContext ?? "";
+  if (!discoveryContext && options.adapter) {
+    try {
+      discoveryContext = await runDiscovery(tools, options.adapter);
+    } catch {
+      // Discovery is best-effort
+    }
+  }
 
   // Phase 2: Generate tasks for all tools concurrently (up to 5 at a time)
   const CONCURRENCY = 5;

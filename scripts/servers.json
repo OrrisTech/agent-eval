@@ -1,0 +1,88 @@
+[
+  {
+    "name": "mcp-filesystem",
+    "package": "@modelcontextprotocol/server-filesystem",
+    "endpoint": "npx -y @modelcontextprotocol/server-filesystem /tmp/agent-eval-sandbox",
+    "capabilities": ["file-operations"],
+    "category": "Filesystem",
+    "setup": "mkdir -p /tmp/agent-eval-sandbox/subdir && echo 'Hello World' > /tmp/agent-eval-sandbox/hello.txt && echo '{\"name\":\"test\",\"value\":42}' > /tmp/agent-eval-sandbox/data.json && echo 'Line 1\nLine 2\nLine 3' > /tmp/agent-eval-sandbox/multiline.txt && echo 'Nested file content' > /tmp/agent-eval-sandbox/subdir/nested.txt"
+  },
+  {
+    "name": "mcp-everything",
+    "package": "@modelcontextprotocol/server-everything",
+    "endpoint": "npx -y @modelcontextprotocol/server-everything",
+    "capabilities": ["general"],
+    "category": "Reference"
+  },
+  {
+    "name": "mcp-memory",
+    "package": "@modelcontextprotocol/server-memory",
+    "endpoint": "npx -y @modelcontextprotocol/server-memory",
+    "capabilities": ["knowledge-graph", "memory"],
+    "category": "Memory"
+  },
+  {
+    "name": "mcp-sequential-thinking",
+    "package": "@modelcontextprotocol/server-sequential-thinking",
+    "endpoint": "npx -y @modelcontextprotocol/server-sequential-thinking",
+    "capabilities": ["reasoning"],
+    "category": "Reasoning"
+  },
+  {
+    "name": "mcp-fetch",
+    "package": "mcp-fetch",
+    "endpoint": "npx -y mcp-fetch",
+    "capabilities": ["web-fetch"],
+    "category": "Web"
+  },
+  {
+    "name": "mcp-datetime",
+    "package": "mcp-datetime",
+    "endpoint": "npx -y mcp-datetime",
+    "capabilities": ["time-operations"],
+    "category": "Utilities"
+  },
+  {
+    "name": "mcp-git",
+    "package": "mcp-git",
+    "endpoint": "npx -y mcp-git",
+    "capabilities": ["git-operations"],
+    "category": "DevTools"
+  },
+  {
+    "name": "playwright-mcp",
+    "package": "@playwright/mcp",
+    "endpoint": "npx -y @playwright/mcp --headless",
+    "capabilities": ["browser-automation"],
+    "category": "Browser"
+  },
+  {
+    "name": "mcp-puppeteer",
+    "package": "@modelcontextprotocol/server-puppeteer",
+    "endpoint": "npx -y @modelcontextprotocol/server-puppeteer",
+    "capabilities": ["browser-automation"],
+    "category": "Browser"
+  },
+  {
+    "name": "context7",
+    "package": "@upstash/context7-mcp",
+    "endpoint": "npx -y @upstash/context7-mcp",
+    "capabilities": ["documentation-search"],
+    "category": "Search"
+  },
+  {
+    "name": "mcp-sqlite",
+    "package": "@berthojoris/mcp-sqlite-server",
+    "endpoint": "npx -y @berthojoris/mcp-sqlite-server /tmp/agent-eval-sandbox/test.db",
+    "capabilities": ["database-operations"],
+    "category": "Database"
+  },
+  {
+    "name": "notion-mcp",
+    "package": "@notionhq/notion-mcp-server",
+    "endpoint": "npx -y @notionhq/notion-mcp-server --api-key dummy",
+    "capabilities": ["project-management"],
+    "category": "Productivity",
+    "note": "Will discover tools even with dummy key, tasks may fail at execution"
+  }
+]

@@ -79,40 +79,36 @@ async function runEval(options: {
   // Step 2: Get API key
   const apiKey = await getApiKey();
 
-  // Step 3: Connect to agent
+  // Step 3: Connect and discover tools.
+  // We keep one connection open for the entire eval — discovery, task gen, and execution.
   spinner.start(
     `Connecting to agent via ${config.agent.protocol.toUpperCase()}...`,
   );
   const adapter = createAdapter(config.agent.protocol, config.agent.endpoint);
   await adapter.connect();
-  spinner.succeed("Connected to agent");
-
-  // Step 4: Discover tools
-  spinner.start("Discovering tools...");
   const tools = await adapter.listTools();
   spinner.succeed(`Discovered ${tools.length} tool(s)`);
 
   if (tools.length === 0) {
     console.log(chalk.yellow("No tools found. Nothing to evaluate."));
-    await adapter.disconnect();
+    await adapter.disconnect().catch(() => {});
     return;
   }
 
-  // Step 5: Generate test tasks (with discovery probes for smarter generation)
+  // Step 4: Generate test tasks using Claude API
   spinner.start(
-    `Probing agent & generating ${tasksPerTool} test tasks per tool (${tools.length} tools)...`,
+    `Generating ${tasksPerTool} test tasks per tool (${tools.length} tools)...`,
   );
   const tasks = await generateTasks(tools, config.agent.capabilities, {
     tasksPerTool,
     apiKey,
-    adapter,
   });
   spinner.succeed(`Generated ${tasks.length} test tasks`);
 
-  // Step 6: Execute tasks
+  // Step 5: Execute tasks (reuse the same connection)
   const totalRuns = tasks.length * runsPerTask;
   spinner.start(
-    `Executing ${totalRuns} runs (${tasks.length} tasks × ${runsPerTask} runs)...`,
+    `Executing ${totalRuns} runs (${tasks.length} tasks x ${runsPerTask} runs)...`,
   );
   const execution = await executeTasks(adapter, tasks, runsPerTask, {
     onRunComplete: (completed, total) => {
@@ -123,8 +119,8 @@ async function runEval(options: {
     `Executed ${execution.totalRuns} runs (${execution.totalSuccessful} successful)`,
   );
 
-  // Step 7: Disconnect from agent
-  await adapter.disconnect();
+  // Step 6: Disconnect
+  await adapter.disconnect().catch(() => {});
 
   // Step 8: Score results with LLM-as-judge
   spinner.start("Scoring results with LLM-as-judge...");
