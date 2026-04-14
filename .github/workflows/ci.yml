@@ -21,16 +21,16 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Lint
-        run: bun run --filter agent-eval lint
+        run: bun run --filter @agenthunter/eval lint
 
       - name: Type check
-        run: bun run --filter agent-eval typecheck
+        run: bun run --filter @agenthunter/eval typecheck
 
       - name: Test
-        run: bun run --filter agent-eval test
+        run: bun run --filter @agenthunter/eval test
 
       - name: Build
-        run: bun run --filter agent-eval build
+        run: bun run --filter @agenthunter/eval build
 
       - name: Verify CLI runs
         run: node packages/agent-eval/dist/cli.js --version
