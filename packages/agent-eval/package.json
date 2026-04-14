@@ -1,6 +1,6 @@
 {
   "name": "@agenthunter/eval",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Open-source AI agent evaluation framework — benchmark MCP servers, A2A agents, and API-first agent services",
   "type": "module",
   "bin": {

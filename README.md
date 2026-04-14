@@ -4,19 +4,16 @@
 [![CI](https://github.com/OrrisTech/agent-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/OrrisTech/agent-eval/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**The credit rating agency for AI agents.** Open-source evaluation framework for benchmarking MCP servers, A2A agents, and API-first agent services.
+**The credit rating agency for AI agents.** Open-source evaluation platform with two layers: **Task Eval** (can the agent complete real tasks?) and **Tool Eval** (are the agent's tools reliable?).
 
 ## Quick Start
 
 ```bash
-# Initialize config for your agent
-npx @agenthunter/eval init
+# Evaluate an agent on a task
+npx @agenthunter/eval task -c task.yaml
 
-# Run evaluation
-ANTHROPIC_API_KEY=your-key npx @agenthunter/eval run
-
-# View results
-cat agent-eval-report/report.json
+# Benchmark an MCP server (tool quality)
+npx @agenthunter/eval tool -c agent-eval.yaml
 ```
 
 ## What it does

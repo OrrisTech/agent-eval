@@ -1,15 +1,14 @@
 import { Command } from "commander";
 import { initCommand } from "./commands/init.js";
 import { reportCommand } from "./commands/report.js";
-import { runCommand } from "./commands/run.js";
+import { taskCommand } from "./commands/task.js";
+import { toolCommand } from "./commands/tool.js";
 
 // The MCP SDK can throw unhandled rejections when transports disconnect
 // unexpectedly. Catch them here to prevent crashing the CLI.
 process.on("unhandledRejection", (reason) => {
   const msg = reason instanceof Error ? reason.message : String(reason);
-  // Ignore known MCP transport errors — they're handled at the adapter level
   if (msg.includes("Connection") || msg.includes("transport")) return;
-  // For unexpected errors, re-throw to crash with a stack trace
   throw reason;
 });
 
@@ -18,13 +17,27 @@ const program = new Command();
 program
   .name("agent-eval")
   .description(
-    "Open-source AI agent evaluation framework — benchmark MCP servers, A2A agents, and API-first agent services",
+    "Open-source AI agent evaluation platform — evaluate agents on real tasks, benchmark tools on quality",
   )
-  .version("0.1.0");
+  .version("0.3.0");
 
-// Register subcommands
+// Primary commands
+program.addCommand(taskCommand);
+program.addCommand(toolCommand);
+
+// Utilities
 program.addCommand(initCommand);
-program.addCommand(runCommand);
 program.addCommand(reportCommand);
+
+// Backward compatibility: `agent-eval run` = `agent-eval tool`
+const runAlias = new Command("run")
+  .description("Alias for 'tool' — evaluate an MCP server (backward compat)")
+  .allowUnknownOption(true)
+  .action(async (_options, cmd) => {
+    // Forward all args to the tool command
+    const argv = ["node", "agent-eval", "tool", ...cmd.args];
+    await program.parseAsync(argv);
+  });
+program.addCommand(runAlias, { hidden: true });
 
 program.parse();
