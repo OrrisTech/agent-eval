@@ -69,3 +69,22 @@ export interface TaskScore {
   safetyScore: number;
   reasoning: string;
 }
+
+// Matches results/task-summary.json
+export interface AgentTaskSummary {
+  agent: string;
+  model: string;
+  tasks: Array<{
+    taskId: string;
+    taskName: string;
+    passed: boolean;
+    successRate: number;
+    avgDurationMs: number;
+    avgTokens: number;
+    criteriaTotal: number;
+    criteriaPassed: number;
+  }>;
+  overallPassRate: number;
+  avgDuration: number;
+  avgTokens: number;
+}

@@ -1,0 +1,46 @@
+{
+  "taskName": "Write unit tests for a function",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file calculator.test.js is created",
+          "passed": true,
+          "reasoning": "The file calculator.test.js was successfully created and is present in the workspace."
+        },
+        {
+          "criterion": "Tests cover all four operations",
+          "passed": true,
+          "reasoning": "The test file includes tests for addition (5 + 3), subtraction (10 - 4), multiplication (6 * 7), and division (20 / 4)."
+        },
+        {
+          "criterion": "Tests include division by zero case",
+          "passed": true,
+          "reasoning": "The test file explicitly tests division by zero with assert.strictEqual(calculate('10 / 0'), null)."
+        },
+        {
+          "criterion": "Tests include invalid input cases",
+          "passed": true,
+          "reasoning": "The test file covers multiple invalid input scenarios including non-numbers, wrong format, invalid operators, and edge cases."
+        },
+        {
+          "criterion": "Tests can run with node calculator.test.js without errors",
+          "passed": true,
+          "reasoning": "The test file uses only Node.js built-in assert module, properly imports the calculate function, and ends with a success message indicating all tests should pass."
+        }
+      ],
+      "durationMs": 5544,
+      "exitCode": 0,
+      "output": "  Created: calculator.test.js\nTask completed.\n",
+      "estimatedTokens": 12
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 5544,
+  "avgTokens": 12,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

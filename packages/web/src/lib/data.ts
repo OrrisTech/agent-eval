@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
-import type { AgentSummary, AgentReport } from "./types";
+import type { AgentSummary, AgentReport, AgentTaskSummary } from "./types";
 
 // Resolve the results directory — works both locally and on Vercel
 const RESULTS_DIR =
@@ -32,6 +32,17 @@ export function getAgent(slug: string): AgentReport | null {
   if (!existsSync(reportPath)) return null;
 
   return JSON.parse(readFileSync(reportPath, "utf-8"));
+}
+
+/**
+ * Get task evaluation results for all agents.
+ * Reads from results/task-summary.json.
+ */
+export function getTaskSummary(): AgentTaskSummary[] {
+  const summaryPath = join(RESULTS_DIR, "task-summary.json");
+  if (!existsSync(summaryPath)) return [];
+
+  return JSON.parse(readFileSync(summaryPath, "utf-8"));
 }
 
 /**

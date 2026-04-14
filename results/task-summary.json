@@ -1,0 +1,120 @@
+[
+  {
+    "agent": "haiku",
+    "model": "Claude Haiku 4.5",
+    "tasks": [
+      {
+        "taskId": "01-create-cli-tool",
+        "taskName": "Create a word count CLI",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 3361,
+        "avgTokens": 10,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      },
+      {
+        "taskId": "02-fix-bug",
+        "taskName": "Fix the sorting bug",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 2646,
+        "avgTokens": 9,
+        "criteriaTotal": 3,
+        "criteriaPassed": 3
+      },
+      {
+        "taskId": "03-data-analysis",
+        "taskName": "Analyze CSV sales data",
+        "passed": false,
+        "successRate": 0,
+        "avgDurationMs": 3433,
+        "avgTokens": 11,
+        "criteriaTotal": 4,
+        "criteriaPassed": 3
+      },
+      {
+        "taskId": "04-write-tests",
+        "taskName": "Write unit tests for a function",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 5544,
+        "avgTokens": 12,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "05-refactor-code",
+        "taskName": "Refactor repetitive code",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 2614,
+        "avgTokens": 9,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      }
+    ],
+    "overallPassRate": 0.8,
+    "avgDuration": 3520,
+    "avgTokens": 10
+  },
+  {
+    "agent": "sonnet",
+    "model": "Claude Sonnet 4",
+    "tasks": [
+      {
+        "taskId": "01-create-cli-tool",
+        "taskName": "Create a word count CLI",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 4990,
+        "avgTokens": 10,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      },
+      {
+        "taskId": "02-fix-bug",
+        "taskName": "Fix the sorting bug",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 3510,
+        "avgTokens": 9,
+        "criteriaTotal": 3,
+        "criteriaPassed": 3
+      },
+      {
+        "taskId": "03-data-analysis",
+        "taskName": "Analyze CSV sales data",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 5156,
+        "avgTokens": 11,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      },
+      {
+        "taskId": "04-write-tests",
+        "taskName": "Write unit tests for a function",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 9878,
+        "avgTokens": 12,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "05-refactor-code",
+        "taskName": "Refactor repetitive code",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 4151,
+        "avgTokens": 9,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      }
+    ],
+    "overallPassRate": 1,
+    "avgDuration": 5537,
+    "avgTokens": 10
+  }
+]
