@@ -8,7 +8,7 @@ on:
 
 jobs:
   check:
-    name: Lint, Test, Build
+    name: Lint, Build, Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,11 +26,11 @@ jobs:
       - name: Type check
         run: bun run --filter @agenthunter/eval typecheck
 
-      - name: Test
-        run: bun run --filter @agenthunter/eval test
-
       - name: Build
         run: bun run --filter @agenthunter/eval build
+
+      - name: Test
+        run: bun run --filter @agenthunter/eval test
 
       - name: Verify CLI runs
         run: node packages/agent-eval/dist/cli.js --version
