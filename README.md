@@ -47,7 +47,7 @@ cat agent-eval-report/report.json
 
 ## Benchmark Results
 
-We evaluated 12 popular MCP servers — 11 successfully. [See full results →](docs/blog/mcp-server-benchmark.md)
+We evaluated 12 popular MCP servers. [See full results →](docs/blog/mcp-server-benchmark.md)
 
 | Rank | Server | Score | Tools | Reliability | Category |
 |------|--------|-------|-------|-------------|----------|
@@ -59,9 +59,10 @@ We evaluated 12 popular MCP servers — 11 successfully. [See full results →](
 | 6 | mcp-everything | **75** | 13 | 74% | Reference |
 | 7 | mcp-sequential-thinking | **71** | 1 | 100% | Reasoning |
 | 8 | mcp-filesystem | **68** | 14 | 14% | Filesystem |
-| 9 | mcp-sqlite | **63** | 5 | 10% | Database |
-| 10 | mcp-git | **55** | 15 | 4% | DevTools |
-| 11 | mcp-puppeteer | **47** | 7 | 0% | Browser |
+| 9 | playwright-mcp | **68** | 10 | 30% | Browser |
+| 10 | mcp-sqlite | **63** | 5 | 10% | Database |
+| 11 | mcp-git | **55** | 15 | 4% | DevTools |
+| 12 | mcp-puppeteer | **47** | 7 | 0% | Browser |
 
 Raw evaluation data: [`results/`](results/)
 

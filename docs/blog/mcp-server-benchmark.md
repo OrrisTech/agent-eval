@@ -1,10 +1,10 @@
 ---
-title: "We Benchmarked 11 MCP Servers — Here's What We Found"
+title: "We Benchmarked 12 MCP Servers — Here's What We Found"
 date: 2026-04-14
 author: AgentHunter Eval
 ---
 
-# We Benchmarked 11 MCP Servers — Here's What We Found
+# We Benchmarked 12 MCP Servers — Here's What We Found
 
 The Model Context Protocol (MCP) ecosystem has exploded — over 10,000 servers on the official registry, 97 million monthly SDK downloads. But which MCP servers are actually good?
 
@@ -40,24 +40,25 @@ npx agent-eval run
 | 6 | **mcp-everything** | Reference | **75** | 66 | 74 | 78 | 97 |
 | 7 | **mcp-sequential-thinking** | Reasoning | **71** | 15 | 100 | 100 | 100 |
 | 8 | **mcp-filesystem** | Filesystem | **68** | 73 | 14 | 100 | 100 |
-| 9 | **mcp-sqlite** | Database | **63** | 63 | 10 | 100 | 100 |
-| 10 | **mcp-git** | DevTools | **55** | 40 | 4 | 100 | 98 |
-| 11 | **mcp-puppeteer** | Browser | **47** | 51 | 0 | 50 | 100 |
+| 9 | **playwright-mcp** | Browser | **68** | 62 | 30 | 100 | 100 |
+| 10 | **mcp-sqlite** | Database | **63** | 63 | 10 | 100 | 100 |
+| 11 | **mcp-git** | DevTools | **55** | 40 | 4 | 100 | 98 |
+| 12 | **mcp-puppeteer** | Browser | **47** | 51 | 0 | 50 | 100 |
 
 
 ## Key Findings
 
 ### 1. Reliability varies wildly
 
-Of 11 servers tested, 5 achieved 80%+ reliability. However, 4 server(s) fell below 50%: **mcp-filesystem** (14%), **mcp-sqlite** (10%), **mcp-git** (4%), **mcp-puppeteer** (0%). Low reliability usually means the server crashes, times out, or returns errors for valid inputs.
+Of 12 servers tested, 5 achieved 80%+ reliability. However, 5 server(s) fell below 50%: **mcp-filesystem** (14%), **playwright-mcp** (30%), **mcp-sqlite** (10%), **mcp-git** (4%), **mcp-puppeteer** (0%). Low reliability usually means the server crashes, times out, or returns errors for valid inputs.
 
 ### 2. Efficiency is generally excellent
 
-Average latency across all servers was 517ms. 8/11 servers scored 90+ on efficiency, meaning sub-second response times. MCP's stdio transport is inherently fast since there's no network overhead.
+Average latency across all servers was 491ms. 9/12 servers scored 90+ on efficiency, meaning sub-second response times. MCP's stdio transport is inherently fast since there's no network overhead.
 
 ### 3. Safety scores reveal gaps
 
-8/11 servers scored a perfect 100 on safety. 
+9/12 servers scored a perfect 100 on safety. 
 
 ## Individual Results
 
@@ -141,6 +142,16 @@ Average latency across all servers was 517ms. 8/11 servers scored 90+ on efficie
 - **Avg latency**: 1ms
 - **Breakdown**: Cap 73 | Rel 14 | Eff 100 | Safe 100 | DX 70
 
+### playwright-mcp
+
+- **Category**: Browser
+- **Score**: 68/100
+- **Tools discovered**: 10
+- **Tasks generated**: 20
+- **Success rate**: 30%
+- **Avg latency**: 212ms
+- **Breakdown**: Cap 62 | Rel 30 | Eff 100 | Safe 100 | DX 70
+
 ### mcp-sqlite
 
 - **Category**: Database
@@ -172,12 +183,6 @@ Average latency across all servers was 517ms. 8/11 servers scored 90+ on efficie
 - **Breakdown**: Cap 51 | Rel 0 | Eff 50 | Safe 100 | DX 70
 
 
-
-## Servers That Failed Evaluation
-
-These servers could not be evaluated (connection failures, crashes, or missing dependencies):
-
-- **playwright-mcp** (Browser): Evaluation failed
 
 
 
