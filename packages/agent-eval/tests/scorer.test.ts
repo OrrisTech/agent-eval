@@ -32,6 +32,18 @@ const DEFAULT_WEIGHTS = {
   developer_experience: 0.1,
 };
 
+const MOCK_TOOLS = [
+  {
+    name: "test_tool",
+    description: "A test tool that performs operations",
+    inputSchema: {
+      type: "object",
+      properties: { input: { type: "string", description: "Input value" } },
+      required: ["input"],
+    },
+  },
+];
+
 function makeTaskResult(overrides?: {
   success?: boolean;
   latencyMs?: number;
@@ -75,6 +87,7 @@ describe("scoreResults", () => {
     const results = [makeTaskResult()];
     const scores = await scoreResults(results, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
 
@@ -92,6 +105,7 @@ describe("scoreResults", () => {
     const allSuccess = [makeTaskResult({ success: true })];
     const scoresSuccess = await scoreResults(allSuccess, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
     expect(scoresSuccess.reliability).toBe(100);
@@ -99,6 +113,7 @@ describe("scoreResults", () => {
     const allFail = [makeTaskResult({ success: false })];
     const scoresFail = await scoreResults(allFail, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
     expect(scoresFail.reliability).toBe(0);
@@ -108,6 +123,7 @@ describe("scoreResults", () => {
     const fast = [makeTaskResult({ latencyMs: 100 })];
     const scoresFast = await scoreResults(fast, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
     expect(scoresFast.efficiency).toBe(100); // < 500ms = 100
@@ -115,6 +131,7 @@ describe("scoreResults", () => {
     const slow = [makeTaskResult({ latencyMs: 10000 })];
     const scoresSlow = await scoreResults(slow, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
     expect(scoresSlow.efficiency).toBe(0); // >= 10000ms = 0
@@ -124,6 +141,7 @@ describe("scoreResults", () => {
     const results = [makeTaskResult()];
     const scores = await scoreResults(results, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
 
@@ -139,6 +157,7 @@ describe("scoreResults", () => {
 
     await scoreResults(results, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
       onTaskScored: callback,
     });
@@ -153,10 +172,12 @@ describe("scoreResults", () => {
 
     const scoresBasic = await scoreResults(basicOnly, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
     const scoresAdv = await scoreResults(advancedOnly, {
       apiKey: "test-key",
+      tools: MOCK_TOOLS,
       weights: DEFAULT_WEIGHTS,
     });
 

@@ -88,4 +88,37 @@ describe("AgentEvalConfig schema", () => {
     expect(result.agent.pricing?.model).toBe("per-task");
     expect(result.agent.pricing?.estimated_cost).toBe(0.05);
   });
+
+  it("should accept optional judge config", () => {
+    const input = {
+      agent: {
+        name: "test-agent",
+        protocol: "mcp",
+        endpoint: "npx @test/agent",
+        capabilities: ["general"],
+      },
+      eval: {
+        runs: 10,
+        judge: { model: "claude-haiku-4-5-20251001" },
+      },
+    };
+
+    const result = AgentEvalConfig.parse(input);
+    expect(result.eval.judge?.model).toBe("claude-haiku-4-5-20251001");
+  });
+
+  it("should work without judge config (backward compatible)", () => {
+    const input = {
+      agent: {
+        name: "test-agent",
+        protocol: "mcp",
+        endpoint: "npx @test/agent",
+        capabilities: ["general"],
+      },
+      eval: { runs: 10 },
+    };
+
+    const result = AgentEvalConfig.parse(input);
+    expect(result.eval.judge).toBeUndefined();
+  });
 });

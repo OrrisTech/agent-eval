@@ -43,6 +43,10 @@ export const runCommand = new Command("run")
     "--max-tools <number>",
     "Max tools to evaluate (randomly samples from discovered tools)",
   )
+  .option(
+    "--regenerate-tasks",
+    "Force regeneration of test tasks (ignore cached task set)",
+  )
   .option("--json", "Output results as JSON only")
   .option(
     "-o, --output <dir>",
@@ -71,6 +75,7 @@ export const runCommand = new Command("run")
         tasksPerTool,
         runsPerTask,
         maxTools,
+        regenerateTasks: options.regenerateTasks ?? false,
         outputDir: options.output,
         onProgress: (_step, detail) => {
           spinner.text = detail;

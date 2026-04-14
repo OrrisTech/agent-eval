@@ -15,6 +15,7 @@ export interface EvalReport {
     endpoint: string;
     capabilities: string[];
     evalFrameworkVersion: string;
+    judgeModel: string;
     evaluatedAt: string;
   };
   tools: ToolInfo[];
@@ -61,7 +62,8 @@ export function buildReport(
       protocol: config.agent.protocol,
       endpoint: config.agent.endpoint,
       capabilities: config.agent.capabilities,
-      evalFrameworkVersion: "0.1.0",
+      evalFrameworkVersion: "0.2.0",
+      judgeModel: config.eval.judge?.model ?? "claude-sonnet-4-20250514",
       evaluatedAt: new Date().toISOString(),
     },
     tools,

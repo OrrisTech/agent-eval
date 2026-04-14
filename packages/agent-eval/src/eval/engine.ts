@@ -13,7 +13,9 @@ import {
 } from "../report/generator.js";
 import { executeTasks } from "./executor.js";
 import { scoreResults } from "./scorer.js";
+import type { TestTask } from "./task-generator.js";
 import { generateTasks } from "./task-generator.js";
+import { loadTaskSet, saveTaskSet } from "./task-store.js";
 
 /** Progress callback — receives step name and detail message */
 export type ProgressCallback = (step: string, detail: string) => void;
@@ -26,6 +28,10 @@ export interface EvalOptions {
   runsPerTask?: number;
   /** Max tools to evaluate — for large servers, randomly sample this many tools */
   maxTools?: number;
+  /** Force regeneration of task set even if cached */
+  regenerateTasks?: boolean;
+  /** Base directory for task set storage (defaults to outputDir or cwd) */
+  baseDir?: string;
   outputDir?: string;
   /** Called on each major step for progress reporting */
   onProgress?: ProgressCallback;
@@ -55,6 +61,8 @@ export async function runEvaluation(options: EvalOptions): Promise<EvalResult> {
     tasksPerTool = 3,
     runsPerTask = config.eval.runs,
     maxTools,
+    regenerateTasks = false,
+    baseDir = process.cwd(),
     outputDir,
     onProgress,
   } = options;
@@ -95,17 +103,44 @@ export async function runEvaluation(options: EvalOptions): Promise<EvalResult> {
     throw new Error("No tools found. Nothing to evaluate.");
   }
 
-  // Step 2: Generate test tasks using Claude API
-  // The MCP connection stays open during this step — tested to survive 60s+ idle
-  progress(
-    "generate",
-    `Generating ${tasksPerTool} tasks per tool (${tools.length} tools)...`,
-  );
-  const tasks = await generateTasks(tools, config.agent.capabilities, {
-    tasksPerTool,
-    apiKey,
-  });
-  progress("generate", `Generated ${tasks.length} test tasks`);
+  // Step 2: Load cached tasks or generate new ones
+  const toolNames = tools.map((t) => t.name);
+  let tasks: TestTask[];
+
+  // Try loading cached task set (unless forced to regenerate)
+  const cached = !regenerateTasks
+    ? loadTaskSet(baseDir, config.agent.name, toolNames)
+    : null;
+
+  if (cached) {
+    tasks = cached.tasks;
+    progress(
+      "generate",
+      `Loaded ${tasks.length} cached tasks (v${cached.version})`,
+    );
+  } else {
+    // Generate new tasks via Claude API
+    // The MCP connection stays open during this step — tested to survive 60s+ idle
+    progress(
+      "generate",
+      `Generating ${tasksPerTool} tasks per tool (${tools.length} tools)...`,
+    );
+    tasks = await generateTasks(tools, config.agent.capabilities, {
+      tasksPerTool,
+      apiKey,
+    });
+    const saved = saveTaskSet(
+      baseDir,
+      config.agent.name,
+      toolNames,
+      tasks,
+      config.eval.judge?.model ?? "claude-sonnet-4-20250514",
+    );
+    progress(
+      "generate",
+      `Generated and saved ${tasks.length} tasks (v${saved.version})`,
+    );
+  }
 
   // Step 3: Execute tasks
   const totalRuns = tasks.length * runsPerTask;
@@ -134,7 +169,9 @@ export async function runEvaluation(options: EvalOptions): Promise<EvalResult> {
   };
   const scores = await scoreResults(execution.taskResults, {
     apiKey,
+    tools,
     weights,
+    judgeModel: config.eval.judge?.model,
     onTaskScored: (completed, total) => {
       progress("score", `Scoring tasks... ${completed}/${total}`);
     },

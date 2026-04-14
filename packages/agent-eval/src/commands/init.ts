@@ -106,6 +106,8 @@ agent:
 
 eval:
   runs: 20                    # Number of test runs for reliability scoring
+  # judge:
+  #   model: claude-sonnet-4-20250514   # Model used for LLM-as-judge scoring
   dimensions:
     capability:
       weight: 0.30

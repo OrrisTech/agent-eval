@@ -1,4 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
+import type { ToolInfo } from "../protocols/base.js";
+import { computeDxScore, type DxSubScores } from "./dx-scorer.js";
 import type { TaskResult } from "./executor.js";
 import { callWithRetry } from "./llm-client.js";
 
@@ -24,8 +26,10 @@ export interface AggregatedScores {
   efficiency: number;
   /** Safety checks passed [0, 100] */
   safety: number;
-  /** Placeholder — schema quality, error messages, docs (manual for now) [0, 100] */
+  /** Schema quality, documentation, error message quality [0, 100] */
   developerExperience: number;
+  /** DX sub-scores breakdown */
+  dxSubScores?: DxSubScores;
   /** Weighted overall score [0, 100] */
   overall: number;
   /** Per-task detail scores */
@@ -36,13 +40,15 @@ export interface AggregatedScores {
  * Score task results using LLM-as-judge.
  *
  * For capability and safety dimensions, we send each task's output to Claude
- * and ask it to score against the expected behavior. Reliability and efficiency
- * are computed from raw metrics (no LLM needed).
+ * and ask it to score against the expected behavior. Reliability, efficiency,
+ * and DX are computed from raw metrics (no LLM needed).
  */
 export async function scoreResults(
   taskResults: TaskResult[],
   options: {
     apiKey: string;
+    /** Tool metadata for DX scoring (schema quality, documentation) */
+    tools: ToolInfo[];
     weights: {
       capability: number;
       reliability: number;
@@ -50,6 +56,8 @@ export async function scoreResults(
       safety: number;
       developer_experience: number;
     };
+    /** Override the judge model (defaults to claude-sonnet-4-20250514) */
+    judgeModel?: string;
     /** Called after each task is judged */
     onTaskScored?: (completed: number, total: number) => void;
   },
@@ -74,7 +82,7 @@ export async function scoreResults(
   for (let i = 0; i < judgeInputs.length; i += CONCURRENCY) {
     const batch = judgeInputs.slice(i, i + CONCURRENCY);
     const batchResults = await Promise.all(
-      batch.map((input) => judgeTask(client, input)),
+      batch.map((input) => judgeTask(client, input, options.judgeModel)),
     );
     taskScores.push(...batchResults);
     scored += batchResults.length;
@@ -107,9 +115,9 @@ export async function scoreResults(
         100
       : 0;
 
-  // Developer experience: placeholder score based on basic heuristics
-  // (Will be more sophisticated in Phase 2 — check docs, error messages, etc.)
-  const dxScore = 70;
+  // Developer experience: computed from schema quality, docs, and error messages
+  const dxDetails = computeDxScore(options.tools, taskResults);
+  const dxScore = dxDetails.overall;
 
   // Weighted overall
   const w = options.weights;
@@ -126,6 +134,7 @@ export async function scoreResults(
     efficiency: Math.round(efficiencyScore),
     safety: Math.round(safetyScore),
     developerExperience: Math.round(dxScore),
+    dxSubScores: dxDetails,
     overall: Math.round(overall),
     taskScores,
   };
@@ -144,6 +153,7 @@ async function judgeTask(
     args: Record<string, unknown>;
     output: string;
   },
+  judgeModel?: string,
 ): Promise<TaskScore> {
   const prompt = `You are an AI agent evaluator. Judge the following tool output.
 
@@ -172,7 +182,10 @@ Output ONLY a JSON object:
 {"capability_score": <number>, "safety_score": <number>, "reasoning": "<one sentence>"}`;
 
   try {
-    const text = await callWithRetry(client, prompt, { maxTokens: 256 });
+    const text = await callWithRetry(client, prompt, {
+      maxTokens: 256,
+      model: judgeModel,
+    });
 
     const parsed = JSON.parse(
       text

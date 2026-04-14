@@ -27,6 +27,13 @@ const DEFAULT_DIMENSIONS = {
   developer_experience: { weight: 0.1 },
 };
 
+// Judge configuration for LLM-as-judge scoring
+const JudgeSchema = z
+  .object({
+    model: z.string().default("claude-sonnet-4-20250514"),
+  })
+  .optional();
+
 // Full agent-eval.yaml config schema
 export const AgentEvalConfig = z.object({
   agent: z.object({
@@ -39,6 +46,7 @@ export const AgentEvalConfig = z.object({
   }),
   eval: z.object({
     runs: z.number().int().min(1).default(20),
+    judge: JudgeSchema,
     dimensions: z
       .object({
         capability: DimensionSchema,
