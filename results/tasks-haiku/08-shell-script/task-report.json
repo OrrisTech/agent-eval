@@ -1,0 +1,51 @@
+{
+  "taskName": "Create a backup automation script",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named backup.sh is created",
+          "passed": true,
+          "reasoning": "The file backup.sh exists in the workspace as confirmed by the file listing."
+        },
+        {
+          "criterion": "The script has a proper shebang line (#!/bin/bash)",
+          "passed": true,
+          "reasoning": "The script starts with the correct shebang line '#!/bin/bash'."
+        },
+        {
+          "criterion": "It validates that a source directory argument is provided",
+          "passed": true,
+          "reasoning": "The script checks if no arguments are provided with '[ $# -eq 0 ]' and shows usage information."
+        },
+        {
+          "criterion": "It checks that the source directory exists",
+          "passed": true,
+          "reasoning": "The script validates the source directory exists using '[ ! -d \"$SOURCE_DIR\" ]' and exits with error if not found."
+        },
+        {
+          "criterion": "It creates a timestamped tar.gz archive",
+          "passed": true,
+          "reasoning": "The script generates a timestamp using date command and creates a tar.gz file with the required format 'backup-YYYY-MM-DD-HHMMSS.tar.gz'."
+        },
+        {
+          "criterion": "It handles errors with appropriate exit codes",
+          "passed": true,
+          "reasoning": "The script uses 'exit 1' for all error conditions including missing arguments, non-existent directories, and backup creation failures."
+        }
+      ],
+      "durationMs": 3308,
+      "exitCode": 0,
+      "output": "  Created: backup.sh\nTask completed.\n",
+      "estimatedTokens": 9
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 3308,
+  "avgTokens": 9,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

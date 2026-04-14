@@ -1,0 +1,33 @@
+# Task 8: Generate a shell automation script (DevOps/Automation)
+# Tests: shell scripting, error handling, practical utility
+
+task:
+  name: "Create a backup automation script"
+  description: |
+    Create a bash script called backup.sh that:
+    1. Takes a source directory as the first argument
+    2. Creates a timestamped tar.gz backup in a ./backups/ directory
+    3. The backup filename format should be: backup-YYYY-MM-DD-HHMMSS.tar.gz
+    4. Prints "Backup created: <filename>" on success
+    5. Prints "Error: <message>" and exits with code 1 on failure
+    6. Handles the case where no argument is provided (show usage)
+    7. Handles the case where the source directory doesn't exist
+
+    The script should create the ./backups/ directory if it doesn't exist.
+  success_criteria:
+    - "A file named backup.sh is created"
+    - "The script has a proper shebang line (#!/bin/bash)"
+    - "It validates that a source directory argument is provided"
+    - "It checks that the source directory exists"
+    - "It creates a timestamped tar.gz archive"
+    - "It handles errors with appropriate exit codes"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 60
+  runs: 1

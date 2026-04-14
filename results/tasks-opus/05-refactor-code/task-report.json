@@ -1,0 +1,41 @@
+{
+  "taskName": "Refactor repetitive code",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "The file report.js is modified",
+          "passed": true,
+          "reasoning": "The report.js file has been created/modified with refactored code that differs from the original repetitive implementation."
+        },
+        {
+          "criterion": "A helper function is extracted for table generation",
+          "passed": true,
+          "reasoning": "A new helper function called `generateTable` has been extracted that takes a title and items array to generate HTML tables."
+        },
+        {
+          "criterion": "The three report sections use the helper instead of duplicated code",
+          "passed": true,
+          "reasoning": "The main `generateReport` function now calls `generateTable` three times for sales, inventory, and returns sections instead of repeating the table generation code."
+        },
+        {
+          "criterion": "The refactored code produces the same HTML output as the original",
+          "passed": true,
+          "reasoning": "The helper function generates identical HTML structure with the same headers, table elements, and data formatting as the original code."
+        }
+      ],
+      "durationMs": 6489,
+      "exitCode": 0,
+      "output": "  Created: report.js\nTask completed.\n",
+      "estimatedTokens": 9
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 6489,
+  "avgTokens": 9,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

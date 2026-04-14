@@ -52,10 +52,169 @@
         "avgTokens": 9,
         "criteriaTotal": 4,
         "criteriaPassed": 4
+      },
+      {
+        "taskId": "06-write-email",
+        "taskName": "Write a project delay email",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 4510,
+        "avgTokens": 9,
+        "criteriaTotal": 6,
+        "criteriaPassed": 6
+      },
+      {
+        "taskId": "07-summarize-doc",
+        "taskName": "Summarize a technical document",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 4002,
+        "avgTokens": 10,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "08-shell-script",
+        "taskName": "Create a backup automation script",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 3308,
+        "avgTokens": 9,
+        "criteriaTotal": 6,
+        "criteriaPassed": 6
+      },
+      {
+        "taskId": "09-convert-data",
+        "taskName": "Convert JSON to CSV",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 5786,
+        "avgTokens": 15,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "10-write-readme",
+        "taskName": "Write a project README",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 8701,
+        "avgTokens": 9,
+        "criteriaTotal": 7,
+        "criteriaPassed": 7
       }
     ],
-    "overallPassRate": 0.8,
-    "avgDuration": 3520,
+    "overallPassRate": 0.9,
+    "avgDuration": 4391,
+    "avgTokens": 10
+  },
+  {
+    "agent": "opus",
+    "model": "Claude Opus 4",
+    "tasks": [
+      {
+        "taskId": "01-create-cli-tool",
+        "taskName": "Create a word count CLI",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 6580,
+        "avgTokens": 10,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      },
+      {
+        "taskId": "02-fix-bug",
+        "taskName": "Fix the sorting bug",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 3741,
+        "avgTokens": 9,
+        "criteriaTotal": 3,
+        "criteriaPassed": 3
+      },
+      {
+        "taskId": "03-data-analysis",
+        "taskName": "Analyze CSV sales data",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 6481,
+        "avgTokens": 11,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      },
+      {
+        "taskId": "04-write-tests",
+        "taskName": "Write unit tests for a function",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 12762,
+        "avgTokens": 12,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "05-refactor-code",
+        "taskName": "Refactor repetitive code",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 6489,
+        "avgTokens": 9,
+        "criteriaTotal": 4,
+        "criteriaPassed": 4
+      },
+      {
+        "taskId": "06-write-email",
+        "taskName": "Write a project delay email",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 11561,
+        "avgTokens": 9,
+        "criteriaTotal": 6,
+        "criteriaPassed": 6
+      },
+      {
+        "taskId": "07-summarize-doc",
+        "taskName": "Summarize a technical document",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 9195,
+        "avgTokens": 10,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "08-shell-script",
+        "taskName": "Create a backup automation script",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 6256,
+        "avgTokens": 9,
+        "criteriaTotal": 6,
+        "criteriaPassed": 6
+      },
+      {
+        "taskId": "09-convert-data",
+        "taskName": "Convert JSON to CSV",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 10550,
+        "avgTokens": 15,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "10-write-readme",
+        "taskName": "Write a project README",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 20126,
+        "avgTokens": 9,
+        "criteriaTotal": 7,
+        "criteriaPassed": 7
+      }
+    ],
+    "overallPassRate": 1,
+    "avgDuration": 9374,
     "avgTokens": 10
   },
   {
@@ -111,10 +270,60 @@
         "avgTokens": 9,
         "criteriaTotal": 4,
         "criteriaPassed": 4
+      },
+      {
+        "taskId": "06-write-email",
+        "taskName": "Write a project delay email",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 13262,
+        "avgTokens": 9,
+        "criteriaTotal": 6,
+        "criteriaPassed": 6
+      },
+      {
+        "taskId": "07-summarize-doc",
+        "taskName": "Summarize a technical document",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 8840,
+        "avgTokens": 10,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "08-shell-script",
+        "taskName": "Create a backup automation script",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 5645,
+        "avgTokens": 9,
+        "criteriaTotal": 6,
+        "criteriaPassed": 6
+      },
+      {
+        "taskId": "09-convert-data",
+        "taskName": "Convert JSON to CSV",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 11635,
+        "avgTokens": 15,
+        "criteriaTotal": 5,
+        "criteriaPassed": 5
+      },
+      {
+        "taskId": "10-write-readme",
+        "taskName": "Write a project README",
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 19967,
+        "avgTokens": 9,
+        "criteriaTotal": 7,
+        "criteriaPassed": 7
       }
     ],
     "overallPassRate": 1,
-    "avgDuration": 5537,
+    "avgDuration": 8703,
     "avgTokens": 10
   }
 ]

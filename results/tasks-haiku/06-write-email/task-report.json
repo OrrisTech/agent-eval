@@ -1,0 +1,51 @@
+{
+  "taskName": "Write a project delay email",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named email.txt is created",
+          "passed": true,
+          "reasoning": "The file email.txt was successfully created and contains the email content."
+        },
+        {
+          "criterion": "The email addresses Sarah Chen at Acme Corp",
+          "passed": true,
+          "reasoning": "The email begins with 'Dear Sarah' and mentions 'Acme Corp' in the body, clearly addressing Sarah Chen at the correct company."
+        },
+        {
+          "criterion": "It explains a 2-week delay with the new March 29 deadline",
+          "passed": true,
+          "reasoning": "The email clearly states the project delivery date has been adjusted from March 15 to March 29, 2024, which is a 2-week extension."
+        },
+        {
+          "criterion": "It mentions the third-party API integration issue as the reason",
+          "passed": true,
+          "reasoning": "The email explicitly states the delay is 'Due to unexpected integration issues with a third-party API'."
+        },
+        {
+          "criterion": "It offers weekly progress calls as mitigation",
+          "passed": true,
+          "reasoning": "The email proposes 'scheduling a weekly progress call' and asks about availability for 'weekly check-ins'."
+        },
+        {
+          "criterion": "The tone is professional and apologetic but confident",
+          "passed": true,
+          "reasoning": "The email maintains a professional tone throughout, expresses understanding of the impact while showing confidence in delivering a quality solution."
+        }
+      ],
+      "durationMs": 4510,
+      "exitCode": 0,
+      "output": "  Created: email.txt\nTask completed.\n",
+      "estimatedTokens": 9
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 4510,
+  "avgTokens": 9,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

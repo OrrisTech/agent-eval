@@ -1,0 +1,51 @@
+{
+  "taskName": "Write a project delay email",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named email.txt is created",
+          "passed": true,
+          "reasoning": "The file email.txt was successfully created and contains the email content."
+        },
+        {
+          "criterion": "The email addresses Sarah Chen at Acme Corp",
+          "passed": true,
+          "reasoning": "The email is addressed to 'Dear Sarah' and references 'the software project we are currently developing for Acme Corp.'"
+        },
+        {
+          "criterion": "It explains a 2-week delay with the new March 29 deadline",
+          "passed": true,
+          "reasoning": "The email clearly states the delivery timeline is extended by two weeks with the original March 15 deadline moved to March 29."
+        },
+        {
+          "criterion": "It mentions the third-party API integration issue as the reason",
+          "passed": true,
+          "reasoning": "The email specifically explains the delay is 'due to unexpected integration issues we have encountered with a third-party API that is critical to the project's functionality.'"
+        },
+        {
+          "criterion": "It offers weekly progress calls as mitigation",
+          "passed": true,
+          "reasoning": "The email proposes 'weekly progress calls where we can discuss the current status, address any concerns you may have, and provide detailed updates on our development milestones.'"
+        },
+        {
+          "criterion": "The tone is professional and apologetic but confident",
+          "passed": true,
+          "reasoning": "The email maintains a professional tone throughout, includes sincere apologies for the inconvenience, while confidently explaining the solution and next steps."
+        }
+      ],
+      "durationMs": 13262,
+      "exitCode": 0,
+      "output": "  Created: email.txt\nTask completed.\n",
+      "estimatedTokens": 9
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 13262,
+  "avgTokens": 9,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

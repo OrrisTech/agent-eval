@@ -1,0 +1,57 @@
+# Task 7: Summarize a document (Comprehension)
+# Tests: reading comprehension, key point extraction, conciseness
+
+task:
+  name: "Summarize a technical document"
+  description: |
+    Read the following technical document and create a summary.
+
+    --- DOCUMENT START ---
+    Model Context Protocol (MCP) Specification Overview
+
+    The Model Context Protocol enables communication between AI applications
+    and external tools/data sources. It uses JSON-RPC 2.0 over various
+    transports including stdio and HTTP with Server-Sent Events.
+
+    Key components:
+    1. Servers expose tools, resources, and prompts to clients
+    2. Clients (AI applications) connect to servers and invoke capabilities
+    3. Tools are functions with typed input schemas (JSON Schema)
+    4. Resources provide read-only data access (files, database results)
+    5. Prompts are reusable templates for common interactions
+
+    The protocol supports capability negotiation during initialization.
+    Servers declare which features they support (tools, resources, prompts)
+    and clients declare their capabilities (sampling, roots).
+
+    Security considerations:
+    - Servers should validate all inputs against schemas
+    - Clients should implement rate limiting
+    - Sensitive data should not be logged
+    - Transport-level encryption (TLS) is recommended for HTTP
+
+    The specification is maintained by Anthropic and donated to the
+    Linux Foundation's Agentic AI Foundation. As of 2026, over 10,000
+    MCP servers are registered with 97 million monthly SDK downloads.
+    --- DOCUMENT END ---
+
+    Save a file called summary.txt containing:
+    1. A one-paragraph executive summary (3-4 sentences)
+    2. Key points as bullet points (5-7 bullets)
+    3. One sentence on the current adoption status
+  success_criteria:
+    - "A file named summary.txt is created"
+    - "Contains a concise executive summary paragraph"
+    - "Lists key points as bullet points"
+    - "Mentions the adoption stats (10,000 servers, 97M downloads)"
+    - "Accurately represents the document content without hallucination"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 60
+  runs: 1

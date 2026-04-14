@@ -1,0 +1,46 @@
+{
+  "taskName": "Summarize a technical document",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named summary.txt is created",
+          "passed": true,
+          "reasoning": "The agent successfully created a file named summary.txt as evidenced by its presence in the workspace."
+        },
+        {
+          "criterion": "Contains a concise executive summary paragraph",
+          "passed": true,
+          "reasoning": "The file contains a well-written 3-sentence executive summary paragraph that concisely explains what MCP is and its key characteristics."
+        },
+        {
+          "criterion": "Lists key points as bullet points",
+          "passed": true,
+          "reasoning": "The file includes 7 bullet points under 'Key Points:' that effectively summarize the main aspects of the MCP specification."
+        },
+        {
+          "criterion": "Mentions the adoption stats (10,000 servers, 97M downloads)",
+          "passed": true,
+          "reasoning": "The adoption statistics are accurately mentioned in the final sentence, citing 'over 10,000 registered servers with 97 million monthly SDK downloads.'"
+        },
+        {
+          "criterion": "Accurately represents the document content without hallucination",
+          "passed": true,
+          "reasoning": "All information in the summary directly corresponds to content in the original document with no added or fabricated details."
+        }
+      ],
+      "durationMs": 9195,
+      "exitCode": 0,
+      "output": "  Created: summary.txt\nTask completed.\n",
+      "estimatedTokens": 10
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 9195,
+  "avgTokens": 10,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

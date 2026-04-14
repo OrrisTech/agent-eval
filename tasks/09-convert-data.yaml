@@ -1,0 +1,41 @@
+# Task 9: Convert data between formats (Data Processing)
+# Tests: parsing, transformation, format knowledge
+
+task:
+  name: "Convert JSON to CSV"
+  description: |
+    Create a script called convert.js (Node.js) that converts JSON data
+    to CSV format.
+
+    The input JSON is an array of objects. Example:
+
+    [
+      {"name": "Alice", "age": 30, "city": "New York", "role": "Engineer"},
+      {"name": "Bob", "age": 25, "city": "London", "role": "Designer"},
+      {"name": "Charlie", "age": 35, "city": "Tokyo", "role": "Manager"}
+    ]
+
+    The script should:
+    1. Read from a file path provided as the first argument
+    2. Output CSV to stdout with headers as the first row
+    3. Handle values that contain commas by wrapping in double quotes
+    4. Handle missing values (output empty field)
+    5. Print usage if no argument provided
+
+    Also create a test file called sample.json with the example data above.
+  success_criteria:
+    - "A file named convert.js is created"
+    - "A file named sample.json is created with test data"
+    - "The script reads JSON and outputs CSV format"
+    - "CSV includes a header row derived from object keys"
+    - "The script handles the case where no argument is provided"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 60
+  runs: 1

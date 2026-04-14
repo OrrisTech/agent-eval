@@ -1,0 +1,56 @@
+{
+  "taskName": "Write a project README",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named README.md is created",
+          "passed": true,
+          "reasoning": "The agent successfully created a file named README.md in the workspace."
+        },
+        {
+          "criterion": "Contains a project title and description",
+          "passed": true,
+          "reasoning": "The README includes the project title 'QuickServe' and a clear one-line description 'A lightweight, zero-dependency HTTP file server written in Go for serving static files with ease.'"
+        },
+        {
+          "criterion": "Lists at least 4 features",
+          "passed": true,
+          "reasoning": "The README lists 8 features in the Features section, well exceeding the minimum requirement of 4."
+        },
+        {
+          "criterion": "Includes installation instructions with code blocks",
+          "passed": true,
+          "reasoning": "The Quick Start section includes clear installation instructions with proper code blocks showing the go install command."
+        },
+        {
+          "criterion": "Includes usage examples with code blocks",
+          "passed": true,
+          "reasoning": "The Usage Examples section contains multiple usage scenarios with proper code blocks demonstrating different command options."
+        },
+        {
+          "criterion": "Includes a license section",
+          "passed": true,
+          "reasoning": "The README includes a complete MIT License section with the full license text as required."
+        },
+        {
+          "criterion": "Uses proper markdown formatting (headers, lists, code fences)",
+          "passed": true,
+          "reasoning": "The README demonstrates excellent markdown formatting with proper headers (#, ##), bullet lists with emojis, code fences (```), and a well-formatted configuration table."
+        }
+      ],
+      "durationMs": 20126,
+      "exitCode": 0,
+      "output": "  Created: README.md\nTask completed.\n",
+      "estimatedTokens": 9
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 20126,
+  "avgTokens": 9,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

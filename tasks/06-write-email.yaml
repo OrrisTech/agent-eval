@@ -1,0 +1,32 @@
+# Task 6: Write a professional email (Writing)
+# Tests: tone, structure, completeness, professionalism
+
+task:
+  name: "Write a project delay email"
+  description: |
+    Write a professional email to a client named Sarah Chen at Acme Corp.
+    The email should explain that the software project delivery will be
+    delayed by 2 weeks due to unexpected integration issues with a
+    third-party API. The original deadline was March 15, new deadline is
+    March 29. Offer a weekly progress call as a mitigation measure.
+
+    Save the email to a file called email.txt.
+    Include Subject line, greeting, body, and sign-off.
+    Sign as "James, Project Lead at OrrisTech".
+  success_criteria:
+    - "A file named email.txt is created"
+    - "The email addresses Sarah Chen at Acme Corp"
+    - "It explains a 2-week delay with the new March 29 deadline"
+    - "It mentions the third-party API integration issue as the reason"
+    - "It offers weekly progress calls as mitigation"
+    - "The tone is professional and apologetic but confident"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 60
+  runs: 1

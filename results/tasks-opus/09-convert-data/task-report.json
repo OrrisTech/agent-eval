@@ -1,0 +1,46 @@
+{
+  "taskName": "Convert JSON to CSV",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named convert.js is created",
+          "passed": true,
+          "reasoning": "The file convert.js exists in the workspace with proper Node.js script content."
+        },
+        {
+          "criterion": "A file named sample.json is created with test data",
+          "passed": true,
+          "reasoning": "The file sample.json exists and contains the exact example JSON data specified in the task."
+        },
+        {
+          "criterion": "The script reads JSON and outputs CSV format",
+          "passed": true,
+          "reasoning": "The script reads JSON from a file path argument and outputs CSV format with proper comma-separated values."
+        },
+        {
+          "criterion": "CSV includes a header row derived from object keys",
+          "passed": true,
+          "reasoning": "The script extracts all unique keys from the JSON objects and outputs them as the first row header."
+        },
+        {
+          "criterion": "The script handles the case where no argument is provided",
+          "passed": true,
+          "reasoning": "The script checks if process.argv.length < 3 and prints usage information before exiting with error code 1."
+        }
+      ],
+      "durationMs": 10550,
+      "exitCode": 0,
+      "output": "  Created: convert.js\n  Created: sample.json\nTask completed.\n",
+      "estimatedTokens": 15
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 10550,
+  "avgTokens": 15,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

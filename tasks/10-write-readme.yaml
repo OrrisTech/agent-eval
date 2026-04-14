@@ -1,0 +1,40 @@
+# Task 10: Write a README (Documentation)
+# Tests: structure, completeness, markdown formatting, technical writing
+
+task:
+  name: "Write a project README"
+  description: |
+    Write a README.md file for a fictional open-source project called
+    "quickserve" — a lightweight HTTP file server written in Go.
+
+    The README should include:
+    1. Project title and one-line description
+    2. Features list (at least 4 features)
+    3. Quick start / installation section with code blocks
+    4. Usage examples with code blocks
+    5. Configuration options (port, directory, etc.)
+    6. License section (MIT)
+
+    The project URL is github.com/example/quickserve.
+    Installation is via: go install github.com/example/quickserve@latest
+    Basic usage: quickserve --port 8080 --dir ./public
+
+    Make it look professional with proper markdown formatting.
+  success_criteria:
+    - "A file named README.md is created"
+    - "Contains a project title and description"
+    - "Lists at least 4 features"
+    - "Includes installation instructions with code blocks"
+    - "Includes usage examples with code blocks"
+    - "Includes a license section"
+    - "Uses proper markdown formatting (headers, lists, code fences)"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 60
+  runs: 1

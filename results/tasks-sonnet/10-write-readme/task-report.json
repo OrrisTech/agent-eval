@@ -1,0 +1,56 @@
+{
+  "taskName": "Write a project README",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named README.md is created",
+          "passed": true,
+          "reasoning": "The agent successfully created a file named README.md in the workspace."
+        },
+        {
+          "criterion": "Contains a project title and description",
+          "passed": true,
+          "reasoning": "The README includes the title 'QuickServe' and a clear one-line description 'A lightweight, fast HTTP file server written in Go for quick static file serving and development.'"
+        },
+        {
+          "criterion": "Lists at least 4 features",
+          "passed": true,
+          "reasoning": "The README lists 8 features including Lightning Fast, Directory Browsing, Zero Configuration, Cross Platform, Mobile Friendly, Security Focused, Custom Error Pages, and Request Logging."
+        },
+        {
+          "criterion": "Includes installation instructions with code blocks",
+          "passed": true,
+          "reasoning": "The Quick Start section includes installation instructions using properly formatted code blocks with the go install command."
+        },
+        {
+          "criterion": "Includes usage examples with code blocks",
+          "passed": true,
+          "reasoning": "The README contains multiple usage examples with code blocks, including basic usage, React/Vue.js serving, logging, and production mode examples."
+        },
+        {
+          "criterion": "Includes a license section",
+          "passed": true,
+          "reasoning": "The README includes a dedicated License section stating the project is licensed under the MIT License."
+        },
+        {
+          "criterion": "Uses proper markdown formatting (headers, lists, code fences)",
+          "passed": true,
+          "reasoning": "The README uses proper markdown formatting including headers (#, ##), bullet lists, code fences (```), tables, and emojis for enhanced presentation."
+        }
+      ],
+      "durationMs": 19967,
+      "exitCode": 0,
+      "output": "  Created: README.md\nTask completed.\n",
+      "estimatedTokens": 9
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 19967,
+  "avgTokens": 9,
+  "totalRuns": 1,
+  "totalPassed": 1
+}
