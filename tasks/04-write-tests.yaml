@@ -1,0 +1,52 @@
+# Task 4: Write tests (Testing)
+# Tests: test design, edge case coverage, working assertions
+
+task:
+  name: "Write unit tests for a function"
+  description: |
+    There is a file called calculator.js in the current directory:
+
+    ```javascript
+    function calculate(expression) {
+      const parts = expression.split(' ');
+      if (parts.length !== 3) return null;
+
+      const a = parseFloat(parts[0]);
+      const op = parts[1];
+      const b = parseFloat(parts[2]);
+
+      if (isNaN(a) || isNaN(b)) return null;
+
+      switch (op) {
+        case '+': return a + b;
+        case '-': return a - b;
+        case '*': return a * b;
+        case '/': return b === 0 ? null : a / b;
+        default: return null;
+      }
+    }
+    module.exports = { calculate };
+    ```
+
+    Write a test file called calculator.test.js using Node.js assert module
+    (no external dependencies). Cover:
+    - Basic operations (+, -, *, /)
+    - Division by zero
+    - Invalid input (non-numbers, wrong format)
+    - Edge cases (negative numbers, decimals)
+  success_criteria:
+    - "A file calculator.test.js is created"
+    - "Tests cover all four operations"
+    - "Tests include division by zero case"
+    - "Tests include invalid input cases"
+    - "Tests can run with node calculator.test.js without errors"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 120
+  runs: 1

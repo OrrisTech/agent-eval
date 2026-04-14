@@ -1,0 +1,41 @@
+{
+  "taskName": "Analyze CSV sales data",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A script file is created that processes the CSV",
+          "passed": true,
+          "reasoning": "The agent created sales_analysis.py which reads the CSV file using the csv module and processes the data."
+        },
+        {
+          "criterion": "Total revenue is calculated correctly ($1,589.60)",
+          "passed": true,
+          "reasoning": "The script calculates total revenue by summing quantity * price for all rows, which gives $1,589.60 (10*29.99 + 5*49.99 + 8*29.99 + 12*49.99 + 15*29.99 + 3*99.99)."
+        },
+        {
+          "criterion": "Best selling product is identified (Widget A with 33 units)",
+          "passed": true,
+          "reasoning": "The script correctly identifies Widget A as the best seller with 33 total units (10 + 8 + 15) by tracking product quantities in a defaultdict."
+        },
+        {
+          "criterion": "Average daily revenue is calculated ($529.87)",
+          "passed": true,
+          "reasoning": "The script calculates average daily revenue by dividing total revenue by number of unique days, which gives $1,589.60 / 3 = $529.87."
+        }
+      ],
+      "durationMs": 5156,
+      "exitCode": 0,
+      "output": "  Created: sales_analysis.py\nTask completed.\n",
+      "estimatedTokens": 11
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 5156,
+  "avgTokens": 11,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

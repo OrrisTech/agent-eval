@@ -1,0 +1,40 @@
+# Task 2: Fix a bug (Debugging)
+# Tests: code comprehension, bug identification, correct fix
+
+task:
+  name: "Fix the sorting bug"
+  description: |
+    There is a file called sort.py in the current directory with a bug.
+    The function is supposed to sort a list of numbers in ascending order,
+    but it returns them in descending order.
+
+    Fix the bug so the function sorts correctly in ascending order.
+    Do not rewrite the function — just fix the bug.
+
+    Contents of sort.py:
+    ```python
+    def sort_numbers(numbers):
+        for i in range(len(numbers)):
+            for j in range(i + 1, len(numbers)):
+                if numbers[i] < numbers[j]:  # BUG: should be >
+                    numbers[i], numbers[j] = numbers[j], numbers[i]
+        return numbers
+
+    if __name__ == "__main__":
+        result = sort_numbers([3, 1, 4, 1, 5, 9, 2, 6])
+        print(result)
+    ```
+  success_criteria:
+    - "The file sort.py is modified"
+    - "The comparison operator is changed from < to >"
+    - "Running sort.py produces [1, 1, 2, 3, 4, 5, 6, 9]"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 60
+  runs: 1

@@ -1,0 +1,72 @@
+# Task 5: Refactor code (Code Quality)
+# Tests: code comprehension, refactoring ability, maintaining behavior
+
+task:
+  name: "Refactor repetitive code"
+  description: |
+    There is a file called report.js in the current directory with repetitive code:
+
+    ```javascript
+    function generateReport(data) {
+      let html = '<html><body>';
+
+      html += '<h2>Sales Report</h2>';
+      html += '<table>';
+      html += '<tr><th>Name</th><th>Amount</th><th>Status</th></tr>';
+      for (const item of data.sales) {
+        html += '<tr>';
+        html += '<td>' + item.name + '</td>';
+        html += '<td>' + item.amount + '</td>';
+        html += '<td>' + item.status + '</td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+
+      html += '<h2>Inventory Report</h2>';
+      html += '<table>';
+      html += '<tr><th>Name</th><th>Amount</th><th>Status</th></tr>';
+      for (const item of data.inventory) {
+        html += '<tr>';
+        html += '<td>' + item.name + '</td>';
+        html += '<td>' + item.amount + '</td>';
+        html += '<td>' + item.status + '</td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+
+      html += '<h2>Returns Report</h2>';
+      html += '<table>';
+      html += '<tr><th>Name</th><th>Amount</th><th>Status</th></tr>';
+      for (const item of data.returns) {
+        html += '<tr>';
+        html += '<td>' + item.name + '</td>';
+        html += '<td>' + item.amount + '</td>';
+        html += '<td>' + item.status + '</td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+
+      html += '</body></html>';
+      return html;
+    }
+    module.exports = { generateReport };
+    ```
+
+    Refactor this code to eliminate the repetition. Extract the repeated
+    table-generation logic into a helper function. The output HTML should
+    remain identical.
+  success_criteria:
+    - "The file report.js is modified"
+    - "A helper function is extracted for table generation"
+    - "The three report sections use the helper instead of duplicated code"
+    - "The refactored code produces the same HTML output as the original"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 120
+  runs: 1

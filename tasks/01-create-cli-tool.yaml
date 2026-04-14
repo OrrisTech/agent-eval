@@ -1,0 +1,29 @@
+# Task 1: Create a CLI tool (Coding)
+# Tests: code generation, file creation, argument handling
+
+task:
+  name: "Create a word count CLI"
+  description: |
+    Create a Node.js CLI script called wordcount.js that:
+    1. Takes a file path as a command-line argument
+    2. Reads the file
+    3. Counts the number of words, lines, and characters
+    4. Prints the result in format: "Lines: X, Words: Y, Characters: Z"
+
+    The script should handle the case where no argument is provided
+    by printing "Usage: node wordcount.js <file>".
+  success_criteria:
+    - "A file named wordcount.js is created"
+    - "The script is valid JavaScript or TypeScript that can run with Node.js"
+    - "Running the script with a text file produces word/line/character counts"
+    - "Running without arguments shows a usage message"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 120
+  runs: 1

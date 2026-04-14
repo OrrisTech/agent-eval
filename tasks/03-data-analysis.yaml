@@ -1,0 +1,40 @@
+# Task 3: Analyze data (Data Analysis)
+# Tests: data processing, computation, formatted output
+
+task:
+  name: "Analyze CSV sales data"
+  description: |
+    There is a file called sales.csv in the current directory with this content:
+
+    date,product,quantity,price
+    2026-01-01,Widget A,10,29.99
+    2026-01-01,Widget B,5,49.99
+    2026-01-02,Widget A,8,29.99
+    2026-01-02,Widget B,12,49.99
+    2026-01-03,Widget A,15,29.99
+    2026-01-03,Widget C,3,99.99
+
+    Write a script (any language) that reads this CSV and outputs:
+    1. Total revenue (sum of quantity * price for all rows)
+    2. Best selling product by quantity
+    3. Average daily revenue
+
+    Output format:
+    Total Revenue: $X.XX
+    Best Seller: Product Name (XX units)
+    Avg Daily Revenue: $X.XX
+  success_criteria:
+    - "A script file is created that processes the CSV"
+    - "Total revenue is calculated correctly ($1,589.60)"
+    - "Best selling product is identified (Widget A with 33 units)"
+    - "Average daily revenue is calculated ($529.87)"
+
+agent:
+  type: cli
+  command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
+  args: ["{{description}}"]
+  workdir: "/tmp/agent-eval-workspace"
+
+eval:
+  timeout: 120
+  runs: 1

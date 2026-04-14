@@ -1,0 +1,41 @@
+{
+  "taskName": "Create a word count CLI",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named wordcount.js is created",
+          "passed": true,
+          "reasoning": "The file wordcount.js was created and is present in the workspace."
+        },
+        {
+          "criterion": "The script is valid JavaScript or TypeScript that can run with Node.js",
+          "passed": true,
+          "reasoning": "The script uses valid Node.js JavaScript syntax with proper require statements, file system operations, and process handling."
+        },
+        {
+          "criterion": "Running the script with a text file produces word/line/character counts",
+          "passed": true,
+          "reasoning": "The script reads files, counts lines by splitting on newlines, counts words by splitting on whitespace and filtering empty strings, counts characters using string length, and outputs in the required format."
+        },
+        {
+          "criterion": "Running without arguments shows a usage message",
+          "passed": true,
+          "reasoning": "The script checks if process.argv.length is less than 3 and prints the exact required usage message when no file argument is provided."
+        }
+      ],
+      "durationMs": 4990,
+      "exitCode": 0,
+      "output": "  Created: wordcount.js\nTask completed.\n",
+      "estimatedTokens": 10
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 4990,
+  "avgTokens": 10,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

@@ -11,7 +11,13 @@
  */
 
 import { type ExecFileSyncOptions, execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+} from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
 import type { TaskEvalConfig } from "../config/task-schema.js";
 import { callWithRetry } from "./llm-client.js";
@@ -113,12 +119,30 @@ export async function runTaskEvaluation(options: {
 
     const durationMs = Math.round(performance.now() - start);
 
-    // Step 4: List workspace files for context
+    // Step 4: List workspace files and read small file contents for judge context
     let workspaceFiles = "";
     try {
       const files = listFilesRecursive(workdir);
       if (files.length > 0) {
-        workspaceFiles = `\nFiles created in workspace:\n${files.join("\n")}`;
+        workspaceFiles = "\n\nFiles in workspace:";
+        for (const file of files) {
+          if (file.endsWith("/")) {
+            workspaceFiles += `\n  [dir] ${file}`;
+            continue;
+          }
+          workspaceFiles += `\n  ${file}`;
+          // Read small files so the judge can see their content
+          try {
+            const fullPath = `${workdir}/${file}`;
+            const stat = statSync(fullPath);
+            if (stat.size < 5000) {
+              const content = readFileSync(fullPath, "utf-8");
+              workspaceFiles += `\n--- Content of ${file} ---\n${content}\n--- End of ${file} ---`;
+            }
+          } catch {
+            // Skip unreadable files
+          }
+        }
       }
     } catch {
       // Workspace may not exist
