@@ -24,8 +24,8 @@ For each server, we:
 All evaluation code is [open source](https://github.com/OrrisTech/agent-eval). You can reproduce these results yourself:
 
 ```bash
-npx agent-eval init
-npx agent-eval run
+npx @agenthunter/eval init
+npx @agenthunter/eval run
 ```
 
 ## Rankings
@@ -215,7 +215,7 @@ echo 'agent:
 eval:
   runs: 3' > agent-eval.yaml
 
-ANTHROPIC_API_KEY=your-key npx agent-eval run
+ANTHROPIC_API_KEY=your-key npx @agenthunter/eval run
 ```
 
 ## What's Next

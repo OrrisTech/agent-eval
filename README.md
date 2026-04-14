@@ -6,10 +6,10 @@
 
 ```bash
 # Initialize config for your agent
-npx agent-eval init
+npx @agenthunter/eval init
 
 # Run evaluation
-ANTHROPIC_API_KEY=your-key npx agent-eval run
+ANTHROPIC_API_KEY=your-key npx @agenthunter/eval run
 
 # View results
 cat agent-eval-report/report.json

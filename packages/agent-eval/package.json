@@ -1,18 +1,30 @@
 {
-  "name": "agent-eval",
+  "name": "@agenthunter/eval",
   "version": "0.1.0",
   "description": "Open-source AI agent evaluation framework — benchmark MCP servers, A2A agents, and API-first agent services",
   "type": "module",
   "bin": {
-    "agent-eval": "./dist/cli.js"
+    "agent-eval": "./dist/cli.js",
+    "agenthunter": "./dist/cli.js"
   },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "biome check src/",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "ai-agent",
@@ -20,9 +32,24 @@
     "benchmark",
     "mcp",
     "a2a",
-    "agent-eval"
+    "agent-eval",
+    "agenthunter",
+    "llm",
+    "model-context-protocol"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OrrisTech/agent-eval"
+  },
+  "homepage": "https://github.com/OrrisTech/agent-eval",
+  "bugs": {
+    "url": "https://github.com/OrrisTech/agent-eval/issues"
+  },
+  "author": "AgentHunter",
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.88.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
