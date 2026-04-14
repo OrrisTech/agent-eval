@@ -33,7 +33,13 @@ export function RadarChart({
   const polygon = points.map((p) => p.join(",")).join(" ");
 
   return (
-    <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="w-full max-w-[280px]">
+    <svg
+      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      className="w-full max-w-[280px]"
+      role="img"
+      aria-label={`Score radar: ${DIMENSIONS.map((d) => `${d.label} ${scores[d.key] ?? 0}%`).join(", ")}`}
+    >
+      <title>Agent score dimensions</title>
       {/* Background rings */}
       {Array.from({ length: LEVELS }, (_, level) => {
         const r = (RADIUS * (level + 1)) / LEVELS;

@@ -3,15 +3,48 @@
 :root {
   --color-bg: #0a1628;
   --color-surface: #111d33;
+  --color-surface-hover: #162240;
   --color-border: #1e3050;
   --color-accent: #00d4ff;
   --color-accent-dim: #0891b2;
   --color-text: #e2e8f0;
-  --color-text-dim: #94a3b8;
+  --color-text-dim: #a0aec0;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Score bar fill animation — grows from 0 to target width on mount */
+@keyframes grow-bar {
+  from {
+    width: 0;
+  }
+}
+
+.score-bar-fill {
+  animation: grow-bar 0.6s ease-out;
+}
+
+/* Hero background glow */
+.hero-glow {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 0%,
+    rgba(0, 212, 255, 0.06) 0%,
+    transparent 70%
+  );
+}
+
+/* Card shadow on hover */
+.card-hover {
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+.card-hover:hover {
+  box-shadow: 0 4px 24px rgba(0, 212, 255, 0.06);
+  border-color: rgba(0, 212, 255, 0.15);
 }

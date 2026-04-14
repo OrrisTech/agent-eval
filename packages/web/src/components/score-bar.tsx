@@ -29,7 +29,7 @@ export function ScoreBar({
       </span>
       <div className="flex-1 h-3 rounded-full bg-[var(--color-border)] overflow-hidden">
         <div
-          className={`h-full rounded-full ${color} transition-all duration-500`}
+          className={`h-full rounded-full ${color} score-bar-fill`}
           style={{ width: `${score}%` }}
         />
       </div>

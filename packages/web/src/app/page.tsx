@@ -9,26 +9,28 @@ export default function HomePage() {
   return (
     <div className="space-y-12">
       {/* Hero */}
-      <section className="py-12 text-center">
-        <h1 className="text-4xl font-bold mb-4">
+      <section className="py-16 text-center hero-glow">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
           AI Agent{" "}
           <span className="text-[var(--color-accent)]">Evaluation</span>
         </h1>
-        <p className="text-lg text-[var(--color-text-dim)] max-w-2xl mx-auto mb-6">
+        <p className="text-lg text-[var(--color-text-dim)] max-w-2xl mx-auto mb-8">
           Independent evaluation platform for AI agents and their tools.
           Task completion scoring for agents. Quality benchmarks for MCP
           servers.
         </p>
-        <div className="flex justify-center gap-4 text-sm">
+        <div className="flex flex-col sm:flex-row justify-center gap-3 text-sm">
           <a
             href="https://www.npmjs.com/package/@agenthunter/eval"
-            className="px-4 py-2 rounded-lg bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold hover:opacity-90 transition"
+            className="px-6 py-3 rounded-lg bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold hover:shadow-lg hover:shadow-cyan-500/20 hover:scale-105 transition-all min-h-[44px] flex items-center justify-center"
           >
             npx @agenthunter/eval task
           </a>
           <a
             href="https://github.com/OrrisTech/agent-eval"
-            className="px-4 py-2 rounded-lg border border-[var(--color-border)] text-[var(--color-text-dim)] hover:text-white hover:border-white/30 transition"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 rounded-lg border border-[var(--color-border)] text-[var(--color-text-dim)] hover:text-white hover:border-white/30 transition-all min-h-[44px] flex items-center justify-center"
           >
             View Source
           </a>
@@ -58,7 +60,7 @@ export default function HomePage() {
           {agents.length} MCP servers benchmarked across capability,
           reliability, efficiency, safety, and developer experience.
         </p>
-        <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+        <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 card-hover">
           <RankingTable agents={agents} />
         </div>
         <p className="text-xs text-[var(--color-text-dim)] mt-3">
@@ -90,7 +92,7 @@ function TaskComparisonTable({
     sorted[0]?.tasks.map((t) => t.taskName) ?? [];
 
   return (
-    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 overflow-x-auto">
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 card-hover overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">

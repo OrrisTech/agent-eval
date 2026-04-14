@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { AgentSummary } from "@/lib/types";
 import { ScoreBadge } from "./score-badge";
@@ -11,14 +11,18 @@ export function RankingTable({ agents }: { agents: AgentSummary[] }) {
   const [sortKey, setSortKey] = useState<SortKey>("score");
   const [sortAsc, setSortAsc] = useState(false);
 
-  const sorted = [...agents].sort((a, b) => {
-    const aVal = a[sortKey];
-    const bVal = b[sortKey];
-    if (typeof aVal === "number" && typeof bVal === "number") {
-      return sortAsc ? aVal - bVal : bVal - aVal;
-    }
-    return String(aVal).localeCompare(String(bVal)) * (sortAsc ? 1 : -1);
-  });
+  const sorted = useMemo(
+    () =>
+      [...agents].sort((a, b) => {
+        const aVal = a[sortKey];
+        const bVal = b[sortKey];
+        if (typeof aVal === "number" && typeof bVal === "number") {
+          return sortAsc ? aVal - bVal : bVal - aVal;
+        }
+        return String(aVal).localeCompare(String(bVal)) * (sortAsc ? 1 : -1);
+      }),
+    [agents, sortKey, sortAsc],
+  );
 
   function handleSort(key: SortKey) {
     if (key === sortKey) {
@@ -41,19 +45,30 @@ export function RankingTable({ agents }: { agents: AgentSummary[] }) {
     { key: "successRate", label: "Success" },
   ];
 
+  function ariaSort(key: SortKey): "ascending" | "descending" | "none" {
+    if (sortKey !== key) return "none";
+    return sortAsc ? "ascending" : "descending";
+  }
+
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
+      <table className="w-full text-sm" role="grid">
         <thead>
           <tr className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">
             <th className="py-3 px-2 text-left w-8">#</th>
             {columns.map((col) => (
               <th
                 key={col.key}
-                className={`py-3 px-2 text-left cursor-pointer hover:text-white select-none ${
+                role="columnheader"
+                aria-sort={ariaSort(col.key)}
+                tabIndex={0}
+                className={`py-3 px-2 text-left cursor-pointer hover:text-white select-none transition-colors ${
                   col.hideOnMobile ? "hidden md:table-cell" : ""
                 }`}
                 onClick={() => handleSort(col.key)}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && handleSort(col.key)
+                }
               >
                 {col.label}
                 {sortKey === col.key && (
@@ -67,10 +82,16 @@ export function RankingTable({ agents }: { agents: AgentSummary[] }) {
           {sorted.map((agent, i) => (
             <tr
               key={agent.name}
-              className="border-b border-[var(--color-border)]/50 hover:bg-[var(--color-surface)] transition-colors"
+              className="border-b border-[var(--color-border)]/50 hover:bg-[var(--color-surface)] hover:shadow-sm transition-all"
             >
               <td className="py-3 px-2 text-[var(--color-text-dim)]">
-                {i + 1}
+                {i < 3 ? (
+                  <span className="font-bold text-[var(--color-accent)]">
+                    {i + 1}
+                  </span>
+                ) : (
+                  i + 1
+                )}
               </td>
               <td className="py-3 px-2">
                 <ScoreBadge score={agent.score} />

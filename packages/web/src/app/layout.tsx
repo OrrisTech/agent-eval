@@ -1,20 +1,26 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import "./globals.css";
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: {
-    default: "AgentHunter Eval — MCP Server Benchmarks",
+    default: "AgentHunter Eval — AI Agent Evaluation",
     template: "%s | AgentHunter Eval",
   },
   description:
-    "Independent benchmarks for MCP servers. Scored across capability, reliability, efficiency, safety, and developer experience.",
+    "Independent AI agent evaluation platform. Task completion scoring for agents. Quality benchmarks for MCP servers.",
   openGraph: {
-    title: "AgentHunter Eval — MCP Server Benchmarks",
+    title: "AgentHunter Eval — AI Agent Evaluation",
     description:
-      "Independent benchmarks for MCP servers. Scored across capability, reliability, efficiency, safety, and developer experience.",
+      "Independent AI agent evaluation platform. Task completion scoring for agents. Quality benchmarks for MCP servers.",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
   },
 };
 
@@ -24,10 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen flex flex-col">
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <Nav />
-        <main className="flex-1 mx-auto w-full max-w-6xl px-6 py-8">
+        <main className="flex-1 mx-auto w-full max-w-6xl px-4 sm:px-6 py-8">
           {children}
         </main>
         <Footer />
