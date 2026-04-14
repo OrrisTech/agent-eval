@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllAgents, getTaskSummary } from "@/lib/data";
 import { RankingTable } from "@/components/ranking-table";
 import type { AgentTaskSummary } from "@/lib/types";
@@ -87,9 +88,8 @@ function TaskComparisonTable({
       a.avgDuration - b.avgDuration,
   );
 
-  // Collect all unique task names in order
-  const taskNames =
-    sorted[0]?.tasks.map((t) => t.taskName) ?? [];
+  // Collect all unique tasks in order
+  const tasks = sorted[0]?.tasks ?? [];
 
   return (
     <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 card-hover overflow-x-auto">
@@ -99,15 +99,20 @@ function TaskComparisonTable({
             <th className="py-3 px-3 text-left">Agent</th>
             <th className="py-3 px-3 text-left">Pass Rate</th>
             <th className="py-3 px-3 text-left">Avg Time</th>
-            {taskNames.map((name) => (
+            {tasks.map((t) => (
               <th
-                key={name}
+                key={t.taskId}
                 className="py-3 px-2 text-center hidden lg:table-cell"
-                title={name}
               >
-                {name.length > 15
-                  ? `${name.slice(0, 13)}...`
-                  : name}
+                <Link
+                  href={`/task/${t.taskId}`}
+                  className="hover:text-[var(--color-accent)] transition-colors"
+                  title={t.taskName}
+                >
+                  {t.taskName.length > 15
+                    ? `${t.taskName.slice(0, 13)}...`
+                    : t.taskName}
+                </Link>
               </th>
             ))}
           </tr>

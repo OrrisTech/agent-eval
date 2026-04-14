@@ -19,7 +19,7 @@ program
   .description(
     "Open-source AI agent evaluation platform — evaluate agents on real tasks, benchmark tools on quality",
   )
-  .version("0.3.0");
+  .version("0.3.1");
 
 // Primary commands
 program.addCommand(taskCommand);
