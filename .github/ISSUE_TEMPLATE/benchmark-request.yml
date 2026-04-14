@@ -1,0 +1,82 @@
+name: Request MCP Server Benchmark
+description: Submit your MCP server to be benchmarked by AgentHunter Eval
+title: "[Benchmark] "
+labels: ["benchmark-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for submitting your MCP server for benchmarking! We'll evaluate it across 5 dimensions: Capability, Reliability, Efficiency, Safety, and Developer Experience.
+
+  - type: input
+    id: server-name
+    attributes:
+      label: Server Name
+      description: The name of your MCP server
+      placeholder: e.g. my-awesome-mcp-server
+    validations:
+      required: true
+
+  - type: input
+    id: npm-package
+    attributes:
+      label: npm Package
+      description: The npm package name (must be installable via npx)
+      placeholder: e.g. @scope/my-server or my-server
+    validations:
+      required: true
+
+  - type: input
+    id: startup-command
+    attributes:
+      label: Startup Command
+      description: The full command to start the server via stdio
+      placeholder: e.g. npx -y @scope/my-server --some-flag
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Filesystem
+        - Database
+        - Web / HTTP
+        - Browser Automation
+        - Search
+        - Memory / Knowledge
+        - DevTools
+        - Productivity
+        - Utilities
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: capabilities
+    attributes:
+      label: Capabilities
+      description: What does your server do? List the main capabilities.
+      placeholder: |
+        - file-operations
+        - code-analysis
+    validations:
+      required: true
+
+  - type: textarea
+    id: setup
+    attributes:
+      label: Setup Requirements
+      description: Any setup needed before running (e.g. environment variables, databases, files to create). Leave blank if none.
+      placeholder: |
+        Requires SOME_API_KEY environment variable
+        OR
+        No setup needed
+
+  - type: input
+    id: repo-url
+    attributes:
+      label: Repository URL
+      description: Link to the source code (optional)
+      placeholder: https://github.com/your-org/your-server

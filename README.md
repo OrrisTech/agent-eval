@@ -1,5 +1,9 @@
 # agent-eval
 
+[![npm version](https://img.shields.io/npm/v/@agenthunter/eval)](https://www.npmjs.com/package/@agenthunter/eval)
+[![CI](https://github.com/OrrisTech/agent-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/OrrisTech/agent-eval/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 **The credit rating agency for AI agents.** Open-source evaluation framework for benchmarking MCP servers, A2A agents, and API-first agent services.
 
 ## Quick Start
@@ -72,14 +76,25 @@ Raw evaluation data: [`results/`](results/)
 - **A2A** — coming in Phase 2
 - **REST API** — coming in Phase 2
 
+## Contributing
+
+We welcome contributions! Here are some ways to help:
+
+- **Submit your MCP server** — [open a Benchmark Request](https://github.com/OrrisTech/agent-eval/issues/new?template=benchmark-request.yml)
+- **Add servers** — PR to `scripts/servers.json`
+- **Build adapters** — A2A and REST protocol adapters needed
+- **Improve scoring** — better DX heuristics, multi-model judge support
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
+
 ## Development
 
 ```bash
 git clone https://github.com/OrrisTech/agent-eval
 cd agent-eval
 bun install
-bun run --filter agent-eval build
-bun run --filter agent-eval test
+bun run --filter @agenthunter/eval build
+bun run --filter @agenthunter/eval test   # 65 tests
 ```
 
 ## License

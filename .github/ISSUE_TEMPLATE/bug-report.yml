@@ -1,0 +1,51 @@
+name: Bug Report
+description: Report an issue with agent-eval
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug clearly.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this?
+      placeholder: |
+        1. Created agent-eval.yaml with...
+        2. Ran `npx @agenthunter/eval run`
+        3. Got error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: agent-eval.yaml
+      description: Paste your config (remove any API keys)
+      render: yaml
+
+  - type: textarea
+    id: error
+    attributes:
+      label: Error output
+      description: Paste the full error message
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `npx @agenthunter/eval --version`
+      placeholder: "0.2.0"
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version
+      placeholder: "22.14.0"
