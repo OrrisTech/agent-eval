@@ -112,17 +112,17 @@ Output looks like this:
 
 ## Caveats
 
-- **LLM non-determinism**: Scores vary ±5 points between runs because both task generation and judging use Claude. Deterministic task sets are coming in v0.2.
+- ~~**LLM non-determinism**~~: **Fixed in v0.2.0** — tasks are now cached after first generation. Subsequent runs reuse the same tasks for reproducible scores. Use `--regenerate-tasks` to force new tasks.
 - **Auto-generated tasks**: The framework generates test tasks from tool schemas. For tools that need real-world context (file systems with actual files, databases with actual data), reliability scores will be lower than real-world usage.
-- **DX score is a placeholder**: Developer Experience is scored at a flat 70 for now. Proper DX evaluation (docs quality, error message helpfulness) is coming.
-- **Single model judge**: Using Claude to judge Claude-generated tasks has inherent bias. Multi-model judging is on the roadmap.
+- ~~**DX score is a placeholder**~~: **Fixed in v0.2.0** — DX now scores schema quality (typed properties, descriptions), documentation (meaningful tool descriptions), and error messages (informative vs empty) automatically. No more flat 70.
+- **Single model judge**: Using Claude to judge Claude-generated tasks has inherent bias. v0.2.0 adds `eval.judge.model` config to switch models. Multi-provider judging is on the roadmap.
 
 ## What's next
 
 - **A2A protocol support** — evaluate Google's Agent-to-Agent servers
-- **Deterministic task sets** — curated test suites per category
 - **Web dashboard** — browse rankings at eval.agenthunter.io
 - **Continuous monitoring** — track score changes over time
+- **Multi-provider judging** — use GPT-4o, Gemini, or multiple models as judges
 
 The framework is fully open source: **[github.com/OrrisTech/agent-eval](https://github.com/OrrisTech/agent-eval)**
 
