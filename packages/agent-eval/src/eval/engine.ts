@@ -24,6 +24,8 @@ export interface EvalOptions {
   apiKey: string;
   tasksPerTool?: number;
   runsPerTask?: number;
+  /** Max tools to evaluate — for large servers, randomly sample this many tools */
+  maxTools?: number;
   outputDir?: string;
   /** Called on each major step for progress reporting */
   onProgress?: ProgressCallback;
@@ -52,6 +54,7 @@ export async function runEvaluation(options: EvalOptions): Promise<EvalResult> {
     apiKey,
     tasksPerTool = 3,
     runsPerTask = config.eval.runs,
+    maxTools,
     outputDir,
     onProgress,
   } = options;
@@ -74,7 +77,18 @@ export async function runEvaluation(options: EvalOptions): Promise<EvalResult> {
     throw err;
   }
 
-  progress("discover", `Discovered ${tools.length} tool(s)`);
+  // If maxTools is set, sample a subset to keep evaluation time reasonable
+  const allToolCount = tools.length;
+  if (maxTools && tools.length > maxTools) {
+    // Keep a diverse sample: first few + random from the rest
+    const shuffled = [...tools].sort(() => Math.random() - 0.5);
+    tools = shuffled.slice(0, maxTools);
+  }
+
+  progress(
+    "discover",
+    `Discovered ${allToolCount} tool(s)${maxTools && allToolCount > maxTools ? `, evaluating ${tools.length}` : ""}`,
+  );
 
   if (tools.length === 0) {
     await adapter.disconnect().catch(() => {});

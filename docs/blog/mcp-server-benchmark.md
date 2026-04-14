@@ -1,10 +1,10 @@
 ---
-title: "We Benchmarked 9 MCP Servers — Here's What We Found"
-date: 2026-04-13
+title: "We Benchmarked 11 MCP Servers — Here's What We Found"
+date: 2026-04-14
 author: AgentHunter Eval
 ---
 
-# We Benchmarked 9 MCP Servers — Here's What We Found
+# We Benchmarked 11 MCP Servers — Here's What We Found
 
 The Model Context Protocol (MCP) ecosystem has exploded — over 10,000 servers on the official registry, 97 million monthly SDK downloads. But which MCP servers are actually good?
 
@@ -33,29 +33,31 @@ npx agent-eval run
 | Rank | Server | Category | Score | Capability | Reliability | Efficiency | Safety |
 |------|--------|----------|-------|------------|-------------|------------|--------|
 | 1 🥇 | **context7** | Search | **89** | 83 | 100 | 87 | 100 |
-| 2 🥈 | **mcp-memory** | Memory | **82** | 63 | 93 | 100 | 89 |
-| 3 🥉 | **notion-mcp** | Productivity | **82** | 55 | 97 | 98 | 100 |
-| 4 | **mcp-datetime** | Utilities | **81** | 70 | 73 | 100 | 100 |
-| 5 | **mcp-everything** | Reference | **75** | 66 | 74 | 78 | 97 |
-| 6 | **mcp-sequential-thinking** | Reasoning | **71** | 15 | 100 | 100 | 100 |
-| 7 | **mcp-filesystem** | Filesystem | **68** | 73 | 14 | 100 | 100 |
-| 8 | **mcp-git** | DevTools | **55** | 40 | 4 | 100 | 98 |
-| 9 | **mcp-puppeteer** | Browser | **47** | 51 | 0 | 50 | 100 |
+| 2 🥈 | **mcp-fetch** | Web | **86** | 73 | 90 | 99 | 100 |
+| 3 🥉 | **mcp-memory** | Memory | **82** | 63 | 93 | 100 | 89 |
+| 4 | **notion-mcp** | Productivity | **82** | 55 | 97 | 98 | 100 |
+| 5 | **mcp-datetime** | Utilities | **81** | 70 | 73 | 100 | 100 |
+| 6 | **mcp-everything** | Reference | **75** | 66 | 74 | 78 | 97 |
+| 7 | **mcp-sequential-thinking** | Reasoning | **71** | 15 | 100 | 100 | 100 |
+| 8 | **mcp-filesystem** | Filesystem | **68** | 73 | 14 | 100 | 100 |
+| 9 | **mcp-sqlite** | Database | **63** | 63 | 10 | 100 | 100 |
+| 10 | **mcp-git** | DevTools | **55** | 40 | 4 | 100 | 98 |
+| 11 | **mcp-puppeteer** | Browser | **47** | 51 | 0 | 50 | 100 |
 
 
 ## Key Findings
 
 ### 1. Reliability varies wildly
 
-Of 9 servers tested, 4 achieved 80%+ reliability. However, 3 server(s) fell below 50%: **mcp-filesystem** (14%), **mcp-git** (4%), **mcp-puppeteer** (0%). Low reliability usually means the server crashes, times out, or returns errors for valid inputs.
+Of 11 servers tested, 5 achieved 80%+ reliability. However, 4 server(s) fell below 50%: **mcp-filesystem** (14%), **mcp-sqlite** (10%), **mcp-git** (4%), **mcp-puppeteer** (0%). Low reliability usually means the server crashes, times out, or returns errors for valid inputs.
 
 ### 2. Efficiency is generally excellent
 
-Average latency across all servers was 560ms. 6/9 servers scored 90+ on efficiency, meaning sub-second response times. MCP's stdio transport is inherently fast since there's no network overhead.
+Average latency across all servers was 517ms. 8/11 servers scored 90+ on efficiency, meaning sub-second response times. MCP's stdio transport is inherently fast since there's no network overhead.
 
 ### 3. Safety scores reveal gaps
 
-6/9 servers scored a perfect 100 on safety. 
+8/11 servers scored a perfect 100 on safety. 
 
 ## Individual Results
 
@@ -68,6 +70,16 @@ Average latency across all servers was 560ms. 6/9 servers scored 90+ on efficien
 - **Success rate**: 100%
 - **Avg latency**: 1756ms
 - **Breakdown**: Cap 83 | Rel 100 | Eff 87 | Safe 100 | DX 70
+
+### mcp-fetch
+
+- **Category**: Web
+- **Score**: 86/100
+- **Tools discovered**: 5
+- **Tasks generated**: 10
+- **Success rate**: 90%
+- **Avg latency**: 640ms
+- **Breakdown**: Cap 73 | Rel 90 | Eff 99 | Safe 100 | DX 70
 
 ### mcp-memory
 
@@ -129,6 +141,16 @@ Average latency across all servers was 560ms. 6/9 servers scored 90+ on efficien
 - **Avg latency**: 1ms
 - **Breakdown**: Cap 73 | Rel 14 | Eff 100 | Safe 100 | DX 70
 
+### mcp-sqlite
+
+- **Category**: Database
+- **Score**: 63/100
+- **Tools discovered**: 5
+- **Tasks generated**: 10
+- **Success rate**: 10%
+- **Avg latency**: 1ms
+- **Breakdown**: Cap 63 | Rel 10 | Eff 100 | Safe 100 | DX 70
+
 ### mcp-git
 
 - **Category**: DevTools
@@ -155,9 +177,7 @@ Average latency across all servers was 560ms. 6/9 servers scored 90+ on efficien
 
 These servers could not be evaluated (connection failures, crashes, or missing dependencies):
 
-- **mcp-fetch** (Web): No report generated
-- **mcp-sqlite** (Database): No report generated
-- **playwright-mcp** (Browser): No report generated
+- **playwright-mcp** (Browser): Evaluation failed
 
 
 
@@ -199,4 +219,4 @@ We're expanding to evaluate A2A agents and REST API agents. If you'd like your M
 
 ---
 
-*Evaluations run on 2026-04-13 using agent-eval v0.1.0. Scores may vary between runs due to LLM non-determinism. Full raw data available in the [results directory](https://github.com/OrrisTech/agent-eval/tree/main/results).*
+*Evaluations run on 2026-04-14 using agent-eval v0.1.0. Scores may vary between runs due to LLM non-determinism. Full raw data available in the [results directory](https://github.com/OrrisTech/agent-eval/tree/main/results).*

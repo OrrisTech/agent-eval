@@ -39,6 +39,10 @@ export const runCommand = new Command("run")
     "Number of test tasks to generate per tool",
     "5",
   )
+  .option(
+    "--max-tools <number>",
+    "Max tools to evaluate (randomly samples from discovered tools)",
+  )
   .option("--json", "Output results as JSON only")
   .option(
     "-o, --output <dir>",
@@ -55,6 +59,9 @@ export const runCommand = new Command("run")
         ? Number.parseInt(options.runs, 10)
         : config.eval.runs;
       const tasksPerTool = Number.parseInt(options.tasksPerTool, 10);
+      const maxTools = options.maxTools
+        ? Number.parseInt(options.maxTools, 10)
+        : undefined;
 
       // Run evaluation with spinner progress
       const spinner = ora().start();
@@ -63,6 +70,7 @@ export const runCommand = new Command("run")
         apiKey,
         tasksPerTool,
         runsPerTask,
+        maxTools,
         outputDir: options.output,
         onProgress: (_step, detail) => {
           spinner.text = detail;

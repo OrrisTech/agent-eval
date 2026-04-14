@@ -54,7 +54,8 @@
     "package": "@playwright/mcp",
     "endpoint": "npx -y @playwright/mcp --headless",
     "capabilities": ["browser-automation"],
-    "category": "Browser"
+    "category": "Browser",
+    "maxTools": 10
   },
   {
     "name": "mcp-puppeteer",
@@ -73,7 +74,7 @@
   {
     "name": "mcp-sqlite",
     "package": "@berthojoris/mcp-sqlite-server",
-    "endpoint": "npx -y @berthojoris/mcp-sqlite-server /tmp/agent-eval-sandbox/test.db",
+    "endpoint": "npx -y mcp-sqlite-server /tmp/agent-eval-sandbox/test.db",
     "capabilities": ["database-operations"],
     "category": "Database"
   },

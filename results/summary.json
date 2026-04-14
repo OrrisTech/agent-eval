@@ -15,6 +15,21 @@
     "status": "success"
   },
   {
+    "name": "mcp-fetch",
+    "category": "Web",
+    "score": 86,
+    "capability": 73,
+    "reliability": 90,
+    "efficiency": 99,
+    "safety": 100,
+    "dx": 70,
+    "tools": 5,
+    "tasks": 10,
+    "successRate": 90,
+    "avgLatencyMs": 640,
+    "status": "success"
+  },
+  {
     "name": "mcp-memory",
     "category": "Memory",
     "score": 82,
@@ -105,6 +120,21 @@
     "status": "success"
   },
   {
+    "name": "mcp-sqlite",
+    "category": "Database",
+    "score": 63,
+    "capability": 63,
+    "reliability": 10,
+    "efficiency": 100,
+    "safety": 100,
+    "dx": 70,
+    "tools": 5,
+    "tasks": 10,
+    "successRate": 10,
+    "avgLatencyMs": 1,
+    "status": "success"
+  },
+  {
     "name": "mcp-git",
     "category": "DevTools",
     "score": 55,
@@ -135,38 +165,6 @@
     "status": "success"
   },
   {
-    "name": "mcp-fetch",
-    "category": "Web",
-    "score": 0,
-    "capability": 0,
-    "reliability": 0,
-    "efficiency": 0,
-    "safety": 0,
-    "dx": 0,
-    "tools": 0,
-    "tasks": 0,
-    "successRate": 0,
-    "avgLatencyMs": 0,
-    "status": "failed",
-    "error": "No report generated"
-  },
-  {
-    "name": "mcp-sqlite",
-    "category": "Database",
-    "score": 0,
-    "capability": 0,
-    "reliability": 0,
-    "efficiency": 0,
-    "safety": 0,
-    "dx": 0,
-    "tools": 0,
-    "tasks": 0,
-    "successRate": 0,
-    "avgLatencyMs": 0,
-    "status": "failed",
-    "error": "No report generated"
-  },
-  {
     "name": "playwright-mcp",
     "category": "Browser",
     "score": 0,
@@ -180,6 +178,6 @@
     "successRate": 0,
     "avgLatencyMs": 0,
     "status": "failed",
-    "error": "No report generated"
+    "error": "Evaluation failed"
   }
 ]

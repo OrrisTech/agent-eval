@@ -47,15 +47,21 @@ cat agent-eval-report/report.json
 
 ## Benchmark Results
 
-We evaluated 12 popular MCP servers. [See full results →](docs/blog/mcp-server-benchmark.md)
+We evaluated 12 popular MCP servers — 11 successfully. [See full results →](docs/blog/mcp-server-benchmark.md)
 
-| Rank | Server | Score | Reliability |
-|------|--------|-------|-------------|
-| 🥇 | mcp-sequential-thinking | **77** | 100% |
-| 🥈 | mcp-datetime | **75** | 73% |
-| 🥉 | context7 | **73** | 100% |
-| 4 | mcp-everything | **68** | 77% |
-| 5 | mcp-filesystem | **62** | 14% |
+| Rank | Server | Score | Tools | Reliability | Category |
+|------|--------|-------|-------|-------------|----------|
+| 🥇 | context7 | **89** | 2 | 100% | Search |
+| 🥈 | mcp-fetch | **86** | 5 | 90% | Web |
+| 🥉 | mcp-memory | **82** | 9 | 93% | Memory |
+| 4 | notion-mcp | **82** | 22 | 97% | Productivity |
+| 5 | mcp-datetime | **81** | 10 | 73% | Utilities |
+| 6 | mcp-everything | **75** | 13 | 74% | Reference |
+| 7 | mcp-sequential-thinking | **71** | 1 | 100% | Reasoning |
+| 8 | mcp-filesystem | **68** | 14 | 14% | Filesystem |
+| 9 | mcp-sqlite | **63** | 5 | 10% | Database |
+| 10 | mcp-git | **55** | 15 | 4% | DevTools |
+| 11 | mcp-puppeteer | **47** | 7 | 0% | Browser |
 
 Raw evaluation data: [`results/`](results/)
 

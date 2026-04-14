@@ -30,6 +30,7 @@ interface ServerConfig {
   category: string;
   setup?: string;
   note?: string;
+  maxTools?: number;
 }
 
 interface EvalSummary {
@@ -124,6 +125,7 @@ for (let i = 0; i < toRun.length; i++) {
       apiKey,
       tasksPerTool,
       runsPerTask,
+      maxTools: server.maxTools,
       outputDir: serverResultDir,
       onProgress: (_step, detail) => {
         // Minimal progress output for batch mode

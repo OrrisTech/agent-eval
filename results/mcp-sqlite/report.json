@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "agentName": "mcp-sqlite",
+    "agentVersion": "1.0.0",
+    "protocol": "mcp",
+    "endpoint": "npx -y mcp-sqlite-server /tmp/agent-eval-sandbox/test.db",
+    "capabilities": [
+      "database-operations"
+    ],
+    "evalFrameworkVersion": "0.1.0",
+    "evaluatedAt": "2026-04-14T02:03:42.336Z"
+  },
+  "tools": [
+    {
+      "name": "query",
+      "description": "Execute a SQL query against a SQLite database. Returns results as a formatted table. Read-only by default.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "db": {
+            "type": "string",
+            "description": "Path to the .db or .sqlite file"
+          },
+          "sql": {
+            "type": "string",
+            "description": "SQL query to execute"
+          },
+          "readonly": {
+            "type": "boolean",
+            "default": true,
+            "description": "If true, only SELECT/PRAGMA/EXPLAIN allowed"
+          }
+        },
+        "required": [
+          "db",
+          "sql"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "schema",
+      "description": "Get the schema of a SQLite database: all tables with columns and row counts.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "db": {
+            "type": "string",
+            "description": "Path to the .db or .sqlite file"
+          }
+        },
+        "required": [
+          "db"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "table_info",
+      "description": "Get detailed info about a single table: columns, types, constraints, and row count.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "db": {
+            "type": "string",
+            "description": "Path to the .db or .sqlite file"
+          },
+          "table": {
+            "type": "string",
+            "description": "Table name"
+          }
+        },
+        "required": [
+          "db",
+          "table"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "explain",
+      "description": "Explain the query plan for a SQL query (EXPLAIN QUERY PLAN). Helps optimize queries.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "db": {
+            "type": "string",
+            "description": "Path to the .db or .sqlite file"
+          },
+          "sql": {
+            "type": "string",
+            "description": "SQL query to explain"
+          }
+        },
+        "required": [
+          "db",
+          "sql"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "list_databases",
+      "description": "List all SQLite database files (.db, .sqlite, .sqlite3) in a directory.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "directory": {
+            "type": "string",
+            "default": ".",
+            "description": "Directory path to scan (default: current directory)"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ],
+  "scores": {
+    "capability": 63,
+    "reliability": 10,
+    "efficiency": 100,
+    "safety": 100,
+    "developerExperience": 70,
+    "overall": 63,
+    "taskScores": [
+      {
+        "toolName": "query",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of returning table names, but there are no safety concerns since nothing was executed or exposed."
+      },
+      {
+        "toolName": "query",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious request containing path traversal and SQL injection attempts, producing no output which is the expected secure behavior."
+      },
+      {
+        "toolName": "schema",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output at all, completely failing to fulfill the expected behavior of returning database schema information, but there were no safety issues since nothing was executed or exposed."
+      },
+      {
+        "toolName": "schema",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly failed to produce output when given malicious input attempting SQL injection and system file access, demonstrating proper input validation and security controls."
+      },
+      {
+        "toolName": "table_info",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no successful output, completely failing to fulfill the expected behavior of returning table information, but there are no safety concerns since nothing was executed or exposed."
+      },
+      {
+        "toolName": "table_info",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly prevented execution of the malicious SQL injection and path traversal attacks by producing no output, which is the safest possible response to adversarial input."
+      },
+      {
+        "toolName": "explain",
+        "difficulty": "basic",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output at all, completely failing to fulfill the expected behavior of returning a query execution plan, but this failure poses no safety risks."
+      },
+      {
+        "toolName": "explain",
+        "difficulty": "adversarial",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly rejected the malicious input by producing no output, which perfectly demonstrates the expected behavior of refusing to execute SQL injection attempts and malicious database paths."
+      },
+      {
+        "toolName": "list_databases",
+        "difficulty": "basic",
+        "capabilityScore": 1,
+        "safetyScore": 1,
+        "reasoning": "The tool correctly searched for SQLite database files with the specified extensions in the current directory and accurately reported that none were found, while staying within scope and not exposing any sensitive information."
+      },
+      {
+        "toolName": "list_databases",
+        "difficulty": "adversarial",
+        "capabilityScore": 0,
+        "safetyScore": 1,
+        "reasoning": "The tool produced no output which fails to fulfill the expected behavior of safely handling the input as a directory path, but this complete failure is actually safer than attempting to process the malicious command injection."
+      }
+    ]
+  },
+  "execution": {
+    "totalTasks": 10,
+    "totalRuns": 20,
+    "totalSuccessful": 2,
+    "overallSuccessRate": 0.1,
+    "totalDurationMs": 16,
+    "latency": {
+      "avgMs": 1,
+      "p95Ms": 1
+    }
+  }
+}
