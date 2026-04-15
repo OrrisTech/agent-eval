@@ -1,6 +1,6 @@
 {
   "taskName": "Summarize a technical document",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,37 +9,37 @@
         {
           "criterion": "A file named summary.txt is created",
           "passed": true,
-          "reasoning": "The agent successfully created a file named summary.txt as evidenced by its presence in the workspace."
+          "reasoning": "The workspace shows summary.txt was created and its contents are displayed."
         },
         {
           "criterion": "Contains a concise executive summary paragraph",
           "passed": true,
-          "reasoning": "The file contains a well-written 3-sentence executive summary paragraph that concisely explains what MCP is and its key characteristics."
+          "reasoning": "The file includes a clearly labeled 'Executive Summary' section with 3 sentences covering the protocol's purpose, architecture, and security features."
         },
         {
           "criterion": "Lists key points as bullet points",
           "passed": true,
-          "reasoning": "The file includes 7 bullet points under 'Key Points:' that effectively summarize the main aspects of the MCP specification."
+          "reasoning": "The file contains a 'Key Points' section with 7 bullet points covering transport, capabilities, security, and governance."
         },
         {
           "criterion": "Mentions the adoption stats (10,000 servers, 97M downloads)",
           "passed": true,
-          "reasoning": "The adoption statistics are accurately mentioned in the final sentence, citing 'over 10,000 registered servers with 97 million monthly SDK downloads.'"
+          "reasoning": "The 'Adoption Status' section explicitly states 'over 10,000 registered servers and 97 million monthly SDK downloads' as of 2026."
         },
         {
           "criterion": "Accurately represents the document content without hallucination",
           "passed": true,
-          "reasoning": "All information in the summary directly corresponds to content in the original document with no added or fabricated details."
+          "reasoning": "All statements in the summary are directly supported by the source document with no fabricated details or misrepresentations."
         }
       ],
-      "durationMs": 9195,
+      "durationMs": 8822,
       "exitCode": 0,
       "output": "  Created: summary.txt\nTask completed.\n",
       "estimatedTokens": 10
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 9195,
+  "avgDurationMs": 8822,
   "avgTokens": 10,
   "totalRuns": 1,
   "totalPassed": 1

@@ -1,6 +1,6 @@
 {
   "taskName": "Write a project README",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,47 +9,47 @@
         {
           "criterion": "A file named README.md is created",
           "passed": true,
-          "reasoning": "The agent successfully created a file named README.md in the workspace."
+          "reasoning": "The workspace shows README.md was created and its contents are visible."
         },
         {
           "criterion": "Contains a project title and description",
           "passed": true,
-          "reasoning": "The README includes the project title 'quickserve' and a clear one-line description 'A lightweight, fast HTTP file server written in Go.'"
+          "reasoning": "The README begins with '# quickserve' as the title and provides a one-line description: 'A lightweight, fast HTTP file server written in Go with minimal dependencies and zero configuration needed to get started.'"
         },
         {
           "criterion": "Lists at least 4 features",
           "passed": true,
-          "reasoning": "The Features section lists 7 features including 'Blazingly Fast', 'Cross-Platform', 'Simple Configuration', 'Directory Browsing', 'CORS Support', 'Gzip Compression', and 'Range Requests'."
+          "reasoning": "The Features section lists 8 features including Blazingly Fast, Zero Dependencies, Directory Browsing, CORS Support, Custom Port & Directory, Range Requests, GZIP Compression, and TLS/HTTPS."
         },
         {
           "criterion": "Includes installation instructions with code blocks",
           "passed": true,
-          "reasoning": "The Quick Start section includes installation instructions with properly formatted code blocks using the specified command 'go install github.com/example/quickserve@latest'."
+          "reasoning": "The Quick Start section includes installation via 'go install github.com/example/quickserve@latest' and source build instructions, both wrapped in fenced code blocks."
         },
         {
           "criterion": "Includes usage examples with code blocks",
           "passed": true,
-          "reasoning": "The Usage Examples section provides multiple examples with properly formatted code blocks showing various ways to run the quickserve command."
+          "reasoning": "The Usage Examples section provides multiple examples with fenced bash code blocks, including basic usage, HTTPS, CORS, and custom host examples."
         },
         {
           "criterion": "Includes a license section",
           "passed": true,
-          "reasoning": "The README includes a comprehensive License section with the full MIT License text as requested."
+          "reasoning": "The README includes a License section at the bottom specifying MIT License, though the content appears truncated in the output."
         },
         {
           "criterion": "Uses proper markdown formatting (headers, lists, code fences)",
           "passed": true,
-          "reasoning": "The document uses proper markdown formatting including headers (#, ##), bullet points, code fences (```), tables, and other markdown elements throughout."
+          "reasoning": "The README uses proper markdown including H1/H2/H3 headers, bullet lists with bold text, fenced code blocks with language tags, and a formatted table for configuration options."
         }
       ],
-      "durationMs": 8701,
+      "durationMs": 8731,
       "exitCode": 0,
       "output": "  Created: README.md\nTask completed.\n",
       "estimatedTokens": 9
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 8701,
+  "avgDurationMs": 8731,
   "avgTokens": 9,
   "totalRuns": 1,
   "totalPassed": 1

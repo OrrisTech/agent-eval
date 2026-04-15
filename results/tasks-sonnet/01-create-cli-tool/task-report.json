@@ -1,6 +1,6 @@
 {
   "taskName": "Create a word count CLI",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,32 +9,32 @@
         {
           "criterion": "A file named wordcount.js is created",
           "passed": true,
-          "reasoning": "The file wordcount.js was created and is present in the workspace."
+          "reasoning": "The workspace contains a file named wordcount.js as shown in the file listing."
         },
         {
           "criterion": "The script is valid JavaScript or TypeScript that can run with Node.js",
           "passed": true,
-          "reasoning": "The script uses valid Node.js JavaScript syntax with proper require statements, file system operations, and process handling."
+          "reasoning": "The script uses valid Node.js syntax with require('fs'), process.argv, and fs.readFile, which are standard Node.js APIs."
         },
         {
           "criterion": "Running the script with a text file produces word/line/character counts",
           "passed": true,
-          "reasoning": "The script reads files, counts lines by splitting on newlines, counts words by splitting on whitespace and filtering empty strings, counts characters using string length, and outputs in the required format."
+          "reasoning": "The script reads the file, splits by newline for lines, splits by whitespace for words, and uses data.length for characters, then prints them in the required format 'Lines: X, Words: Y, Characters: Z'."
         },
         {
           "criterion": "Running without arguments shows a usage message",
           "passed": true,
-          "reasoning": "The script checks if process.argv.length is less than 3 and prints the exact required usage message when no file argument is provided."
+          "reasoning": "When args.length === 0, the script prints 'Usage: node wordcount.js <file>' as required."
         }
       ],
-      "durationMs": 4990,
+      "durationMs": 3949,
       "exitCode": 0,
       "output": "  Created: wordcount.js\nTask completed.\n",
       "estimatedTokens": 10
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 4990,
+  "avgDurationMs": 3949,
   "avgTokens": 10,
   "totalRuns": 1,
   "totalPassed": 1

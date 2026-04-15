@@ -1,46 +1,46 @@
 {
   "taskName": "Write unit tests for a function",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
-      "success": true,
+      "success": false,
       "criteriaResults": [
         {
           "criterion": "A file calculator.test.js is created",
           "passed": true,
-          "reasoning": "The file calculator.test.js was created and contains comprehensive unit tests."
+          "reasoning": "The file calculator.test.js is listed in the workspace files with full content shown."
         },
         {
           "criterion": "Tests cover all four operations",
           "passed": true,
-          "reasoning": "The test file includes test cases for addition (+), subtraction (-), multiplication (*), and division (/) operations."
+          "reasoning": "The test file includes tests for addition, subtraction, multiplication, and division operations."
         },
         {
           "criterion": "Tests include division by zero case",
           "passed": true,
-          "reasoning": "The test file explicitly tests division by zero with cases like '10 / 0' and '0 / 0', both expecting null return values."
+          "reasoning": "There are three division by zero tests including '5 / 0', '-10 / 0', and '0 / 0' all expecting null."
         },
         {
           "criterion": "Tests include invalid input cases",
           "passed": true,
-          "reasoning": "The test file covers multiple invalid input scenarios including non-numbers, wrong format expressions, invalid operators, and edge cases."
+          "reasoning": "The test file covers non-numeric operands, unknown operators, empty strings, wrong number of parts, and no-space expressions."
         },
         {
           "criterion": "Tests can run with node calculator.test.js without errors",
-          "passed": true,
-          "reasoning": "The test file uses Node.js assert module correctly and includes proper require statements, making it executable with the node command."
+          "passed": false,
+          "reasoning": "The file content is truncated mid-test (the last test for '-3 + -7' is incomplete with no closing braces), suggesting the file may be malformed and would cause a syntax error when run."
         }
       ],
-      "durationMs": 9878,
+      "durationMs": 14578,
       "exitCode": 0,
       "output": "  Created: calculator.test.js\nTask completed.\n",
       "estimatedTokens": 12
     }
   ],
-  "successRate": 1,
-  "avgDurationMs": 9878,
+  "successRate": 0,
+  "avgDurationMs": 14578,
   "avgTokens": 12,
   "totalRuns": 1,
-  "totalPassed": 1
+  "totalPassed": 0
 }

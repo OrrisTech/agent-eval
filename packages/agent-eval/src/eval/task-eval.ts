@@ -17,6 +17,7 @@ import {
   readdirSync,
   readFileSync,
   statSync,
+  writeFileSync,
 } from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
 import type { TaskEvalConfig } from "../config/task-schema.js";
@@ -80,8 +81,14 @@ export async function runTaskEvaluation(options: {
     }
 
     // Step 2: Build the agent command
+    // Write description to a temp file to avoid shell escaping issues with
+    // multi-line descriptions containing backticks, quotes, and code blocks
+    const descFile = `${workdir}/.task-description.txt`;
+    writeFileSync(descFile, config.task.description, "utf-8");
     const agentArgs = config.agent.args.map((arg) =>
-      arg.replace("{{description}}", config.task.description),
+      arg
+        .replace("{{description}}", config.task.description)
+        .replace("{{description_file}}", descFile),
     );
 
     // Step 3: Execute the agent

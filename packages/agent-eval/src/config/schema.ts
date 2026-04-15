@@ -30,7 +30,7 @@ const DEFAULT_DIMENSIONS = {
 // Judge configuration for LLM-as-judge scoring
 const JudgeSchema = z
   .object({
-    model: z.string().default("claude-sonnet-4-20250514"),
+    model: z.string().default("claude-sonnet-4-6"),
   })
   .optional();
 

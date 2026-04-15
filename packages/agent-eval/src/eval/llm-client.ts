@@ -15,7 +15,7 @@ export async function callWithRetry(
     maxTokens?: number;
   },
 ): Promise<string> {
-  const model = options?.model ?? "claude-sonnet-4-20250514";
+  const model = options?.model ?? "claude-sonnet-4-6";
   const maxTokens = options?.maxTokens ?? 2048;
 
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {

@@ -1,7 +1,7 @@
 ---
-title: "Sonnet vs Haiku vs Opus: I Tested 3 Claude Models on 10 Real Tasks"
+title: "Sonnet 4.6 vs Haiku 4.5 vs Opus 4.6: I Tested 3 Claude Models on 10 Real Tasks"
 published: false
-description: I used an open-source eval framework to test Claude Sonnet 4, Haiku 4.5, and Opus 4 on 10 standardized tasks — coding, writing, data analysis, and more. Here's what I found.
+description: I used an open-source eval framework to test the latest Claude models — Sonnet 4.6, Haiku 4.5, and Opus 4.6 — on 10 standardized tasks. Only one model passed all 10.
 tags: ai, llm, claude, benchmarks
 canonical_url: https://github.com/OrrisTech/agent-eval
 cover_image:
@@ -9,108 +9,80 @@ cover_image:
 
 *Evaluated on April 15, 2026 using [AgentHunter Eval](https://eval.agenthunter.io) v0.3.1*
 
-Which Claude model should you use for your agent? I tested all three on the same 10 tasks to find out.
-
-## Setup
-
-I built [agent-eval](https://github.com/OrrisTech/agent-eval), an open-source tool that evaluates AI agents on real tasks. Each task has:
-- A description (what to do)
-- Success criteria (how to judge if it's done)
-- An LLM judge that evaluates the output
-
-Each model received the exact same tasks, same prompts, same judge. The only variable is the model.
+Which Claude model should you use for your agent? I tested the latest versions of all three on the same 10 tasks to find out.
 
 ## Results
 
 | Model | Tasks Passed | Avg Time | Cost Tier |
 |-------|-------------|----------|-----------|
-| **Claude Sonnet 4** | **10/10** | 8.7s | $$ |
-| **Claude Opus 4** | **10/10** | 9.4s | $$$$ |
-| **Claude Haiku 4.5** | **9/10** | 4.4s | $ |
+| **Claude Opus 4.6** | **10/10** | 9.4s | $$$$ |
+| **Claude Sonnet 4.6** | **9/10** | 10.2s | $$ |
+| **Claude Haiku 4.5** | **9/10** | 3.9s | $ |
 
-Sonnet and Opus both scored perfect 10/10. Haiku missed one task but was **2x faster**.
+Only Opus 4.6 scored a perfect 10/10. Sonnet 4.6 and Haiku 4.5 both stumbled on the same task. Haiku was **2.5x faster** than the other two.
 
 ## The 10 Tasks
 
 ### Coding (5 tasks)
 
-| Task | Sonnet 4 | Haiku 4.5 | Opus 4 |
-|------|----------|-----------|--------|
-| Create a CLI tool | PASS (5.0s) | PASS (3.4s) | PASS (6.6s) |
-| Fix a sorting bug | PASS (3.5s) | PASS (2.6s) | PASS (3.7s) |
-| Analyze CSV data | PASS (5.2s) | **FAIL** (3.4s) | PASS (6.5s) |
-| Write unit tests | PASS (9.9s) | PASS (5.5s) | PASS (12.8s) |
-| Refactor repetitive code | PASS (4.2s) | PASS (2.6s) | PASS (6.5s) |
+| Task | Opus 4.6 | Sonnet 4.6 | Haiku 4.5 |
+|------|----------|------------|-----------|
+| Create a CLI tool | PASS (4.7s) | PASS (3.9s) | PASS (2.4s) |
+| Fix a sorting bug | PASS (3.8s) | PASS (5.8s) | PASS (1.9s) |
+| Analyze CSV data | PASS (5.7s) | PASS (4.4s) | PASS (3.3s) |
+| Write unit tests | PASS (16.2s) | **FAIL** (14.6s) | **FAIL** (4.5s) |
+| Refactor repetitive code | PASS (4.9s) | PASS (3.8s) | PASS (2.4s) |
 
 ### Writing & Docs (5 tasks)
 
-| Task | Sonnet 4 | Haiku 4.5 | Opus 4 |
-|------|----------|-----------|--------|
-| Write a professional email | PASS (13.3s) | PASS (4.5s) | PASS (11.6s) |
-| Summarize a technical doc | PASS (8.8s) | PASS (4.0s) | PASS (9.2s) |
-| Create a backup shell script | PASS (5.6s) | PASS (3.3s) | PASS (6.3s) |
-| Convert JSON to CSV | PASS (11.6s) | PASS (5.8s) | PASS (10.6s) |
-| Write a project README | PASS (20.0s) | PASS (8.7s) | PASS (20.1s) |
+| Task | Opus 4.6 | Sonnet 4.6 | Haiku 4.5 |
+|------|----------|------------|-----------|
+| Write a professional email | PASS (10.6s) | PASS (10.3s) | PASS (4.2s) |
+| Summarize a technical doc | PASS (8.8s) | PASS (8.1s) | PASS (3.6s) |
+| Create a backup shell script | PASS (6.0s) | PASS (7.2s) | PASS (3.0s) |
+| Convert JSON to CSV | PASS (8.5s) | PASS (12.2s) | PASS (4.6s) |
+| Write a project README | PASS (25.0s) | PASS (32.0s) | PASS (8.7s) |
 
 ## Key Findings
 
-### 1. Haiku's failure is revealing
+### 1. Test writing is the hardest task for smaller models
 
-Haiku failed the CSV data analysis task — it couldn't correctly identify the best-selling product (Widget A with 33 units). This is a computation-heavy task requiring arithmetic across multiple rows. All three models passed the simpler coding tasks (fix a bug, write a CLI), but Haiku stumbles when precision matters.
+Both Sonnet 4.6 and Haiku 4.5 failed the "write unit tests" task. This task requires generating a test file with correct assertions against a provided calculator function — it demands precise understanding of both the source code and test framework patterns. Only Opus 4.6 handled it correctly.
 
-**Takeaway**: For tasks where getting the math right matters, don't use Haiku.
+**Takeaway**: For tasks requiring multi-file reasoning (reading source + generating corresponding tests), Opus is worth the cost.
 
-### 2. Opus is overkill for most tasks
+### 2. Haiku 4.5 is absurdly fast
 
-Opus passed everything, but it was the slowest (9.4s avg) and costs ~10x more than Sonnet per token. For these 10 tasks, Sonnet produced identical results in less time at lower cost.
+At 3.9s average, Haiku is **2.5x faster than Sonnet 4.6** (10.2s) and **2.4x faster than Opus 4.6** (9.4s). For the README task, Haiku took 8.7s vs Sonnet's 32.0s — a 3.7x difference.
 
-**Takeaway**: Use Opus only when Sonnet fails — and on these tasks, it didn't.
+With 9/10 pass rate at that speed, Haiku is the clear winner for high-volume, latency-sensitive workloads.
 
-### 3. All models ace writing tasks
+### 3. Sonnet 4.6 is surprisingly slow
 
-Every model scored 10/10 on the writing and documentation tasks. Professional emails, technical summaries, shell scripts, READMEs — all three handle these fluently. The quality differences between models show up in computation and complex reasoning, not in text generation.
+Sonnet 4.6 averaged 10.2s — actually slower than Opus 4.6 (9.4s) while passing fewer tasks (9 vs 10). This is unexpected: Sonnet is supposed to be the balanced middle option, but on these tasks, Opus delivers better accuracy at comparable speed.
 
-### 4. Haiku is the speed champion
+### 4. Writing tasks are easy for everyone
 
-At 4.4s average (2x faster than Sonnet), Haiku is the clear choice when speed matters and the task is straightforward. 9/10 pass rate at half the latency is a strong value proposition.
+All three models scored 10/10 on writing and documentation tasks. Emails, summaries, shell scripts, READMEs — no differentiation. The quality gap only appears on complex code reasoning tasks.
 
-## How to replicate
-
-```bash
-# Create a task definition
-cat > task.yaml << 'EOF'
-task:
-  name: "My task"
-  description: "Create a hello world script"
-  success_criteria:
-    - "A script file is created"
-    - "It prints hello world"
-agent:
-  type: cli
-  command: "./my-agent.sh"
-  args: ["{{description}}"]
-eval:
-  timeout: 60
-  runs: 1
-EOF
-
-# Run evaluation
-ANTHROPIC_API_KEY=your-key npx @agenthunter/eval task
-```
-
-## My recommendation
+## My updated recommendation
 
 | Use case | Model | Why |
 |----------|-------|-----|
-| **General coding** | Sonnet 4 | Perfect score, fast enough, best value |
-| **Quick tasks, high volume** | Haiku 4.5 | 2x faster, 90% pass rate, cheapest |
-| **Mission-critical, complex** | Opus 4 | Same accuracy as Sonnet, but verify it's actually needed |
-| **Writing & documentation** | Haiku 4.5 | All models score equally, so use the cheapest |
+| **Complex coding (tests, multi-file)** | Opus 4.6 | Only model that passes all tasks |
+| **Simple coding + writing** | Haiku 4.5 | 2.5x faster, 90% pass rate, cheapest |
+| **General purpose** | Sonnet 4.6 | Good balance, but Haiku may be better for most tasks |
 
-All evaluation data is open: [github.com/OrrisTech/agent-eval/results](https://github.com/OrrisTech/agent-eval/tree/main/results)
+## Try it yourself
+
+```bash
+npx @agenthunter/eval task -c task.yaml
+```
+
+All evaluation data: [github.com/OrrisTech/agent-eval/results](https://github.com/OrrisTech/agent-eval/tree/main/results)
 
 Full interactive results: [eval.agenthunter.io](https://eval.agenthunter.io)
 
 ---
 
-*Built with [AgentHunter Eval](https://eval.agenthunter.io) — the open-source AI agent evaluation platform. Try it: `npx @agenthunter/eval task`*
+*Built with [AgentHunter Eval](https://eval.agenthunter.io) — the open-source AI agent evaluation platform. `npx @agenthunter/eval task`*

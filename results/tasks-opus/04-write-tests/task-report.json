@@ -1,6 +1,6 @@
 {
   "taskName": "Write unit tests for a function",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,37 +9,37 @@
         {
           "criterion": "A file calculator.test.js is created",
           "passed": true,
-          "reasoning": "The file calculator.test.js was successfully created in the workspace."
+          "reasoning": "The file calculator.test.js is listed in the workspace files and its content is shown."
         },
         {
           "criterion": "Tests cover all four operations",
           "passed": true,
-          "reasoning": "The test file includes tests for addition (+), subtraction (-), multiplication (*), and division (/) operations."
+          "reasoning": "The test file includes assertions for addition (+), subtraction (-), multiplication (*), and division (/) operations."
         },
         {
           "criterion": "Tests include division by zero case",
           "passed": true,
-          "reasoning": "The test file includes specific tests for division by zero cases with both positive and negative numbers."
+          "reasoning": "The test file explicitly tests division by zero with cases like '5 / 0', '0 / 0', and '-3 / 0', all expecting null."
         },
         {
           "criterion": "Tests include invalid input cases",
           "passed": true,
-          "reasoning": "The test file covers multiple invalid input scenarios including non-numbers, wrong format, and invalid operators."
+          "reasoning": "The test file covers non-number inputs ('abc + 3'), wrong format cases (empty string, single number, too many parts), and invalid operators (%, ^, &)."
         },
         {
           "criterion": "Tests can run with node calculator.test.js without errors",
           "passed": true,
-          "reasoning": "The agent exit code was 0 indicating successful execution, and the test file uses only Node.js built-in assert module with proper syntax."
+          "reasoning": "The agent exit code is 0, the tests use only the built-in assert module, require('./calculator') which exists, and all assertions appear correct against the calculator.js implementation."
         }
       ],
-      "durationMs": 12762,
+      "durationMs": 16245,
       "exitCode": 0,
       "output": "  Created: calculator.test.js\nTask completed.\n",
       "estimatedTokens": 12
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 12762,
+  "avgDurationMs": 16245,
   "avgTokens": 12,
   "totalRuns": 1,
   "totalPassed": 1

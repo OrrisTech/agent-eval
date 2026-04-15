@@ -134,7 +134,7 @@ export async function runEvaluation(options: EvalOptions): Promise<EvalResult> {
       config.agent.name,
       toolNames,
       tasks,
-      config.eval.judge?.model ?? "claude-sonnet-4-20250514",
+      config.eval.judge?.model ?? "claude-sonnet-4-6",
     );
     progress(
       "generate",

@@ -1,6 +1,6 @@
 {
   "taskName": "Convert JSON to CSV",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,37 +9,37 @@
         {
           "criterion": "A file named convert.js is created",
           "passed": true,
-          "reasoning": "The file convert.js exists in the workspace with a complete Node.js script."
+          "reasoning": "The file convert.js is present in the workspace with complete implementation."
         },
         {
           "criterion": "A file named sample.json is created with test data",
           "passed": true,
-          "reasoning": "The file sample.json exists and contains the exact test data specified in the task description."
+          "reasoning": "The file sample.json is present and contains the exact example data specified in the task description."
         },
         {
           "criterion": "The script reads JSON and outputs CSV format",
           "passed": true,
-          "reasoning": "The convert.js script reads JSON from a file path argument and includes a jsonToCsv function that converts the data to CSV format with proper comma-separated values."
+          "reasoning": "The script reads a file path argument, parses the JSON, and outputs CSV lines joined by commas with proper escaping for values containing commas."
         },
         {
           "criterion": "CSV includes a header row derived from object keys",
           "passed": true,
-          "reasoning": "The script extracts all unique keys from the JSON objects and creates a header row as the first line of the CSV output."
+          "reasoning": "The jsonToCSV function collects all unique keys from the JSON objects and outputs them as the first row of the CSV output."
         },
         {
           "criterion": "The script handles the case where no argument is provided",
           "passed": true,
-          "reasoning": "The script checks if no arguments are provided and prints a usage message 'Usage: node convert.js <json-file-path>' before exiting with code 1."
+          "reasoning": "When no arguments are provided, the script prints usage information including description and example, then exits with code 0."
         }
       ],
-      "durationMs": 11635,
+      "durationMs": 12183,
       "exitCode": 0,
       "output": "  Created: convert.js\n  Created: sample.json\nTask completed.\n",
       "estimatedTokens": 15
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 11635,
+  "avgDurationMs": 12183,
   "avgTokens": 15,
   "totalRuns": 1,
   "totalPassed": 1

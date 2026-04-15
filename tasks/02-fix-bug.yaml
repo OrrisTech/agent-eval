@@ -32,7 +32,7 @@ task:
 agent:
   type: cli
   command: "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh"
-  args: ["{{description}}"]
+  args: ["--file", "{{description_file}}"]
   workdir: "/tmp/agent-eval-workspace"
 
 eval:

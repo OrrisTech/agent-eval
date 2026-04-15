@@ -1,46 +1,46 @@
 {
   "taskName": "Write unit tests for a function",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
-      "success": true,
+      "success": false,
       "criteriaResults": [
         {
           "criterion": "A file calculator.test.js is created",
           "passed": true,
-          "reasoning": "The file calculator.test.js was successfully created and is present in the workspace."
+          "reasoning": "The file calculator.test.js is present in the workspace with full content."
         },
         {
           "criterion": "Tests cover all four operations",
           "passed": true,
-          "reasoning": "The test file includes tests for addition (5 + 3), subtraction (10 - 4), multiplication (6 * 7), and division (20 / 4)."
+          "reasoning": "The test file includes explicit test cases for addition (+), subtraction (-), multiplication (*), and division (/)."
         },
         {
           "criterion": "Tests include division by zero case",
           "passed": true,
-          "reasoning": "The test file explicitly tests division by zero with assert.strictEqual(calculate('10 / 0'), null)."
+          "reasoning": "There is a dedicated test asserting that calculate('10 / 0') returns null."
         },
         {
           "criterion": "Tests include invalid input cases",
           "passed": true,
-          "reasoning": "The test file covers multiple invalid input scenarios including non-numbers, wrong format, invalid operators, and edge cases."
+          "reasoning": "The test file covers non-numeric inputs, invalid operators, wrong number of arguments, and empty strings."
         },
         {
           "criterion": "Tests can run with node calculator.test.js without errors",
-          "passed": true,
-          "reasoning": "The test file uses only Node.js built-in assert module, properly imports the calculate function, and ends with a success message indicating all tests should pass."
+          "passed": false,
+          "reasoning": "The test for '10.5 - 3.2' asserts strictEqual to 7.3, but due to floating-point precision (10.5 - 3.2 = 7.300000000000001 in JavaScript), this assertion will fail at runtime."
         }
       ],
-      "durationMs": 5544,
+      "durationMs": 4484,
       "exitCode": 0,
       "output": "  Created: calculator.test.js\nTask completed.\n",
       "estimatedTokens": 12
     }
   ],
-  "successRate": 1,
-  "avgDurationMs": 5544,
+  "successRate": 0,
+  "avgDurationMs": 4484,
   "avgTokens": 12,
   "totalRuns": 1,
-  "totalPassed": 1
+  "totalPassed": 0
 }

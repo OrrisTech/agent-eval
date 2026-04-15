@@ -65,10 +65,13 @@ agent-eval/
 
 ## Content Generation Rules
 
-- **CRITICAL**: When generating any content (blog posts, reports, documentation), always check the current system date first and ensure all data, statistics, and references are up-to-date as of that date
-- Never use stale data from earlier in the conversation — always re-read the latest results/ files before generating content
-- Include the generation date in all published content
-- Reference specific evaluation data with exact numbers from the latest results
+- **CRITICAL**: When generating any content (blog posts, reports, documentation, eval configs):
+  1. Check the current system date first
+  2. Verify all model names/IDs are the LATEST versions as of that date (e.g. Claude Sonnet 4.6, not Sonnet 4; Opus 4.6, not Opus 4; check system context for current model IDs)
+  3. Re-read the latest results/ files — never use stale data from earlier in the conversation
+  4. Include the generation date in all published content
+  5. Reference specific evaluation data with exact numbers from the latest results
+- **Model versions**: Always use the latest model IDs when creating agent configs or referencing models. Outdated model names make the product look stale. Check the assistant system prompt for current model IDs before writing.
 
 ## Key Design Decisions
 

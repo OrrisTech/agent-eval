@@ -56,7 +56,7 @@ export async function scoreResults(
       safety: number;
       developer_experience: number;
     };
-    /** Override the judge model (defaults to claude-sonnet-4-20250514) */
+    /** Override the judge model (defaults to claude-sonnet-4-6) */
     judgeModel?: string;
     /** Called after each task is judged */
     onTaskScored?: (completed: number, total: number) => void;

@@ -1,6 +1,6 @@
 {
   "taskName": "Create a backup automation script",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,42 +9,42 @@
         {
           "criterion": "A file named backup.sh is created",
           "passed": true,
-          "reasoning": "The file backup.sh exists in the workspace as confirmed by the file listing."
+          "reasoning": "The workspace shows a file named backup.sh was created with full content visible."
         },
         {
           "criterion": "The script has a proper shebang line (#!/bin/bash)",
           "passed": true,
-          "reasoning": "The first line of the script is '#!/bin/bash' which is the correct shebang for a bash script."
+          "reasoning": "The first line of backup.sh is '#!/bin/bash', which is the correct shebang line."
         },
         {
           "criterion": "It validates that a source directory argument is provided",
           "passed": true,
-          "reasoning": "The script checks if $# -eq 0 and shows usage message with exit code 1 when no arguments are provided."
+          "reasoning": "The script checks 'if [ $# -eq 0 ]' and prints an error message with usage instructions before exiting with code 1."
         },
         {
           "criterion": "It checks that the source directory exists",
           "passed": true,
-          "reasoning": "The script uses '[ ! -d \"$SOURCE_DIR\" ]' to check if the source directory exists and exits with error message if it doesn't."
+          "reasoning": "The script checks 'if [ ! -d \"$SOURCE_DIR\" ]' and prints an error message and exits with code 1 if the directory doesn't exist."
         },
         {
           "criterion": "It creates a timestamped tar.gz archive",
           "passed": true,
-          "reasoning": "The script generates a timestamp using date +%Y-%m-%d-%H%M%S and creates a tar.gz file with the format backup-YYYY-MM-DD-HHMMSS.tar.gz."
+          "reasoning": "The script generates a timestamp using 'date +\"%Y-%m-%d-%H%M%S\"', formats the filename as 'backup-YYYY-MM-DD-HHMMSS.tar.gz', creates the ./backups/ directory if needed, and uses 'tar -czf' to create the archive."
         },
         {
           "criterion": "It handles errors with appropriate exit codes",
           "passed": true,
-          "reasoning": "The script exits with code 1 in all error cases (no argument, directory doesn't exist, failed to create backup directory, failed to create backup) and uses proper error handling."
+          "reasoning": "The script exits with code 1 in all error cases (no argument, directory not found, failed to create backups directory, failed to create tar archive) and prints 'Error: <message>' messages accordingly."
         }
       ],
-      "durationMs": 6256,
+      "durationMs": 6042,
       "exitCode": 0,
       "output": "  Created: backup.sh\nTask completed.\n",
       "estimatedTokens": 9
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 6256,
+  "avgDurationMs": 6042,
   "avgTokens": 9,
   "totalRuns": 1,
   "totalPassed": 1

@@ -71,7 +71,7 @@ describe("callWithRetry", () => {
 
     expect(createMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-6",
       }),
     );
   });

@@ -8,7 +8,7 @@
         "taskName": "Create a word count CLI",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 3361,
+        "avgDurationMs": 2422,
         "avgTokens": 10,
         "criteriaTotal": 4,
         "criteriaPassed": 4
@@ -18,7 +18,7 @@
         "taskName": "Fix the sorting bug",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 2646,
+        "avgDurationMs": 1875,
         "avgTokens": 9,
         "criteriaTotal": 3,
         "criteriaPassed": 3
@@ -26,29 +26,29 @@
       {
         "taskId": "03-data-analysis",
         "taskName": "Analyze CSV sales data",
-        "passed": false,
-        "successRate": 0,
-        "avgDurationMs": 3433,
+        "passed": true,
+        "successRate": 1,
+        "avgDurationMs": 3285,
         "avgTokens": 11,
         "criteriaTotal": 4,
-        "criteriaPassed": 3
+        "criteriaPassed": 4
       },
       {
         "taskId": "04-write-tests",
         "taskName": "Write unit tests for a function",
-        "passed": true,
-        "successRate": 1,
-        "avgDurationMs": 5544,
+        "passed": false,
+        "successRate": 0,
+        "avgDurationMs": 4484,
         "avgTokens": 12,
         "criteriaTotal": 5,
-        "criteriaPassed": 5
+        "criteriaPassed": 4
       },
       {
         "taskId": "05-refactor-code",
         "taskName": "Refactor repetitive code",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 2614,
+        "avgDurationMs": 2426,
         "avgTokens": 9,
         "criteriaTotal": 4,
         "criteriaPassed": 4
@@ -58,7 +58,7 @@
         "taskName": "Write a project delay email",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 4510,
+        "avgDurationMs": 4174,
         "avgTokens": 9,
         "criteriaTotal": 6,
         "criteriaPassed": 6
@@ -68,7 +68,7 @@
         "taskName": "Summarize a technical document",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 4002,
+        "avgDurationMs": 3646,
         "avgTokens": 10,
         "criteriaTotal": 5,
         "criteriaPassed": 5
@@ -78,7 +78,7 @@
         "taskName": "Create a backup automation script",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 3308,
+        "avgDurationMs": 2965,
         "avgTokens": 9,
         "criteriaTotal": 6,
         "criteriaPassed": 6
@@ -88,7 +88,7 @@
         "taskName": "Convert JSON to CSV",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 5786,
+        "avgDurationMs": 4637,
         "avgTokens": 15,
         "criteriaTotal": 5,
         "criteriaPassed": 5
@@ -98,26 +98,26 @@
         "taskName": "Write a project README",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 8701,
+        "avgDurationMs": 8731,
         "avgTokens": 9,
         "criteriaTotal": 7,
         "criteriaPassed": 7
       }
     ],
     "overallPassRate": 0.9,
-    "avgDuration": 4391,
+    "avgDuration": 3865,
     "avgTokens": 10
   },
   {
     "agent": "opus",
-    "model": "Claude Opus 4",
+    "model": "Claude Opus 4.6",
     "tasks": [
       {
         "taskId": "01-create-cli-tool",
         "taskName": "Create a word count CLI",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 6580,
+        "avgDurationMs": 4722,
         "avgTokens": 10,
         "criteriaTotal": 4,
         "criteriaPassed": 4
@@ -127,7 +127,7 @@
         "taskName": "Fix the sorting bug",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 3741,
+        "avgDurationMs": 3831,
         "avgTokens": 9,
         "criteriaTotal": 3,
         "criteriaPassed": 3
@@ -137,8 +137,8 @@
         "taskName": "Analyze CSV sales data",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 6481,
-        "avgTokens": 11,
+        "avgDurationMs": 5664,
+        "avgTokens": 10,
         "criteriaTotal": 4,
         "criteriaPassed": 4
       },
@@ -147,7 +147,7 @@
         "taskName": "Write unit tests for a function",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 12762,
+        "avgDurationMs": 16245,
         "avgTokens": 12,
         "criteriaTotal": 5,
         "criteriaPassed": 5
@@ -157,7 +157,7 @@
         "taskName": "Refactor repetitive code",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 6489,
+        "avgDurationMs": 4867,
         "avgTokens": 9,
         "criteriaTotal": 4,
         "criteriaPassed": 4
@@ -167,7 +167,7 @@
         "taskName": "Write a project delay email",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 11561,
+        "avgDurationMs": 10639,
         "avgTokens": 9,
         "criteriaTotal": 6,
         "criteriaPassed": 6
@@ -177,7 +177,7 @@
         "taskName": "Summarize a technical document",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 9195,
+        "avgDurationMs": 8822,
         "avgTokens": 10,
         "criteriaTotal": 5,
         "criteriaPassed": 5
@@ -187,7 +187,7 @@
         "taskName": "Create a backup automation script",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 6256,
+        "avgDurationMs": 6042,
         "avgTokens": 9,
         "criteriaTotal": 6,
         "criteriaPassed": 6
@@ -197,7 +197,7 @@
         "taskName": "Convert JSON to CSV",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 10550,
+        "avgDurationMs": 8489,
         "avgTokens": 15,
         "criteriaTotal": 5,
         "criteriaPassed": 5
@@ -207,26 +207,26 @@
         "taskName": "Write a project README",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 20126,
+        "avgDurationMs": 24966,
         "avgTokens": 9,
         "criteriaTotal": 7,
         "criteriaPassed": 7
       }
     ],
     "overallPassRate": 1,
-    "avgDuration": 9374,
+    "avgDuration": 9429,
     "avgTokens": 10
   },
   {
     "agent": "sonnet",
-    "model": "Claude Sonnet 4",
+    "model": "Claude Sonnet 4.6",
     "tasks": [
       {
         "taskId": "01-create-cli-tool",
         "taskName": "Create a word count CLI",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 4990,
+        "avgDurationMs": 3949,
         "avgTokens": 10,
         "criteriaTotal": 4,
         "criteriaPassed": 4
@@ -236,7 +236,7 @@
         "taskName": "Fix the sorting bug",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 3510,
+        "avgDurationMs": 5774,
         "avgTokens": 9,
         "criteriaTotal": 3,
         "criteriaPassed": 3
@@ -246,7 +246,7 @@
         "taskName": "Analyze CSV sales data",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 5156,
+        "avgDurationMs": 4439,
         "avgTokens": 11,
         "criteriaTotal": 4,
         "criteriaPassed": 4
@@ -254,19 +254,19 @@
       {
         "taskId": "04-write-tests",
         "taskName": "Write unit tests for a function",
-        "passed": true,
-        "successRate": 1,
-        "avgDurationMs": 9878,
+        "passed": false,
+        "successRate": 0,
+        "avgDurationMs": 14578,
         "avgTokens": 12,
         "criteriaTotal": 5,
-        "criteriaPassed": 5
+        "criteriaPassed": 4
       },
       {
         "taskId": "05-refactor-code",
         "taskName": "Refactor repetitive code",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 4151,
+        "avgDurationMs": 3786,
         "avgTokens": 9,
         "criteriaTotal": 4,
         "criteriaPassed": 4
@@ -276,7 +276,7 @@
         "taskName": "Write a project delay email",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 13262,
+        "avgDurationMs": 10340,
         "avgTokens": 9,
         "criteriaTotal": 6,
         "criteriaPassed": 6
@@ -286,7 +286,7 @@
         "taskName": "Summarize a technical document",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 8840,
+        "avgDurationMs": 8052,
         "avgTokens": 10,
         "criteriaTotal": 5,
         "criteriaPassed": 5
@@ -296,7 +296,7 @@
         "taskName": "Create a backup automation script",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 5645,
+        "avgDurationMs": 7219,
         "avgTokens": 9,
         "criteriaTotal": 6,
         "criteriaPassed": 6
@@ -306,7 +306,7 @@
         "taskName": "Convert JSON to CSV",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 11635,
+        "avgDurationMs": 12183,
         "avgTokens": 15,
         "criteriaTotal": 5,
         "criteriaPassed": 5
@@ -316,14 +316,14 @@
         "taskName": "Write a project README",
         "passed": true,
         "successRate": 1,
-        "avgDurationMs": 19967,
+        "avgDurationMs": 31978,
         "avgTokens": 9,
         "criteriaTotal": 7,
         "criteriaPassed": 7
       }
     ],
-    "overallPassRate": 1,
-    "avgDuration": 8703,
+    "overallPassRate": 0.9,
+    "avgDuration": 10230,
     "avgTokens": 10
   }
 ]

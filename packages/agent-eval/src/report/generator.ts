@@ -63,7 +63,7 @@ export function buildReport(
       endpoint: config.agent.endpoint,
       capabilities: config.agent.capabilities,
       evalFrameworkVersion: "0.2.0",
-      judgeModel: config.eval.judge?.model ?? "claude-sonnet-4-20250514",
+      judgeModel: config.eval.judge?.model ?? "claude-sonnet-4-6",
       evaluatedAt: new Date().toISOString(),
     },
     tools,

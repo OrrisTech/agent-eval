@@ -1,6 +1,6 @@
 {
   "taskName": "Create a backup automation script",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,42 +9,42 @@
         {
           "criterion": "A file named backup.sh is created",
           "passed": true,
-          "reasoning": "The workspace contains a file named backup.sh as required."
+          "reasoning": "The workspace shows backup.sh exists with full content visible."
         },
         {
           "criterion": "The script has a proper shebang line (#!/bin/bash)",
           "passed": true,
-          "reasoning": "The first line of backup.sh contains the correct shebang #!/bin/bash."
+          "reasoning": "The first line of backup.sh is '#!/bin/bash'."
         },
         {
           "criterion": "It validates that a source directory argument is provided",
           "passed": true,
-          "reasoning": "The script checks if $# -eq 0 and shows usage information when no arguments are provided."
+          "reasoning": "The script checks 'if [ $# -eq 0 ]' and prints usage with exit 1 when no argument is provided."
         },
         {
           "criterion": "It checks that the source directory exists",
           "passed": true,
-          "reasoning": "The script uses '[ ! -d \"$SOURCE_DIR\" ]' to verify the source directory exists before proceeding."
+          "reasoning": "The script uses 'if [ ! -d \"$SOURCE_DIR\" ]' to verify the source directory exists and calls error_exit if it doesn't."
         },
         {
           "criterion": "It creates a timestamped tar.gz archive",
           "passed": true,
-          "reasoning": "The script generates a timestamp using date +\"%Y-%m-%d-%H%M%S\" and creates a tar.gz file with the required naming format."
+          "reasoning": "The script generates a timestamp with 'date +\"%Y-%m-%d-%H%M%S\"' and creates 'backup-${TIMESTAMP}.tar.gz' using tar -czf in the ./backups/ directory."
         },
         {
           "criterion": "It handles errors with appropriate exit codes",
           "passed": true,
-          "reasoning": "The script exits with code 1 for various error conditions including missing arguments, non-existent directories, and backup creation failures."
+          "reasoning": "The script uses an error_exit function that prints 'Error: <message>' to stderr and exits with code 1 for all failure cases including missing argument, missing directory, and tar failures."
         }
       ],
-      "durationMs": 5645,
+      "durationMs": 7219,
       "exitCode": 0,
       "output": "  Created: backup.sh\nTask completed.\n",
       "estimatedTokens": 9
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 5645,
+  "avgDurationMs": 7219,
   "avgTokens": 9,
   "totalRuns": 1,
   "totalPassed": 1

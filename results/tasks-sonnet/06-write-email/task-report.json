@@ -1,6 +1,6 @@
 {
   "taskName": "Write a project delay email",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,42 +9,42 @@
         {
           "criterion": "A file named email.txt is created",
           "passed": true,
-          "reasoning": "The file email.txt was successfully created and contains the email content."
+          "reasoning": "The workspace confirms that email.txt was created and its contents are visible."
         },
         {
           "criterion": "The email addresses Sarah Chen at Acme Corp",
           "passed": true,
-          "reasoning": "The email is addressed to 'Dear Sarah' and references 'the software project we are currently developing for Acme Corp.'"
+          "reasoning": "The email opens with 'Dear Sarah' and references Acme Corp multiple times throughout the body."
         },
         {
           "criterion": "It explains a 2-week delay with the new March 29 deadline",
           "passed": true,
-          "reasoning": "The email clearly states the delivery timeline is extended by two weeks with the original March 15 deadline moved to March 29."
+          "reasoning": "The email explicitly states the original deadline of March 15 and the new deadline of March 29, implying a 2-week delay."
         },
         {
           "criterion": "It mentions the third-party API integration issue as the reason",
           "passed": true,
-          "reasoning": "The email specifically explains the delay is 'due to unexpected integration issues we have encountered with a third-party API that is critical to the project's functionality.'"
+          "reasoning": "The email clearly states 'unexpected integration issues with a third-party API' as the cause of the delay."
         },
         {
           "criterion": "It offers weekly progress calls as mitigation",
           "passed": true,
-          "reasoning": "The email proposes 'weekly progress calls where we can discuss the current status, address any concerns you may have, and provide detailed updates on our development milestones.'"
+          "reasoning": "The email explicitly proposes 'weekly progress calls' and explains their purpose in keeping the client informed."
         },
         {
           "criterion": "The tone is professional and apologetic but confident",
           "passed": true,
-          "reasoning": "The email maintains a professional tone throughout, includes sincere apologies for the inconvenience, while confidently explaining the solution and next steps."
+          "reasoning": "The email maintains a professional tone throughout, includes sincere apologies, and expresses confidence in delivering a quality product by the new deadline."
         }
       ],
-      "durationMs": 13262,
+      "durationMs": 10340,
       "exitCode": 0,
       "output": "  Created: email.txt\nTask completed.\n",
       "estimatedTokens": 9
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 13262,
+  "avgDurationMs": 10340,
   "avgTokens": 9,
   "totalRuns": 1,
   "totalPassed": 1

@@ -1,49 +1,50 @@
 #!/bin/bash
 # Simple coding agent — takes a task description, generates code via Claude API, writes files
 # Usage: ./simple-coder.sh "task description"
+#    or: ./simple-coder.sh --file /path/to/description.txt
 #
 # Requires: ANTHROPIC_API_KEY environment variable, curl, python3
 
 set -euo pipefail
 
-TASK="$1"
-MODEL="${AGENT_MODEL:-claude-sonnet-4-20250514}"
+# Support both direct argument and file-based description
+if [ "${1:-}" = "--file" ] && [ -n "${2:-}" ]; then
+  TASK=$(cat "$2")
+elif [ -n "${1:-}" ]; then
+  TASK="$1"
+else
+  echo "Usage: simple-coder.sh <description> or simple-coder.sh --file <path>"
+  exit 1
+fi
 
-# Use python to properly JSON-encode the request (handles newlines, quotes, etc.)
+MODEL="${AGENT_MODEL:-claude-sonnet-4-6}"
+
+# Use python to properly JSON-encode the request (handles newlines, quotes, backticks)
 RESPONSE=$(python3 -c "
-import json, subprocess, sys
+import json, subprocess, sys, os
 
-task = sys.argv[1]
-model = sys.argv[2]
+task = sys.stdin.read()
+model = sys.argv[1]
 
 payload = {
     'model': model,
     'max_tokens': 4096,
     'messages': [{
         'role': 'user',
-        'content': f'''You are a coding agent. Complete the following task. Output ONLY the files you create, in this exact format for each file:
-
----FILE: filename.ext---
-file contents here
----END FILE---
-
-Do not include any explanation outside the file blocks, just the files.
-
-Task:
-{task}'''
+        'content': 'You are a coding agent. Complete the following task. Output ONLY the files you create, in this exact format for each file:\n\n---FILE: filename.ext---\nfile contents here\n---END FILE---\n\nDo not include any explanation outside the file blocks, just the files.\n\nTask:\n' + task
     }]
 }
 
 result = subprocess.run(
     ['curl', '-s', 'https://api.anthropic.com/v1/messages',
      '-H', 'content-type: application/json',
-     '-H', f'x-api-key: {__import__(\"os\").environ[\"ANTHROPIC_API_KEY\"]}',
+     '-H', 'x-api-key: ' + os.environ['ANTHROPIC_API_KEY'],
      '-H', 'anthropic-version: 2023-06-01',
      '-d', json.dumps(payload)],
     capture_output=True, text=True
 )
 print(result.stdout)
-" "$TASK" "$MODEL")
+" "$MODEL" <<< "$TASK")
 
 # Extract the text content
 CONTENT=$(echo "$RESPONSE" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('content',[{}])[0].get('text',''))" 2>/dev/null)
@@ -56,16 +57,15 @@ fi
 
 # Parse and write files using python (more reliable than awk)
 python3 -c "
-import sys, os
+import sys
 
-content = sys.argv[1]
+content = sys.stdin.read()
 lines = content.split('\n')
 current_file = None
 file_lines = []
 
 for line in lines:
     if line.startswith('---FILE: ') and line.endswith('---'):
-        # Save previous file if any
         if current_file and file_lines:
             with open(current_file, 'w') as f:
                 f.write('\n'.join(file_lines))
@@ -82,11 +82,10 @@ for line in lines:
     elif current_file is not None:
         file_lines.append(line)
 
-# Handle case where last file has no END marker
 if current_file and file_lines:
     with open(current_file, 'w') as f:
         f.write('\n'.join(file_lines))
     print(f'  Created: {current_file}')
-" "$CONTENT"
+" <<< "$CONTENT"
 
-echo "Task completed."
+echo 'Task completed.'

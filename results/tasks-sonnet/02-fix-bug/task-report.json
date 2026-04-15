@@ -1,6 +1,6 @@
 {
   "taskName": "Fix the sorting bug",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,27 +9,27 @@
         {
           "criterion": "The file sort.py is modified",
           "passed": true,
-          "reasoning": "The file sort.py exists in the workspace and shows evidence of modification from the original code."
+          "reasoning": "The sort.py file exists in the workspace and its content differs from the original, with the comparison operator changed."
         },
         {
           "criterion": "The comparison operator is changed from < to >",
           "passed": true,
-          "reasoning": "The comparison operator in the if statement has been changed from 'numbers[i] < numbers[j]' to 'numbers[i] > numbers[j]'."
+          "reasoning": "The file now contains 'if numbers[i] > numbers[j]' instead of the original 'if numbers[i] < numbers[j]'."
         },
         {
           "criterion": "Running sort.py produces [1, 1, 2, 3, 4, 5, 6, 9]",
           "passed": true,
-          "reasoning": "With the corrected comparison operator (>), the bubble sort algorithm will now properly sort the input [3, 1, 4, 1, 5, 9, 2, 6] in ascending order to produce [1, 1, 2, 3, 4, 5, 6, 9]."
+          "reasoning": "With the comparison changed to >, the bubble sort algorithm will correctly sort in ascending order, producing [1, 1, 2, 3, 4, 5, 6, 9]."
         }
       ],
-      "durationMs": 3510,
+      "durationMs": 5774,
       "exitCode": 0,
       "output": "  Created: sort.py\nTask completed.\n",
       "estimatedTokens": 9
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 3510,
+  "avgDurationMs": 5774,
   "avgTokens": 9,
   "totalRuns": 1,
   "totalPassed": 1

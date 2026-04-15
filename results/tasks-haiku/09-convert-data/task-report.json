@@ -1,6 +1,6 @@
 {
   "taskName": "Convert JSON to CSV",
-  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh {{description}}",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
   "runs": [
     {
       "runIndex": 1,
@@ -9,37 +9,37 @@
         {
           "criterion": "A file named convert.js is created",
           "passed": true,
-          "reasoning": "The file convert.js exists in the workspace with complete Node.js script implementation."
+          "reasoning": "The workspace shows convert.js was created with full implementation."
         },
         {
           "criterion": "A file named sample.json is created with test data",
           "passed": true,
-          "reasoning": "The file sample.json exists with the exact test data specified in the task description."
+          "reasoning": "sample.json was created containing the exact example data from the task description with Alice, Bob, and Charlie."
         },
         {
           "criterion": "The script reads JSON and outputs CSV format",
           "passed": true,
-          "reasoning": "The script contains functions to read JSON from file path argument and convert it to CSV format with proper parsing and output to stdout."
+          "reasoning": "The script reads a JSON file using fs.readFileSync, parses it with JSON.parse, and converts it to CSV format using the jsonToCSV function with proper comma-separated values."
         },
         {
           "criterion": "CSV includes a header row derived from object keys",
           "passed": true,
-          "reasoning": "The jsonToCSV function extracts unique keys from all objects and creates a header row as the first line of output."
+          "reasoning": "The jsonToCSV function extracts all unique keys from the JSON objects and creates a header row as the first line of the CSV output."
         },
         {
           "criterion": "The script handles the case where no argument is provided",
           "passed": true,
-          "reasoning": "The script checks if process.argv.length < 3 and prints usage message with process.exit(1) when no argument is provided."
+          "reasoning": "The main function checks if process.argv.length < 3 and prints usage instructions 'Usage: node convert.js <json-file-path>' before exiting with code 1."
         }
       ],
-      "durationMs": 5786,
+      "durationMs": 4637,
       "exitCode": 0,
       "output": "  Created: convert.js\n  Created: sample.json\nTask completed.\n",
       "estimatedTokens": 15
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 5786,
+  "avgDurationMs": 4637,
   "avgTokens": 15,
   "totalRuns": 1,
   "totalPassed": 1
