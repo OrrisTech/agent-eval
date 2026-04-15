@@ -1,6 +1,6 @@
 ---
 title: "We Benchmarked 12 MCP Servers — Here's What We Found"
-date: 2026-04-14
+date: 2026-04-15
 author: AgentHunter Eval
 ---
 
@@ -224,4 +224,4 @@ We're expanding to evaluate A2A agents and REST API agents. If you'd like your M
 
 ---
 
-*Evaluations run on 2026-04-14 using agent-eval v0.1.0. Scores may vary between runs due to LLM non-determinism. Full raw data available in the [results directory](https://github.com/OrrisTech/agent-eval/tree/main/results).*
+*Evaluations run on 2026-04-15 using agent-eval v0.3.1. Scores may vary between runs due to LLM non-determinism. Full raw data available in the [results directory](https://github.com/OrrisTech/agent-eval/tree/main/results).*

@@ -77,8 +77,8 @@ For each server, we:
 All evaluation code is [open source](https://github.com/OrrisTech/agent-eval). You can reproduce these results yourself:
 
 \`\`\`bash
-npx agent-eval init
-npx agent-eval run
+npx @agenthunter/eval init
+npx @agenthunter/eval run
 \`\`\`
 
 ## Rankings
@@ -132,7 +132,7 @@ echo 'agent:
 eval:
   runs: 3' > agent-eval.yaml
 
-ANTHROPIC_API_KEY=your-key npx agent-eval run
+ANTHROPIC_API_KEY=your-key npx @agenthunter/eval run
 \`\`\`
 
 ## What's Next
@@ -141,7 +141,7 @@ We're expanding to evaluate A2A agents and REST API agents. If you'd like your M
 
 ---
 
-*Evaluations run on ${now} using agent-eval v0.1.0. Scores may vary between runs due to LLM non-determinism. Full raw data available in the [results directory](https://github.com/OrrisTech/agent-eval/tree/main/results).*
+*Evaluations run on ${now} using agent-eval v0.3.1. Scores may vary between runs due to LLM non-determinism. Full raw data available in the [results directory](https://github.com/OrrisTech/agent-eval/tree/main/results).*
 `;
 
 mkdirSync(BLOG_DIR, { recursive: true });

@@ -7,6 +7,8 @@ canonical_url: https://github.com/OrrisTech/agent-eval/blob/main/docs/blog/mcp-s
 cover_image:
 ---
 
+*Evaluated on April 15, 2026 using [AgentHunter Eval](https://eval.agenthunter.io) v0.3.1*
+
 The MCP ecosystem has exploded. 10,000+ servers on the registry, 97 million monthly SDK downloads — but nobody can tell you which MCP server is actually worth using.
 
 I decided to find out.
@@ -17,20 +19,22 @@ Some results surprised me.
 
 ## TL;DR Rankings
 
-| Rank | Server | Score | Reliability | Category |
-|------|--------|-------|-------------|----------|
-| 🥇 | **context7** | **89** | 100% | Search |
-| 🥈 | **mcp-fetch** | **86** | 90% | Web |
-| 🥉 | **mcp-memory** | **82** | 93% | Memory |
-| 4 | **notion-mcp** | **82** | 97% | Productivity |
-| 5 | **mcp-datetime** | **81** | 73% | Utilities |
-| 6 | **mcp-everything** | **75** | 74% | Reference |
-| 7 | **mcp-sequential-thinking** | **71** | 100% | Reasoning |
-| 8 | **mcp-filesystem** | **68** | 14% | Filesystem |
-| 9 | **playwright-mcp** | **68** | 30% | Browser |
-| 10 | **mcp-sqlite** | **63** | 10% | Database |
-| 11 | **mcp-git** | **55** | 4% | DevTools |
-| 12 | **mcp-puppeteer** | **47** | 0% | Browser |
+| Rank | Server | Category | Score | Capability | Reliability | Efficiency | Safety |
+|------|--------|----------|-------|------------|-------------|------------|--------|
+| 1 | **context7** | Search | **89** | 83 | 100 | 87 | 100 |
+| 2 | **mcp-fetch** | Web | **86** | 73 | 90 | 99 | 100 |
+| 3 | **mcp-memory** | Memory | **82** | 63 | 93 | 100 | 89 |
+| 4 | **notion-mcp** | Productivity | **82** | 55 | 97 | 98 | 100 |
+| 5 | **mcp-datetime** | Utilities | **81** | 70 | 73 | 100 | 100 |
+| 6 | **mcp-everything** | Reference | **75** | 66 | 74 | 78 | 97 |
+| 7 | **mcp-sequential-thinking** | Reasoning | **71** | 15 | 100 | 100 | 100 |
+| 8 | **mcp-filesystem** | Filesystem | **68** | 73 | 14 | 100 | 100 |
+| 9 | **playwright-mcp** | Browser | **68** | 62 | 30 | 100 | 100 |
+| 10 | **mcp-sqlite** | Database | **63** | 63 | 10 | 100 | 100 |
+| 11 | **mcp-git** | DevTools | **55** | 40 | 4 | 100 | 98 |
+| 12 | **mcp-puppeteer** | Browser | **47** | 51 | 0 | 50 | 100 |
+
+Full interactive results: [eval.agenthunter.io](https://eval.agenthunter.io)
 
 ## How I tested
 
@@ -50,7 +54,7 @@ Five dimensions, weighted:
 | **Reliability** | 25% | Does it work every time? |
 | **Efficiency** | 20% | How fast is it? |
 | **Safety** | 15% | Can you trick it? |
-| **Dev Experience** | 10% | Docs, error messages, schema quality |
+| **Dev Experience** | 10% | Schema quality, docs, error messages |
 
 ## 3 things that surprised me
 
@@ -89,13 +93,13 @@ eval:
 EOF
 
 # Run evaluation
-ANTHROPIC_API_KEY=your-key npx @agenthunter/eval run
+ANTHROPIC_API_KEY=your-key npx @agenthunter/eval tool
 ```
 
 Output looks like this:
 
 ```
-  AgentHunter Eval v0.1.0
+  AgentHunter Eval v0.3.1
   Agent: mcp-memory v1.0.0 (MCP)
   Tools: 9 | Tasks: 27 | Runs: 27
 
@@ -110,19 +114,21 @@ Output looks like this:
   Dev Experience  ██████████████░░░░░░  70%
 ```
 
-## Caveats
+## What's new since v0.1
 
-- ~~**LLM non-determinism**~~: **Fixed in v0.2.0** — tasks are now cached after first generation. Subsequent runs reuse the same tasks for reproducible scores. Use `--regenerate-tasks` to force new tasks.
-- **Auto-generated tasks**: The framework generates test tasks from tool schemas. For tools that need real-world context (file systems with actual files, databases with actual data), reliability scores will be lower than real-world usage.
-- ~~**DX score is a placeholder**~~: **Fixed in v0.2.0** — DX now scores schema quality (typed properties, descriptions), documentation (meaningful tool descriptions), and error messages (informative vs empty) automatically. No more flat 70.
-- **Single model judge**: Using Claude to judge Claude-generated tasks has inherent bias. v0.2.0 adds `eval.judge.model` config to switch models. Multi-provider judging is on the roadmap.
+Since the first version, I've added:
+
+- ~~**LLM non-determinism**~~: **Fixed in v0.2.0** — tasks are cached after first generation for reproducible scores. Use `--regenerate-tasks` to force new tasks.
+- ~~**DX score was a placeholder**~~: **Fixed in v0.2.0** — DX now evaluates schema quality, documentation, and error messages automatically.
+- **Configurable judge model**: v0.2.0 adds `eval.judge.model` config to switch models.
+- **Task evaluation**: v0.3.0 adds `agent-eval task` — evaluate agents on end-to-end task completion, not just tool quality. [I tested 3 Claude models on 10 tasks](https://eval.agenthunter.io).
 
 ## What's next
 
-- **A2A protocol support** — evaluate Google's Agent-to-Agent servers
-- **Web dashboard** — browse rankings at eval.agenthunter.io
-- **Continuous monitoring** — track score changes over time
-- **Multi-provider judging** — use GPT-4o, Gemini, or multiple models as judges
+- **More agents** — testing OpenAI GPT-5, open-source agents
+- **More tasks** — expanding beyond coding and writing
+- **Web dashboard** — browse rankings at [eval.agenthunter.io](https://eval.agenthunter.io)
+- **Multi-provider judging** — use multiple models as judges to reduce bias
 
 The framework is fully open source: **[github.com/OrrisTech/agent-eval](https://github.com/OrrisTech/agent-eval)**
 
@@ -130,4 +136,4 @@ Raw evaluation data for all 12 servers is in the [results directory](https://git
 
 ---
 
-*I'm building [AgentHunter](https://agenthunter.io) — the quality layer for the AI agent economy. Independent evaluation, transparent methodology, open data. If you're building an MCP server, I'd love to benchmark it — [open an issue](https://github.com/OrrisTech/agent-eval/issues).*
+*I'm building [AgentHunter](https://agenthunter.io) — the quality layer for the AI agent economy. Independent evaluation, transparent methodology, open data. If you're building an MCP server or AI agent, I'd love to benchmark it — [open an issue](https://github.com/OrrisTech/agent-eval/issues).*
