@@ -1,6 +1,6 @@
 # AgentHunter Eval
 
-The credit rating agency for AI agents — open-source evaluation framework + discovery platform.
+The credit rating agency for AI agents — open-source evaluation platform with two layers: Task Eval (agent task completion) + Tool Eval (MCP server quality).
 
 ## Quick Reference
 
@@ -62,6 +62,13 @@ agent-eval/
 - Use Zod for all runtime validation (config, API responses, etc.)
 - ESM-only (`"type": "module"` in package.json)
 - Use `node:` prefix for Node.js built-in imports
+
+## Content Generation Rules
+
+- **CRITICAL**: When generating any content (blog posts, reports, documentation), always check the current system date first and ensure all data, statistics, and references are up-to-date as of that date
+- Never use stale data from earlier in the conversation — always re-read the latest results/ files before generating content
+- Include the generation date in all published content
+- Reference specific evaluation data with exact numbers from the latest results
 
 ## Key Design Decisions
 

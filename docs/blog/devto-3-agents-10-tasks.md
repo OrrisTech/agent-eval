@@ -7,6 +7,8 @@ canonical_url: https://github.com/OrrisTech/agent-eval
 cover_image:
 ---
 
+*Evaluated on April 15, 2026 using [AgentHunter Eval](https://eval.agenthunter.io) v0.3.1*
+
 Which Claude model should you use for your agent? I tested all three on the same 10 tasks to find out.
 
 ## Setup
@@ -32,23 +34,23 @@ Sonnet and Opus both scored perfect 10/10. Haiku missed one task but was **2x fa
 
 ### Coding (5 tasks)
 
-| Task | Sonnet | Haiku | Opus |
-|------|--------|-------|------|
-| Create a CLI tool | PASS | PASS | PASS |
-| Fix a sorting bug | PASS | PASS | PASS |
-| Analyze CSV data | PASS | **FAIL** | PASS |
-| Write unit tests | PASS | PASS | PASS |
-| Refactor repetitive code | PASS | PASS | PASS |
+| Task | Sonnet 4 | Haiku 4.5 | Opus 4 |
+|------|----------|-----------|--------|
+| Create a CLI tool | PASS (5.0s) | PASS (3.4s) | PASS (6.6s) |
+| Fix a sorting bug | PASS (3.5s) | PASS (2.6s) | PASS (3.7s) |
+| Analyze CSV data | PASS (5.2s) | **FAIL** (3.4s) | PASS (6.5s) |
+| Write unit tests | PASS (9.9s) | PASS (5.5s) | PASS (12.8s) |
+| Refactor repetitive code | PASS (4.2s) | PASS (2.6s) | PASS (6.5s) |
 
 ### Writing & Docs (5 tasks)
 
-| Task | Sonnet | Haiku | Opus |
-|------|--------|-------|------|
-| Write a professional email | PASS | PASS | PASS |
-| Summarize a technical doc | PASS | PASS | PASS |
-| Create a backup shell script | PASS | PASS | PASS |
-| Convert JSON to CSV | PASS | PASS | PASS |
-| Write a project README | PASS | PASS | PASS |
+| Task | Sonnet 4 | Haiku 4.5 | Opus 4 |
+|------|----------|-----------|--------|
+| Write a professional email | PASS (13.3s) | PASS (4.5s) | PASS (11.6s) |
+| Summarize a technical doc | PASS (8.8s) | PASS (4.0s) | PASS (9.2s) |
+| Create a backup shell script | PASS (5.6s) | PASS (3.3s) | PASS (6.3s) |
+| Convert JSON to CSV | PASS (11.6s) | PASS (5.8s) | PASS (10.6s) |
+| Write a project README | PASS (20.0s) | PASS (8.7s) | PASS (20.1s) |
 
 ## Key Findings
 
@@ -75,10 +77,7 @@ At 4.4s average (2x faster than Sonnet), Haiku is the clear choice when speed ma
 ## How to replicate
 
 ```bash
-# Install
-npm install -g @agenthunter/eval
-
-# Run a task evaluation
+# Create a task definition
 cat > task.yaml << 'EOF'
 task:
   name: "My task"
@@ -95,6 +94,7 @@ eval:
   runs: 1
 EOF
 
+# Run evaluation
 ANTHROPIC_API_KEY=your-key npx @agenthunter/eval task
 ```
 
@@ -109,6 +109,8 @@ ANTHROPIC_API_KEY=your-key npx @agenthunter/eval task
 
 All evaluation data is open: [github.com/OrrisTech/agent-eval/results](https://github.com/OrrisTech/agent-eval/tree/main/results)
 
+Full interactive results: [eval.agenthunter.io](https://eval.agenthunter.io)
+
 ---
 
-*Built with [AgentHunter Eval](https://agent-eval-cyan.vercel.app) — the open-source AI agent evaluation platform. Try it: `npx @agenthunter/eval task`*
+*Built with [AgentHunter Eval](https://eval.agenthunter.io) — the open-source AI agent evaluation platform. Try it: `npx @agenthunter/eval task`*
