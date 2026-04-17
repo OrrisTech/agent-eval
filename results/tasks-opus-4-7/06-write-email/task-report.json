@@ -1,0 +1,57 @@
+{
+  "taskName": "Write a project delay email",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named email.txt is created",
+          "passed": true,
+          "reasoning": "The workspace confirms email.txt was created and its contents are visible."
+        },
+        {
+          "criterion": "The email addresses Sarah Chen at Acme Corp",
+          "passed": true,
+          "reasoning": "The email opens with 'Dear Sarah' and references 'the software project we are developing for Acme Corp' in the body."
+        },
+        {
+          "criterion": "It explains a 2-week delay with the new March 29 deadline",
+          "passed": true,
+          "reasoning": "The email explicitly states the deadline is extended 'by two weeks, moving the target completion date from March 15 to March 29.'"
+        },
+        {
+          "criterion": "It mentions the third-party API integration issue as the reason",
+          "passed": true,
+          "reasoning": "The email clearly states 'unexpected integration issues with the third-party API' as the cause of the delay."
+        },
+        {
+          "criterion": "It offers weekly progress calls as mitigation",
+          "passed": true,
+          "reasoning": "The email explicitly proposes 'a weekly progress call' to keep the client informed during the extended timeline."
+        },
+        {
+          "criterion": "The tone is professional and apologetic but confident",
+          "passed": true,
+          "reasoning": "The email maintains a professional tone throughout, includes a sincere apology ('I sincerely apologize'), and expresses confidence in delivering 'a robust, well-tested solution.'"
+        }
+      ],
+      "durationMs": 9506,
+      "exitCode": 0,
+      "output": "USAGE: input=259 output=480 model=claude-opus-4-7\n  Created: email.txt\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 259,
+      "outputTokens": 480,
+      "costUsd": 0.039885
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 9506,
+  "p50DurationMs": 9506,
+  "p95DurationMs": 9506,
+  "avgTokens": 22,
+  "avgCostUsd": 0.039885,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

@@ -9,7 +9,7 @@
         {
           "criterion": "A file named backup.sh is created",
           "passed": true,
-          "reasoning": "The workspace shows backup.sh exists with full content visible."
+          "reasoning": "The file backup.sh is listed in the workspace files with full content shown."
         },
         {
           "criterion": "The script has a proper shebang line (#!/bin/bash)",
@@ -19,33 +19,39 @@
         {
           "criterion": "It validates that a source directory argument is provided",
           "passed": true,
-          "reasoning": "The script checks 'if [ $# -eq 0 ]' and prints usage with exit 1 when no argument is provided."
+          "reasoning": "The script checks 'if [ $# -eq 0 ]' and prints usage information then exits with code 1 if no argument is provided."
         },
         {
           "criterion": "It checks that the source directory exists",
           "passed": true,
-          "reasoning": "The script uses 'if [ ! -d \"$SOURCE_DIR\" ]' to verify the source directory exists and calls error_exit if it doesn't."
+          "reasoning": "The script checks 'if [ ! -e \"$SOURCE_DIR\" ]' and calls error_exit if the source directory does not exist."
         },
         {
           "criterion": "It creates a timestamped tar.gz archive",
           "passed": true,
-          "reasoning": "The script generates a timestamp with 'date +\"%Y-%m-%d-%H%M%S\"' and creates 'backup-${TIMESTAMP}.tar.gz' using tar -czf in the ./backups/ directory."
+          "reasoning": "The script generates a timestamp with 'date +\"%Y-%m-%d-%H%M%S\"' and creates a tar.gz file named 'backup-${TIMESTAMP}.tar.gz' in the ./backups/ directory."
         },
         {
           "criterion": "It handles errors with appropriate exit codes",
           "passed": true,
-          "reasoning": "The script uses an error_exit function that prints 'Error: <message>' to stderr and exits with code 1 for all failure cases including missing argument, missing directory, and tar failures."
+          "reasoning": "The script uses an error_exit function that prints 'Error: <message>' to stderr and exits with code 1 for all failure cases including missing argument, non-existent directory, and tar failures."
         }
       ],
-      "durationMs": 7219,
+      "durationMs": 7885,
       "exitCode": 0,
-      "output": "  Created: backup.sh\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=220 output=462 model=claude-sonnet-4-6\n  Created: backup.sh\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 220,
+      "outputTokens": 462,
+      "costUsd": 0.00759
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 7219,
-  "avgTokens": 9,
+  "avgDurationMs": 7885,
+  "p50DurationMs": 7885,
+  "p95DurationMs": 7885,
+  "avgTokens": 22,
+  "avgCostUsd": 0.00759,
   "totalRuns": 1,
   "totalPassed": 1
 }

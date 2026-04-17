@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -10,6 +10,7 @@ export function Nav() {
 
   const links = [
     { href: "/", label: "Rankings" },
+    { href: "/compare", label: "Compare" },
     { href: "/methodology", label: "Methodology" },
     { href: "/blog", label: "Blog" },
   ];
@@ -19,9 +20,32 @@ export function Nav() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-3">
         <Link
           href="/"
-          className="text-lg font-bold text-[var(--color-accent)] min-h-[44px] flex items-center"
+          className="text-lg font-bold text-[var(--color-accent)] min-h-[44px] flex items-center gap-2.5"
+          aria-label="AgentHunter Eval — home"
         >
-          AgentHunter Eval
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="shrink-0"
+          >
+            <g fill="none" stroke="currentColor" strokeLinecap="round">
+              <circle cx="50" cy="50" r="32" strokeWidth="2.5" />
+              <circle cx="50" cy="50" r="18" strokeWidth="1.5" opacity="0.55" />
+              <path d="M 12 22 L 12 12 L 22 12" strokeWidth="2.5" />
+              <path d="M 78 12 L 88 12 L 88 22" strokeWidth="2.5" />
+              <path d="M 88 78 L 88 88 L 78 88" strokeWidth="2.5" />
+              <path d="M 22 88 L 12 88 L 12 78" strokeWidth="2.5" />
+              <line x1="50" y1="10" x2="50" y2="20" strokeWidth="2" />
+              <line x1="50" y1="80" x2="50" y2="90" strokeWidth="2" />
+              <line x1="10" y1="50" x2="20" y2="50" strokeWidth="2" />
+              <line x1="80" y1="50" x2="90" y2="50" strokeWidth="2" />
+            </g>
+            <circle cx="50" cy="50" r="4.5" fill="currentColor" />
+          </svg>
+          <span>AgentHunter Eval</span>
         </Link>
 
         {/* Desktop links */}
@@ -62,6 +86,7 @@ export function Nav() {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
+            aria-hidden="true"
           >
             {open ? (
               <path

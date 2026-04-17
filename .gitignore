@@ -143,3 +143,12 @@ vite.config.ts.timestamp-*
 
 # macOS
 .DS_Store
+.vercel
+
+# Playwright/browser snapshots (ephemeral)
+.playwright-mcp/
+# Ad-hoc local screenshots & snapshots
+homepage_screenshot.png
+homepage_snapshot.md
+# Ad-hoc eval workspaces
+test-run/

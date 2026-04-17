@@ -28,7 +28,9 @@ vi.mock("@anthropic-ai/sdk", () => {
   return { default: MockAnthropic };
 });
 
-const { runTaskEvaluation } = await import("../src/eval/task-eval.js");
+const { runTaskEvaluation, percentile, parseUsageLine } = await import(
+  "../src/eval/task-eval.js"
+);
 
 describe("runTaskEvaluation", () => {
   it("should evaluate a simple CLI agent task", async () => {
@@ -127,5 +129,76 @@ describe("runTaskEvaluation", () => {
 
     // The echo output should contain the substituted description
     expect(result.runs[0]?.output).toContain("Create a greeting");
+  });
+
+  it("populates p50/p95 duration fields", async () => {
+    const result = await runTaskEvaluation({
+      config: {
+        task: {
+          name: "Percentile test",
+          description: "Checks duration percentiles exist",
+          success_criteria: ["Task completed"],
+        },
+        agent: {
+          type: "cli",
+          command: "echo",
+          args: ["done"],
+        },
+        eval: { timeout: 10, runs: 3 },
+      },
+      apiKey: "test-key",
+    });
+
+    expect(result.p50DurationMs).toBeGreaterThanOrEqual(0);
+    expect(result.p95DurationMs).toBeGreaterThanOrEqual(result.p50DurationMs);
+    // avgCostUsd is 0 when the agent doesn't emit a USAGE line (like `echo`)
+    expect(result.avgCostUsd).toBe(0);
+  });
+});
+
+describe("percentile", () => {
+  it("returns 0 for empty arrays", () => {
+    expect(percentile([], 50)).toBe(0);
+  });
+
+  it("returns the single value when only one sample", () => {
+    expect(percentile([42], 95)).toBe(42);
+  });
+
+  it("computes p50 of [1,2,3,4,5] as 3", () => {
+    expect(percentile([1, 2, 3, 4, 5], 50)).toBe(3);
+  });
+
+  it("interpolates p95 of [10,20,30,40,50] near the top", () => {
+    // rank = 0.95 * 4 = 3.8 → interpolates between 40 and 50 → 48
+    expect(percentile([10, 20, 30, 40, 50], 95)).toBe(48);
+  });
+
+  it("handles unsorted input", () => {
+    expect(percentile([5, 1, 4, 2, 3], 50)).toBe(3);
+  });
+});
+
+describe("parseUsageLine", () => {
+  it("returns null when no USAGE line is present", () => {
+    expect(parseUsageLine("Task completed.\nCreated: foo.js")).toBeNull();
+  });
+
+  it("parses input/output tokens", () => {
+    const parsed = parseUsageLine(
+      "Created: foo.js\nUSAGE: input=1234 output=567",
+    );
+    expect(parsed).toEqual({ inputTokens: 1234, outputTokens: 567 });
+  });
+
+  it("parses input/output tokens + model", () => {
+    const parsed = parseUsageLine(
+      "Created: foo.js\nUSAGE: input=1234 output=567 model=claude-sonnet-4-6",
+    );
+    expect(parsed).toEqual({
+      inputTokens: 1234,
+      outputTokens: 567,
+      model: "claude-sonnet-4-6",
+    });
   });
 });

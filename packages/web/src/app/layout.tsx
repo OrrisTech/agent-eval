@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { Nav } from "@/components/nav";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -15,6 +15,14 @@ export const metadata: Metadata = {
   },
   description:
     "Independent AI agent evaluation platform. Task completion scoring for agents. Quality benchmarks for MCP servers.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/logo.svg", type: "image/svg+xml", sizes: "any" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
     title: "AgentHunter Eval — AI Agent Evaluation",
     description:

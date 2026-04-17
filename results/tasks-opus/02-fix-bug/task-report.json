@@ -9,28 +9,34 @@
         {
           "criterion": "The file sort.py is modified",
           "passed": true,
-          "reasoning": "The sort.py file has been modified with the comparison operator changed from < to >."
+          "reasoning": "The sort.py file was modified, changing the comparison operator from < to >."
         },
         {
           "criterion": "The comparison operator is changed from < to >",
           "passed": true,
-          "reasoning": "The condition 'if numbers[i] < numbers[j]' has been changed to 'if numbers[i] > numbers[j]' as required."
+          "reasoning": "The condition 'if numbers[i] < numbers[j]' was changed to 'if numbers[i] > numbers[j]' as required."
         },
         {
           "criterion": "Running sort.py produces [1, 1, 2, 3, 4, 5, 6, 9]",
           "passed": true,
-          "reasoning": "With the corrected > operator, the bubble sort algorithm will now sort in ascending order, producing [1, 1, 2, 3, 4, 5, 6, 9] for the input [3, 1, 4, 1, 5, 9, 2, 6]."
+          "reasoning": "With the corrected > operator, the bubble sort algorithm now sorts in ascending order, which will produce [1, 1, 2, 3, 4, 5, 6, 9] for the input [3, 1, 4, 1, 5, 9, 2, 6]."
         }
       ],
-      "durationMs": 3831,
+      "durationMs": 3789,
       "exitCode": 0,
-      "output": "  Created: sort.py\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=275 output=133 model=claude-opus-4-6\n  Created: sort.py\nTask completed.\n",
+      "estimatedTokens": 21,
+      "inputTokens": 275,
+      "outputTokens": 133,
+      "costUsd": 0.0141
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 3831,
-  "avgTokens": 9,
+  "avgDurationMs": 3789,
+  "p50DurationMs": 3789,
+  "p95DurationMs": 3789,
+  "avgTokens": 21,
+  "avgCostUsd": 0.0141,
   "totalRuns": 1,
   "totalPassed": 1
 }

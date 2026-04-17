@@ -1,0 +1,52 @@
+{
+  "taskName": "Convert JSON to CSV",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named convert.js is created",
+          "passed": true,
+          "reasoning": "The file convert.js is present in the workspace with complete Node.js script content."
+        },
+        {
+          "criterion": "A file named sample.json is created with test data",
+          "passed": true,
+          "reasoning": "The file sample.json is present with the exact example data specified in the task description."
+        },
+        {
+          "criterion": "The script reads JSON and outputs CSV format",
+          "passed": true,
+          "reasoning": "The script reads a file path from argv, parses it as JSON, and outputs comma-separated values with proper escaping for values containing commas."
+        },
+        {
+          "criterion": "CSV includes a header row derived from object keys",
+          "passed": true,
+          "reasoning": "The jsonToCsv function collects all unique keys from the objects and outputs them as the first line of the CSV output."
+        },
+        {
+          "criterion": "The script handles the case where no argument is provided",
+          "passed": true,
+          "reasoning": "The main function checks if args.length < 1 and prints 'Usage: node convert.js <input.json>' to stderr before exiting with code 1."
+        }
+      ],
+      "durationMs": 8583,
+      "exitCode": 0,
+      "output": "USAGE: input=356 output=864 model=claude-opus-4-7\n  Created: convert.js\n  Created: sample.json\nTask completed.\n",
+      "estimatedTokens": 28,
+      "inputTokens": 356,
+      "outputTokens": 864,
+      "costUsd": 0.07014
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 8583,
+  "p50DurationMs": 8583,
+  "p95DurationMs": 8583,
+  "avgTokens": 28,
+  "avgCostUsd": 0.07014,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

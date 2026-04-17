@@ -55,6 +55,21 @@ if [ -z "$CONTENT" ]; then
   exit 1
 fi
 
+# Emit real token usage so the eval engine can compute accurate $ cost.
+# The engine parses lines matching `USAGE: input=<n> output=<m> model=<id>`.
+echo "$RESPONSE" | python3 -c "
+import json, sys, os
+try:
+    d = json.load(sys.stdin)
+    u = d.get('usage', {})
+    inp = int(u.get('input_tokens', 0))
+    out = int(u.get('output_tokens', 0))
+    if inp or out:
+        print(f'USAGE: input={inp} output={out} model={os.environ.get(\"AGENT_MODEL\", \"\")}')
+except Exception:
+    pass
+"
+
 # Parse and write files using python (more reliable than awk)
 python3 -c "
 import sys

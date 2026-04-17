@@ -9,33 +9,39 @@
         {
           "criterion": "The file report.js is modified",
           "passed": true,
-          "reasoning": "The report.js file has been rewritten with a new structure including a helper function, confirming it was modified."
+          "reasoning": "The file report.js was created/modified with refactored code that differs from the original."
         },
         {
           "criterion": "A helper function is extracted for table generation",
           "passed": true,
-          "reasoning": "A helper function called generateTable(title, items) has been extracted that encapsulates the table-generation logic."
+          "reasoning": "A helper function called generateTableSection(title, items) was extracted to handle the repeated table-generation logic."
         },
         {
           "criterion": "The three report sections use the helper instead of duplicated code",
           "passed": true,
-          "reasoning": "The generateReport function now calls generateTable three times for Sales, Inventory, and Returns reports instead of duplicating the table-building code."
+          "reasoning": "All three report sections (Sales, Inventory, Returns) now call generateTableSection instead of containing duplicated inline code."
         },
         {
           "criterion": "The refactored code produces the same HTML output as the original",
           "passed": true,
-          "reasoning": "The helper function generates the same h2 heading and table HTML structure with the same header row and item rows as the original, and the outer html/body tags are preserved, so the output is identical."
+          "reasoning": "The helper function generates identical HTML structure (h2 title, table with header row, and rows for each item's name/amount/status) as the original, and the generateReport function wraps them in the same html/body tags."
         }
       ],
-      "durationMs": 2426,
+      "durationMs": 3020,
       "exitCode": 0,
-      "output": "  Created: report.js\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=556 output=251 model=claude-haiku-4-5\n  Created: report.js\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 556,
+      "outputTokens": 251,
+      "costUsd": 0.0018110000000000001
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 2426,
-  "avgTokens": 9,
+  "avgDurationMs": 3020,
+  "p50DurationMs": 3020,
+  "p95DurationMs": 3020,
+  "avgTokens": 22,
+  "avgCostUsd": 0.0018110000000000001,
   "totalRuns": 1,
   "totalPassed": 1
 }

@@ -1,7 +1,12 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
 import type { Metadata } from "next";
-import { getAllTaskIds, getTaskDetails } from "@/lib/data";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { CopyCommand } from "@/components/copy-command";
+import {
+  getAllTaskIds,
+  getTaskDetails,
+  type TaskAgentDetail,
+} from "@/lib/data";
 
 // Generate static pages for all tasks
 export function generateStaticParams() {
@@ -50,7 +55,7 @@ export default async function TaskPage({
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">{task.taskName}</h1>
-        <div className="flex flex-wrap gap-4 text-sm text-[var(--color-text-dim)]">
+        <div className="flex flex-wrap gap-4 text-sm text-[var(--color-text-dim)] mb-6">
           <span>
             <span
               className={
@@ -65,12 +70,16 @@ export default async function TaskPage({
           </span>
           {fastest && (
             <span>
-              Fastest:{" "}
-              <span className="text-white">{fastest.model}</span> (
+              Fastest: <span className="text-white">{fastest.model}</span> (
               {(fastest.avgDurationMs / 1000).toFixed(1)}s)
             </span>
           )}
         </div>
+
+        <CopyCommand
+          command={`npx @agenthunter/eval task --task tasks/${id}.yaml`}
+          hint="Runs this task against your agent and scores the output with the same rubric."
+        />
       </div>
 
       {/* Agent comparison */}
@@ -131,6 +140,9 @@ export default async function TaskPage({
         </div>
       </section>
 
+      {/* Criteria matrix — which criterion each agent passed/failed */}
+      <CriteriaMatrix agents={task.agents} />
+
       {/* Speed comparison */}
       <section>
         <h2 className="text-xl font-semibold mb-4">Speed Comparison</h2>
@@ -142,9 +154,7 @@ export default async function TaskPage({
                 ...task.agents.map((a) => a.avgDurationMs),
               );
               const pct =
-                maxTime > 0
-                  ? (agent.avgDurationMs / maxTime) * 100
-                  : 0;
+                maxTime > 0 ? (agent.avgDurationMs / maxTime) * 100 : 0;
 
               return (
                 <div
@@ -169,5 +179,95 @@ export default async function TaskPage({
         </div>
       </section>
     </div>
+  );
+}
+
+// Combine each agent's criteria into a unified, de-duplicated list so we can
+// render a matrix of criterion × agent. If an agent lacks detailed criteria
+// (older reports), its column shows a neutral dash for that row.
+function buildCriteriaMatrix(agents: TaskAgentDetail[]) {
+  const seen = new Map<string, number>();
+  const criteria: string[] = [];
+  for (const agent of agents) {
+    for (const c of agent.criteria) {
+      if (!seen.has(c.criterion)) {
+        seen.set(c.criterion, criteria.length);
+        criteria.push(c.criterion);
+      }
+    }
+  }
+  return criteria;
+}
+
+function CriteriaMatrix({ agents }: { agents: TaskAgentDetail[] }) {
+  const criteria = buildCriteriaMatrix(agents);
+  if (criteria.length === 0) return null;
+
+  return (
+    <section className="mb-8">
+      <h2 className="text-xl font-semibold mb-2">Failure Attribution</h2>
+      <p className="text-sm text-[var(--color-text-dim)] mb-4">
+        Which individual success criterion each agent passed. A single failure
+        flips the whole task to "fail" — this table shows why.
+      </p>
+
+      <div className="overflow-x-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">
+              <th className="py-3 px-3 text-left font-normal">Criterion</th>
+              {agents.map((a) => (
+                <th
+                  key={a.agent}
+                  className="py-3 px-3 text-center font-normal whitespace-nowrap"
+                >
+                  {a.model}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {criteria.map((criterion) => (
+              <tr
+                key={criterion}
+                className="border-b border-[var(--color-border)]/50 last:border-b-0"
+              >
+                <td className="py-3 px-3 text-[var(--color-text-dim)]">
+                  {criterion}
+                </td>
+                {agents.map((a) => {
+                  const match = a.criteria.find(
+                    (c) => c.criterion === criterion,
+                  );
+                  if (!match) {
+                    return (
+                      <td
+                        key={a.agent}
+                        className="py-3 px-3 text-center text-[var(--color-text-dim)]/40"
+                      >
+                        {"\u2014"}
+                      </td>
+                    );
+                  }
+                  return (
+                    <td
+                      key={a.agent}
+                      className="py-3 px-3 text-center"
+                      title={match.reasoning}
+                    >
+                      {match.passed ? (
+                        <span className="text-emerald-400">{"\u2713"}</span>
+                      ) : (
+                        <span className="text-red-400">{"\u2717"}</span>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }

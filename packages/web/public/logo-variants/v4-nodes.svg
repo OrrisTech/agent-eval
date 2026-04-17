@@ -1,0 +1,19 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="currentColor">
+    <!-- Edges (primary) -->
+    <path d="M 25 70 Q 40 55, 55 45" stroke-width="2.5"/>
+    <path d="M 55 45 Q 70 35, 80 25" stroke-width="2.5"/>
+    <!-- Edge (accent, dashed) from central hub to secondary -->
+    <path d="M 55 45 Q 45 30, 35 22" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/>
+    <!-- Edge (subtle) -->
+    <path d="M 25 70 Q 50 80, 75 75" stroke-width="1.5" opacity="0.35"/>
+  </g>
+  <!-- Nodes -->
+  <circle cx="25" cy="70" r="5" fill="currentColor"/>
+  <circle cx="80" cy="25" r="5" fill="currentColor"/>
+  <circle cx="35" cy="22" r="3.5" fill="currentColor" opacity="0.55"/>
+  <circle cx="75" cy="75" r="3.5" fill="currentColor" opacity="0.45"/>
+  <!-- Central hub (evaluation node) with halo -->
+  <circle cx="55" cy="45" r="11" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+  <circle cx="55" cy="45" r="7" fill="currentColor"/>
+</svg>

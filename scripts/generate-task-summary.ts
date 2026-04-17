@@ -1,20 +1,21 @@
 /**
  * Generate a task summary JSON from all agent task results.
  *
- * Reads: results/tasks-{agent}/*/task-report.json
+ * Reads: results/tasks-<agent>/<taskId>/task-report.json
  * Outputs: results/task-summary.json
  */
 
-const {
+import {
   existsSync,
   readFileSync,
   readdirSync,
   writeFileSync,
-} = require("node:fs");
-const { join } = require("node:path");
+} from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const __dirname = __dirname ?? process.cwd() + "/scripts";
-const RESULTS_DIR = join(__dirname, "..", "results");
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+const RESULTS_DIR = join(SCRIPT_DIR, "..", "results");
 
 interface TaskReport {
   taskName: string;
@@ -23,6 +24,9 @@ interface TaskReport {
     success: boolean;
     durationMs: number;
     estimatedTokens: number;
+    inputTokens?: number;
+    outputTokens?: number;
+    costUsd?: number;
     criteriaResults: Array<{
       criterion: string;
       passed: boolean;
@@ -30,6 +34,10 @@ interface TaskReport {
   }>;
   successRate: number;
   avgDurationMs: number;
+  // Optional fields — older reports may not have these, so we compute fallbacks
+  p50DurationMs?: number;
+  p95DurationMs?: number;
+  avgCostUsd?: number;
   avgTokens: number;
   totalRuns: number;
   totalPassed: number;
@@ -44,13 +52,18 @@ interface AgentTaskSummary {
     passed: boolean;
     successRate: number;
     avgDurationMs: number;
+    p50DurationMs: number;
+    p95DurationMs: number;
     avgTokens: number;
+    avgCostUsd: number;
     criteriaTotal: number;
     criteriaPassed: number;
   }>;
   overallPassRate: number;
   avgDuration: number;
   avgTokens: number;
+  /** Total USD cost to run this agent across all tasks */
+  totalCostUsd: number;
 }
 
 // Find all task-* directories in results/
@@ -67,11 +80,12 @@ for (const agentDir of agentDirs) {
     existsSync(join(agentPath, d, "task-report.json")),
   );
 
-  // Determine model from agent name
+  // Determine model from agent name — keep in sync with current latest models
   const modelMap: Record<string, string> = {
-    sonnet: "Claude Sonnet 4",
+    sonnet: "Claude Sonnet 4.6",
     haiku: "Claude Haiku 4.5",
-    opus: "Claude Opus 4",
+    opus: "Claude Opus 4.6",
+    "opus-4-7": "Claude Opus 4.7",
   };
   const model = modelMap[agentName] ?? agentName;
 
@@ -88,13 +102,27 @@ for (const agentDir of agentDirs) {
       const criteriaPassed =
         firstRun?.criteriaResults.filter((c) => c.passed).length ?? 0;
 
+      // Derive percentiles from per-run durations so old reports (which don't
+      // have the fields) still get sensible values.
+      const durations = report.runs
+        .map((r) => r.durationMs)
+        .filter((d): d is number => typeof d === "number")
+        .sort((a, b) => a - b);
+      const p50 =
+        report.p50DurationMs ?? percentile(durations, 50) ?? report.avgDurationMs;
+      const p95 =
+        report.p95DurationMs ?? percentile(durations, 95) ?? report.avgDurationMs;
+
       tasks.push({
         taskId: taskDir,
         taskName: report.taskName,
         passed: report.totalPassed > 0,
         successRate: report.successRate,
         avgDurationMs: report.avgDurationMs,
+        p50DurationMs: p50,
+        p95DurationMs: p95,
         avgTokens: report.avgTokens,
+        avgCostUsd: report.avgCostUsd ?? 0,
         criteriaTotal,
         criteriaPassed,
       });
@@ -112,6 +140,7 @@ for (const agentDir of agentDirs) {
     tasks.length > 0
       ? Math.round(tasks.reduce((s, t) => s + t.avgTokens, 0) / tasks.length)
       : 0;
+  const totalCostUsd = tasks.reduce((s, t) => s + (t.avgCostUsd ?? 0), 0);
 
   agents.push({
     agent: agentName,
@@ -120,7 +149,20 @@ for (const agentDir of agentDirs) {
     overallPassRate: tasks.length > 0 ? passedTasks / tasks.length : 0,
     avgDuration,
     avgTokens,
+    totalCostUsd,
   });
+}
+
+// Linear-interpolation percentile (matches numpy default). Returns undefined
+// on empty input so callers can fall back to other fields.
+function percentile(sorted: number[], p: number): number | undefined {
+  if (sorted.length === 0) return undefined;
+  if (sorted.length === 1) return Math.round(sorted[0]!);
+  const rank = (p / 100) * (sorted.length - 1);
+  const lo = Math.floor(rank);
+  const hi = Math.ceil(rank);
+  const weight = rank - lo;
+  return Math.round(sorted[lo]! * (1 - weight) + sorted[hi]! * weight);
 }
 
 // Write summary

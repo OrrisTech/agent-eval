@@ -9,17 +9,17 @@
         {
           "criterion": "A file named wordcount.js is created",
           "passed": true,
-          "reasoning": "The workspace contains a file named wordcount.js as shown in the files listing."
+          "reasoning": "The workspace contains a file named wordcount.js as confirmed by the file listing and its contents."
         },
         {
           "criterion": "The script is valid JavaScript or TypeScript that can run with Node.js",
           "passed": true,
-          "reasoning": "The script uses valid Node.js syntax with proper require statements, fs.readFile, and process.argv handling."
+          "reasoning": "The script uses valid Node.js syntax with require('fs'), process.argv, and fs.readFile, all standard Node.js APIs."
         },
         {
           "criterion": "Running the script with a text file produces word/line/character counts",
           "passed": true,
-          "reasoning": "The script reads a file, counts lines by splitting on newlines, words by splitting on whitespace, and characters by data.length, then prints them in the required format 'Lines: X, Words: Y, Characters: Z'."
+          "reasoning": "The script reads a file and outputs counts in the required format 'Lines: X, Words: Y, Characters: Z' using split operations for lines and words."
         },
         {
           "criterion": "Running without arguments shows a usage message",
@@ -27,15 +27,21 @@
           "reasoning": "The script checks if process.argv.length < 3 and prints 'Usage: node wordcount.js <file>' when no argument is provided."
         }
       ],
-      "durationMs": 2422,
+      "durationMs": 2713,
       "exitCode": 0,
-      "output": "  Created: wordcount.js\nTask completed.\n",
-      "estimatedTokens": 10
+      "output": "USAGE: input=168 output=268 model=claude-haiku-4-5\n  Created: wordcount.js\nTask completed.\n",
+      "estimatedTokens": 23,
+      "inputTokens": 168,
+      "outputTokens": 268,
+      "costUsd": 0.001508
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 2422,
-  "avgTokens": 10,
+  "avgDurationMs": 2713,
+  "p50DurationMs": 2713,
+  "p95DurationMs": 2713,
+  "avgTokens": 23,
+  "avgCostUsd": 0.001508,
   "totalRuns": 1,
   "totalPassed": 1
 }

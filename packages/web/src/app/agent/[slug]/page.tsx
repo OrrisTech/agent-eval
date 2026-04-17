@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
 import type { Metadata } from "next";
-import { getAgent, getAllSlugs } from "@/lib/data";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { RadarChart } from "@/components/radar-chart";
 import { ScoreBadge } from "@/components/score-badge";
 import { ScoreBar } from "@/components/score-bar";
-import { RadarChart } from "@/components/radar-chart";
 import { ToolCard } from "@/components/tool-card";
+import { getAgent, getAllSlugs } from "@/lib/data";
 
 // Generate static pages for all evaluated agents
 export function generateStaticParams() {
@@ -100,21 +100,13 @@ export default async function AgentPage({
 
         {/* Score bars */}
         <div className="space-y-4 p-6 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
-          <ScoreBar
-            label="Capability"
-            score={scores.capability}
-            weight="30%"
-          />
+          <ScoreBar label="Capability" score={scores.capability} weight="30%" />
           <ScoreBar
             label="Reliability"
             score={scores.reliability}
             weight="25%"
           />
-          <ScoreBar
-            label="Efficiency"
-            score={scores.efficiency}
-            weight="20%"
-          />
+          <ScoreBar label="Efficiency" score={scores.efficiency} weight="20%" />
           <ScoreBar label="Safety" score={scores.safety} weight="15%" />
           <ScoreBar
             label="Dev Experience"
@@ -129,7 +121,10 @@ export default async function AgentPage({
         {[
           { label: "Tools", value: tools.length },
           { label: "Tasks", value: execution.totalTasks },
-          { label: "Success Rate", value: `${Math.round(execution.overallSuccessRate * 100)}%` },
+          {
+            label: "Success Rate",
+            value: `${Math.round(execution.overallSuccessRate * 100)}%`,
+          },
           { label: "Avg Latency", value: `${execution.latency.avgMs}ms` },
         ].map((stat) => (
           <div
@@ -146,9 +141,7 @@ export default async function AgentPage({
 
       {/* Tools */}
       <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-4">
-          Tools ({tools.length})
-        </h2>
+        <h2 className="text-xl font-semibold mb-4">Tools ({tools.length})</h2>
         <div className="grid md:grid-cols-2 gap-3">
           {tools.map((tool) => (
             <ToolCard key={tool.name} tool={tool} />
@@ -176,9 +169,9 @@ export default async function AgentPage({
                 </tr>
               </thead>
               <tbody>
-                {scores.taskScores.map((ts, i) => (
+                {scores.taskScores.map((ts) => (
                   <tr
-                    key={i}
+                    key={`${ts.toolName}-${ts.difficulty}`}
                     className="border-b border-[var(--color-border)]/50"
                   >
                     <td className="py-2 px-4 font-mono text-xs">

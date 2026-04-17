@@ -14,7 +14,7 @@
         {
           "criterion": "Contains a concise executive summary paragraph",
           "passed": true,
-          "reasoning": "The file includes an EXECUTIVE SUMMARY section with a 3-sentence paragraph accurately describing MCP."
+          "reasoning": "The file contains an EXECUTIVE SUMMARY section with a 3-sentence paragraph accurately describing MCP."
         },
         {
           "criterion": "Lists key points as bullet points",
@@ -24,23 +24,29 @@
         {
           "criterion": "Mentions the adoption stats (10,000 servers, 97M downloads)",
           "passed": true,
-          "reasoning": "The ADOPTION STATUS section explicitly states 'over 10,000 registered MCP servers and 97 million monthly SDK downloads.'"
+          "reasoning": "The ADOPTION STATUS section explicitly states 'over 10,000 registered servers and 97 million monthly SDK downloads.'"
         },
         {
           "criterion": "Accurately represents the document content without hallucination",
           "passed": true,
-          "reasoning": "All claims in the summary are directly supported by the source document with no fabricated information."
+          "reasoning": "All information in the summary accurately reflects the source document with no fabricated details, correctly identifying JSON-RPC 2.0, the three capability types, security considerations, and the Linux Foundation connection."
         }
       ],
-      "durationMs": 3646,
+      "durationMs": 4144,
       "exitCode": 0,
-      "output": "  Created: summary.txt\nTask completed.\n",
-      "estimatedTokens": 10
+      "output": "USAGE: input=409 output=317 model=claude-haiku-4-5\n  Created: summary.txt\nTask completed.\n",
+      "estimatedTokens": 23,
+      "inputTokens": 409,
+      "outputTokens": 317,
+      "costUsd": 0.001994
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 3646,
-  "avgTokens": 10,
+  "avgDurationMs": 4144,
+  "p50DurationMs": 4144,
+  "p95DurationMs": 4144,
+  "avgTokens": 23,
+  "avgCostUsd": 0.001994,
   "totalRuns": 1,
   "totalPassed": 1
 }

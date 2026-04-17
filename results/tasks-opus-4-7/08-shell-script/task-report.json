@@ -1,0 +1,57 @@
+{
+  "taskName": "Create a backup automation script",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named backup.sh is created",
+          "passed": true,
+          "reasoning": "The file backup.sh is listed in the workspace files with its content shown."
+        },
+        {
+          "criterion": "The script has a proper shebang line (#!/bin/bash)",
+          "passed": true,
+          "reasoning": "The first line of backup.sh is '#!/bin/bash'."
+        },
+        {
+          "criterion": "It validates that a source directory argument is provided",
+          "passed": true,
+          "reasoning": "The script checks 'if [ $# -lt 1 ]' and prints usage with exit code 1 if no argument is provided."
+        },
+        {
+          "criterion": "It checks that the source directory exists",
+          "passed": true,
+          "reasoning": "The script uses 'if [ ! -d \"$SOURCE\" ]' to verify the source directory exists, printing an error and exiting with code 1 if not."
+        },
+        {
+          "criterion": "It creates a timestamped tar.gz archive",
+          "passed": true,
+          "reasoning": "The script uses 'date +\"%Y-%m-%d-%H%M%S\"' to generate a timestamp and creates a file named 'backup-$TIMESTAMP.tar.gz' in the ./backups/ directory using tar -czf."
+        },
+        {
+          "criterion": "It handles errors with appropriate exit codes",
+          "passed": true,
+          "reasoning": "The script exits with code 1 on all failure conditions (missing argument, non-existent directory, failed backup dir creation, failed tar) and exits with code 0 on success."
+        }
+      ],
+      "durationMs": 5284,
+      "exitCode": 0,
+      "output": "USAGE: input=297 output=425 model=claude-opus-4-7\n  Created: backup.sh\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 297,
+      "outputTokens": 425,
+      "costUsd": 0.03633
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 5284,
+  "p50DurationMs": 5284,
+  "p95DurationMs": 5284,
+  "avgTokens": 22,
+  "avgCostUsd": 0.03633,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

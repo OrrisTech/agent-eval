@@ -9,17 +9,17 @@
         {
           "criterion": "A file named summary.txt is created",
           "passed": true,
-          "reasoning": "The workspace files show summary.txt was created and its contents are visible."
+          "reasoning": "The workspace confirms summary.txt was created and its contents are visible."
         },
         {
           "criterion": "Contains a concise executive summary paragraph",
           "passed": true,
-          "reasoning": "The file contains a clearly labeled 'Executive Summary' section with 4 sentences covering the protocol's purpose, structure, security, and governance."
+          "reasoning": "The file includes a clearly labeled 'Executive Summary' section with 4 sentences covering the protocol's purpose, structure, security, and governance."
         },
         {
           "criterion": "Lists key points as bullet points",
           "passed": true,
-          "reasoning": "The file contains a 'Key Points' section with 7 bullet points covering tools, clients, transport, negotiation, security, governance, and JSON Schema."
+          "reasoning": "The file contains a 'Key Points' section with 6 bullet points covering transport, capabilities, security, and governance."
         },
         {
           "criterion": "Mentions the adoption stats (10,000 servers, 97M downloads)",
@@ -29,18 +29,24 @@
         {
           "criterion": "Accurately represents the document content without hallucination",
           "passed": true,
-          "reasoning": "All information in the summary (transport types, components, security practices, governance, adoption figures) is directly sourced from the provided document with no fabricated details."
+          "reasoning": "All information in the summary directly corresponds to content in the source document, with no fabricated facts or unsupported claims introduced."
         }
       ],
-      "durationMs": 8052,
+      "durationMs": 7980,
       "exitCode": 0,
-      "output": "  Created: summary.txt\nTask completed.\n",
-      "estimatedTokens": 10
+      "output": "USAGE: input=409 output=388 model=claude-sonnet-4-6\n  Created: summary.txt\nTask completed.\n",
+      "estimatedTokens": 23,
+      "inputTokens": 409,
+      "outputTokens": 388,
+      "costUsd": 0.0070469999999999994
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 8052,
-  "avgTokens": 10,
+  "avgDurationMs": 7980,
+  "p50DurationMs": 7980,
+  "p95DurationMs": 7980,
+  "avgTokens": 23,
+  "avgCostUsd": 0.0070469999999999994,
   "totalRuns": 1,
   "totalPassed": 1
 }

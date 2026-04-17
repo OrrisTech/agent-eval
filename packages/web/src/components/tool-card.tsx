@@ -2,7 +2,8 @@ import type { ToolInfo } from "@/lib/types";
 
 export function ToolCard({ tool }: { tool: ToolInfo }) {
   const schema = tool.inputSchema;
-  const properties = (schema.properties as Record<string, Record<string, unknown>>) || {};
+  const properties =
+    (schema.properties as Record<string, Record<string, unknown>>) || {};
   const propNames = Object.keys(properties);
   const required = (schema.required as string[]) || [];
 

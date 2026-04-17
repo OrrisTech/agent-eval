@@ -80,11 +80,16 @@ export interface AgentTaskSummary {
     passed: boolean;
     successRate: number;
     avgDurationMs: number;
+    // Percentile fields are optional — older reports may not have them
+    p50DurationMs?: number;
+    p95DurationMs?: number;
     avgTokens: number;
+    avgCostUsd?: number;
     criteriaTotal: number;
     criteriaPassed: number;
   }>;
   overallPassRate: number;
   avgDuration: number;
   avgTokens: number;
+  totalCostUsd?: number;
 }

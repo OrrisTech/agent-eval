@@ -14,38 +14,44 @@
         {
           "criterion": "The email addresses Sarah Chen at Acme Corp",
           "passed": true,
-          "reasoning": "The email opens with 'Dear Sarah' and references 'Acme Corp's requirements' in the body."
+          "reasoning": "The email opens with 'Dear Sarah,' and references 'Acme Corp' explicitly in the body."
         },
         {
           "criterion": "It explains a 2-week delay with the new March 29 deadline",
           "passed": true,
-          "reasoning": "The email explicitly states the original March 15 deadline is extended by two weeks to March 29."
+          "reasoning": "The email clearly states the project is extended by two weeks, moving from March 15 to March 29."
         },
         {
           "criterion": "It mentions the third-party API integration issue as the reason",
           "passed": true,
-          "reasoning": "The email clearly explains that unexpected integration issues with a third-party API caused the delay, including details about undocumented API changes."
+          "reasoning": "The email explicitly states the delay is due to 'unexpected integration issues we encountered with a third-party API.'"
         },
         {
           "criterion": "It offers weekly progress calls as mitigation",
           "passed": true,
-          "reasoning": "The email explicitly proposes scheduling weekly progress calls to keep the client informed and maintain transparency."
+          "reasoning": "The email proposes 'a weekly progress call' to maintain transparency and keep the client informed."
         },
         {
           "criterion": "The tone is professional and apologetic but confident",
           "passed": true,
-          "reasoning": "The email maintains a professional tone throughout, acknowledges the issue with sincerity and appreciation for understanding, while expressing confidence in delivering a quality solution."
+          "reasoning": "The email maintains a professional tone throughout, includes a sincere apology, and expresses confidence in delivering a 'stable, high-quality product' by the revised deadline."
         }
       ],
-      "durationMs": 10639,
+      "durationMs": 12407,
       "exitCode": 0,
-      "output": "  Created: email.txt\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=186 output=395 model=claude-opus-4-6\n  Created: email.txt\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 186,
+      "outputTokens": 395,
+      "costUsd": 0.032415
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 10639,
-  "avgTokens": 9,
+  "avgDurationMs": 12407,
+  "p50DurationMs": 12407,
+  "p95DurationMs": 12407,
+  "avgTokens": 22,
+  "avgCostUsd": 0.032415,
   "totalRuns": 1,
   "totalPassed": 1
 }

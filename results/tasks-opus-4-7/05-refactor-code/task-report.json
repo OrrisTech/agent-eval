@@ -1,0 +1,47 @@
+{
+  "taskName": "Refactor repetitive code",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "The file report.js is modified",
+          "passed": true,
+          "reasoning": "The report.js file was created/modified with refactored code replacing the original repetitive implementation."
+        },
+        {
+          "criterion": "A helper function is extracted for table generation",
+          "passed": true,
+          "reasoning": "A `generateTable` function was extracted that handles the table HTML generation with header and rows, and an additional `generateSection` helper was also added."
+        },
+        {
+          "criterion": "The three report sections use the helper instead of duplicated code",
+          "passed": true,
+          "reasoning": "All three report sections (Sales, Inventory, Returns) now call `generateSection` which internally calls `generateTable`, eliminating the duplicated code."
+        },
+        {
+          "criterion": "The refactored code produces the same HTML output as the original",
+          "passed": true,
+          "reasoning": "The refactored code constructs identical HTML with the same structure: h2 tags with section titles followed by tables with the same headers and row format, wrapped in html/body tags."
+        }
+      ],
+      "durationMs": 5850,
+      "exitCode": 0,
+      "output": "USAGE: input=724 output=337 model=claude-opus-4-7\n  Created: report.js\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 724,
+      "outputTokens": 337,
+      "costUsd": 0.036135
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 5850,
+  "p50DurationMs": 5850,
+  "p95DurationMs": 5850,
+  "avgTokens": 22,
+  "avgCostUsd": 0.036135,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

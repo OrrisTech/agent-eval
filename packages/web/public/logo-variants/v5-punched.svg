@@ -1,0 +1,25 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="punch-mask">
+      <rect width="100" height="100" fill="white"/>
+      <!-- Punched dot grid (asymmetric) -->
+      <circle cx="38" cy="38" r="2.2" fill="black"/>
+      <circle cx="50" cy="38" r="2.2" fill="black"/>
+      <circle cx="62" cy="38" r="2.2" fill="black"/>
+      <circle cx="38" cy="50" r="2.2" fill="black"/>
+      <circle cx="62" cy="50" r="2.2" fill="black"/>
+      <circle cx="38" cy="62" r="2.2" fill="black"/>
+      <circle cx="50" cy="62" r="2.2" fill="black"/>
+      <circle cx="62" cy="62" r="2.2" fill="black"/>
+      <!-- Extra accent dots (outer ring, asymmetric) -->
+      <circle cx="50" cy="26" r="1.8" fill="black"/>
+      <circle cx="74" cy="50" r="1.8" fill="black"/>
+      <circle cx="26" cy="50" r="1.8" fill="black"/>
+      <circle cx="50" cy="74" r="1.8" fill="black"/>
+      <!-- Central void (larger) -->
+      <circle cx="50" cy="50" r="4.5" fill="black"/>
+    </mask>
+  </defs>
+  <!-- Solid disc with punched dots -->
+  <circle cx="50" cy="50" r="32" fill="currentColor" mask="url(#punch-mask)"/>
+</svg>

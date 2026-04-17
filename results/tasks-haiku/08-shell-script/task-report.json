@@ -9,43 +9,49 @@
         {
           "criterion": "A file named backup.sh is created",
           "passed": true,
-          "reasoning": "The workspace contains a file named backup.sh as confirmed by the file listing."
+          "reasoning": "The workspace shows backup.sh was created and its contents are visible."
         },
         {
           "criterion": "The script has a proper shebang line (#!/bin/bash)",
           "passed": true,
-          "reasoning": "The first line of backup.sh is '#!/bin/bash', which is the correct shebang for a bash script."
+          "reasoning": "The first line of backup.sh is '#!/bin/bash'."
         },
         {
           "criterion": "It validates that a source directory argument is provided",
           "passed": true,
-          "reasoning": "The script checks 'if [ $# -eq 0 ]' and prints usage/error message then exits with code 1 if no argument is provided."
+          "reasoning": "The script checks 'if [ $# -eq 0 ]' and prints usage information with exit code 1 if no argument is provided."
         },
         {
           "criterion": "It checks that the source directory exists",
           "passed": true,
-          "reasoning": "The script checks 'if [ ! -d \"$SOURCE_DIR\" ]' and prints an error message with exit code 1 if the directory doesn't exist."
+          "reasoning": "The script checks 'if [ ! -d \"$SOURCE_DIR\" ]' and exits with code 1 and an error message if the directory doesn't exist."
         },
         {
           "criterion": "It creates a timestamped tar.gz archive",
           "passed": true,
-          "reasoning": "The script generates a timestamp using 'date +\"%Y-%m-%d-%H%M%S\"' and creates a tar.gz file with the format 'backup-YYYY-MM-DD-HHMMSS.tar.gz' in the ./backups/ directory, which is created if it doesn't exist."
+          "reasoning": "The script generates a timestamp with 'date +\"%Y-%m-%d-%H%M%S\"' and creates a tar.gz file named 'backup-${TIMESTAMP}.tar.gz' in the ./backups/ directory, printing 'Backup created: <filename>' on success."
         },
         {
           "criterion": "It handles errors with appropriate exit codes",
           "passed": true,
-          "reasoning": "The script exits with code 1 for missing arguments, non-existent source directory, failed backups directory creation, and failed tar archive creation, while printing descriptive 'Error: <message>' messages."
+          "reasoning": "The script exits with code 1 for missing arguments, non-existent source directory, failure to create backups directory, and failure to create the tar archive, printing 'Error: <message>' in each case."
         }
       ],
-      "durationMs": 2965,
+      "durationMs": 3314,
       "exitCode": 0,
-      "output": "  Created: backup.sh\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=220 output=359 model=claude-haiku-4-5\n  Created: backup.sh\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 220,
+      "outputTokens": 359,
+      "costUsd": 0.002015
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 2965,
-  "avgTokens": 9,
+  "avgDurationMs": 3314,
+  "p50DurationMs": 3314,
+  "p95DurationMs": 3314,
+  "avgTokens": 22,
+  "avgCostUsd": 0.002015,
   "totalRuns": 1,
   "totalPassed": 1
 }

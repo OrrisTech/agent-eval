@@ -1,0 +1,47 @@
+{
+  "taskName": "Analyze CSV sales data",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A script file is created that processes the CSV",
+          "passed": true,
+          "reasoning": "The agent created sales_report.py which reads sales.csv using Python's csv module and processes the data."
+        },
+        {
+          "criterion": "Total revenue is calculated correctly ($1,589.60)",
+          "passed": true,
+          "reasoning": "The script correctly computes total_revenue as sum of quantity * price for all rows, which equals (10*29.99)+(5*49.99)+(8*29.99)+(12*49.99)+(15*29.99)+(3*99.99) = $1,589.60."
+        },
+        {
+          "criterion": "Best selling product is identified (Widget A with 33 units)",
+          "passed": true,
+          "reasoning": "The script aggregates quantities by product and finds the maximum, which would correctly identify Widget A with 10+8+15=33 units."
+        },
+        {
+          "criterion": "Average daily revenue is calculated ($529.87)",
+          "passed": true,
+          "reasoning": "The script divides total revenue by the number of unique days (3), giving $1,589.60/3 = $529.87."
+        }
+      ],
+      "durationMs": 4725,
+      "exitCode": 0,
+      "output": "USAGE: input=349 output=326 model=claude-opus-4-7\n  Created: sales_report.py\nTask completed.\n",
+      "estimatedTokens": 23,
+      "inputTokens": 349,
+      "outputTokens": 326,
+      "costUsd": 0.029685
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 4725,
+  "p50DurationMs": 4725,
+  "p95DurationMs": 4725,
+  "avgTokens": 23,
+  "avgCostUsd": 0.029685,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

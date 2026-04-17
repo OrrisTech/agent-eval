@@ -1,0 +1,47 @@
+{
+  "taskName": "Create a word count CLI",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file named wordcount.js is created",
+          "passed": true,
+          "reasoning": "The workspace contains a file named wordcount.js as shown in the files listing."
+        },
+        {
+          "criterion": "The script is valid JavaScript or TypeScript that can run with Node.js",
+          "passed": true,
+          "reasoning": "The script uses valid Node.js JavaScript with proper require statements, try/catch error handling, and standard Node.js APIs."
+        },
+        {
+          "criterion": "Running the script with a text file produces word/line/character counts",
+          "passed": true,
+          "reasoning": "The script reads a file, splits by newlines for line count, splits by whitespace for word count, and uses content.length for character count, then prints in the required format 'Lines: X, Words: Y, Characters: Z'."
+        },
+        {
+          "criterion": "Running without arguments shows a usage message",
+          "passed": true,
+          "reasoning": "When no arguments are provided (args.length === 0), the script prints 'Usage: node wordcount.js <file>' and exits."
+        }
+      ],
+      "durationMs": 4115,
+      "exitCode": 0,
+      "output": "USAGE: input=223 output=270 model=claude-opus-4-7\n  Created: wordcount.js\nTask completed.\n",
+      "estimatedTokens": 23,
+      "inputTokens": 223,
+      "outputTokens": 270,
+      "costUsd": 0.023595
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 4115,
+  "p50DurationMs": 4115,
+  "p95DurationMs": 4115,
+  "avgTokens": 23,
+  "avgCostUsd": 0.023595,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

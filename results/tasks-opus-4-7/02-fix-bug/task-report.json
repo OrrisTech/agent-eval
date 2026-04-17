@@ -1,0 +1,42 @@
+{
+  "taskName": "Fix the sorting bug",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "The file sort.py is modified",
+          "passed": true,
+          "reasoning": "The sort.py file was modified, changing the comparison operator from < to >."
+        },
+        {
+          "criterion": "The comparison operator is changed from < to >",
+          "passed": true,
+          "reasoning": "The file content shows the condition is now 'if numbers[i] > numbers[j]' instead of the original 'if numbers[i] < numbers[j]'."
+        },
+        {
+          "criterion": "Running sort.py produces [1, 1, 2, 3, 4, 5, 6, 9]",
+          "passed": true,
+          "reasoning": "With the corrected > operator, the bubble sort algorithm now correctly sorts in ascending order, which would produce [1, 1, 2, 3, 4, 5, 6, 9] for the input [3, 1, 4, 1, 5, 9, 2, 6]."
+        }
+      ],
+      "durationMs": 3817,
+      "exitCode": 0,
+      "output": "USAGE: input=360 output=170 model=claude-opus-4-7\n  Created: sort.py\nTask completed.\n",
+      "estimatedTokens": 21,
+      "inputTokens": 360,
+      "outputTokens": 170,
+      "costUsd": 0.01815
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 3817,
+  "p50DurationMs": 3817,
+  "p95DurationMs": 3817,
+  "avgTokens": 21,
+  "avgCostUsd": 0.01815,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

@@ -9,43 +9,49 @@
         {
           "criterion": "A file named email.txt is created",
           "passed": true,
-          "reasoning": "The workspace confirms that email.txt was created and its contents are visible."
+          "reasoning": "The workspace confirms a file named email.txt was created and its contents are visible."
         },
         {
           "criterion": "The email addresses Sarah Chen at Acme Corp",
           "passed": true,
-          "reasoning": "The email opens with 'Dear Sarah' and references Acme Corp multiple times throughout the body."
+          "reasoning": "The email greeting says 'Dear Sarah' and references Acme Corp multiple times in the body."
         },
         {
           "criterion": "It explains a 2-week delay with the new March 29 deadline",
           "passed": true,
-          "reasoning": "The email explicitly states the original deadline of March 15 and the new deadline of March 29, implying a 2-week delay."
+          "reasoning": "The email clearly states the original deadline of March 15 and the revised deadline of March 29, representing a 2-week delay."
         },
         {
           "criterion": "It mentions the third-party API integration issue as the reason",
           "passed": true,
-          "reasoning": "The email clearly states 'unexpected integration issues with a third-party API' as the cause of the delay."
+          "reasoning": "The email explicitly states 'unexpected integration issues with a third-party API' as the cause of the delay."
         },
         {
           "criterion": "It offers weekly progress calls as mitigation",
           "passed": true,
-          "reasoning": "The email explicitly proposes 'weekly progress calls' and explains their purpose in keeping the client informed."
+          "reasoning": "The email proposes 'a weekly progress call' to keep the client informed and addresses any questions during the delay period."
         },
         {
           "criterion": "The tone is professional and apologetic but confident",
           "passed": true,
-          "reasoning": "The email maintains a professional tone throughout, includes sincere apologies, and expresses confidence in delivering a quality product by the new deadline."
+          "reasoning": "The email maintains a professional tone throughout, includes a sincere apology, and expresses confidence in delivering a quality product by the new deadline."
         }
       ],
-      "durationMs": 10340,
+      "durationMs": 9667,
       "exitCode": 0,
-      "output": "  Created: email.txt\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=186 output=391 model=claude-sonnet-4-6\n  Created: email.txt\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 186,
+      "outputTokens": 391,
+      "costUsd": 0.006423000000000001
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 10340,
-  "avgTokens": 9,
+  "avgDurationMs": 9667,
+  "p50DurationMs": 9667,
+  "p95DurationMs": 9667,
+  "avgTokens": 22,
+  "avgCostUsd": 0.006423000000000001,
   "totalRuns": 1,
   "totalPassed": 1
 }

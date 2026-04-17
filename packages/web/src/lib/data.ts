@@ -1,6 +1,6 @@
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import type { AgentSummary, AgentReport, AgentTaskSummary } from "./types";
+import type { AgentReport, AgentSummary, AgentTaskSummary } from "./types";
 
 // Resolve the results directory — works both locally and on Vercel
 const RESULTS_DIR =
@@ -56,19 +56,59 @@ export function getAllTaskIds(): string[] {
   return summary[0]?.tasks.map((t) => t.taskId) ?? [];
 }
 
+export interface CriterionResult {
+  criterion: string;
+  passed: boolean;
+  reasoning?: string;
+}
+
+export interface TaskAgentDetail {
+  agent: string;
+  model: string;
+  passed: boolean;
+  avgDurationMs: number;
+  criteriaTotal: number;
+  criteriaPassed: number;
+  criteria: CriterionResult[];
+}
+
 /**
- * Get detailed results for a single task across all agents.
+ * Read per-criterion results for a given agent's run on a task.
+ * Reports are stored under results/tasks-<agent>/<taskId>/task-report.json;
+ * if the summary slug is already prefixed we try that path first, then fall
+ * back to the `tasks-` prefix. Returns an empty array if nothing is found.
+ */
+function readCriteriaResults(
+  agentSlug: string,
+  taskId: string,
+): CriterionResult[] {
+  const safeAgent = agentSlug.replace(/[^a-zA-Z0-9_-]/g, "");
+  const safeTask = taskId.replace(/[^a-zA-Z0-9_-]/g, "");
+  const candidates = [
+    join(RESULTS_DIR, safeAgent, safeTask, "task-report.json"),
+    join(RESULTS_DIR, `tasks-${safeAgent}`, safeTask, "task-report.json"),
+  ];
+  const reportPath = candidates.find((p) => existsSync(p));
+  if (!reportPath) return [];
+
+  try {
+    const report = JSON.parse(readFileSync(reportPath, "utf-8")) as {
+      runs?: Array<{ criteriaResults?: CriterionResult[] }>;
+    };
+    // Use the first run — eval.runs is 1 in our current task configs
+    return report.runs?.[0]?.criteriaResults ?? [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get detailed results for a single task across all agents, including
+ * per-criterion pass/fail so we can render a failure-attribution matrix.
  */
 export function getTaskDetails(taskId: string): {
   taskName: string;
-  agents: Array<{
-    agent: string;
-    model: string;
-    passed: boolean;
-    avgDurationMs: number;
-    criteriaTotal: number;
-    criteriaPassed: number;
-  }>;
+  agents: TaskAgentDetail[];
 } | null {
   const summary = getTaskSummary();
   if (summary.length === 0) return null;
@@ -76,19 +116,22 @@ export function getTaskDetails(taskId: string): {
   const safeId = taskId.replace(/[^a-zA-Z0-9_-]/g, "");
   let taskName = "";
 
-  const agents = summary.map((agent) => {
-    const task = agent.tasks.find((t) => t.taskId === safeId);
-    if (!task) return null;
-    taskName = task.taskName;
-    return {
-      agent: agent.agent,
-      model: agent.model,
-      passed: task.passed,
-      avgDurationMs: task.avgDurationMs,
-      criteriaTotal: task.criteriaTotal,
-      criteriaPassed: task.criteriaPassed,
-    };
-  }).filter((a): a is NonNullable<typeof a> => a !== null);
+  const agents = summary
+    .map((agent): TaskAgentDetail | null => {
+      const task = agent.tasks.find((t) => t.taskId === safeId);
+      if (!task) return null;
+      taskName = task.taskName;
+      return {
+        agent: agent.agent,
+        model: agent.model,
+        passed: task.passed,
+        avgDurationMs: task.avgDurationMs,
+        criteriaTotal: task.criteriaTotal,
+        criteriaPassed: task.criteriaPassed,
+        criteria: readCriteriaResults(agent.agent, safeId),
+      };
+    })
+    .filter((a): a is TaskAgentDetail => a !== null);
 
   if (agents.length === 0) return null;
   return { taskName, agents };
@@ -104,8 +147,7 @@ export function getAllSlugs(): string[] {
   return readdirSync(RESULTS_DIR, { withFileTypes: true })
     .filter(
       (d) =>
-        d.isDirectory() &&
-        existsSync(join(RESULTS_DIR, d.name, "report.json")),
+        d.isDirectory() && existsSync(join(RESULTS_DIR, d.name, "report.json")),
     )
     .map((d) => d.name);
 }

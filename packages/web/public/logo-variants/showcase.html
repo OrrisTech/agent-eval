@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentHunter Eval — Logo Exploration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --navy: #0a1628;
+    --navy-2: #0f1d35;
+    --navy-3: #162642;
+    --cyan: #00d4ff;
+    --cyan-soft: rgba(0, 212, 255, 0.15);
+    --text: #e6edf3;
+    --muted: rgba(230, 237, 243, 0.55);
+    --dim: rgba(230, 237, 243, 0.28);
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 80px 32px; }
+  header { text-align: center; margin-bottom: 72px; }
+  header h1 { font-weight: 200; font-size: clamp(40px, 6vw, 72px); letter-spacing: 0.04em; margin-bottom: 16px; }
+  header .tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 24px; }
+  header .brand {
+    display: inline-flex; gap: 12px; align-items: center;
+    padding: 6px 14px; border-radius: 999px;
+    background: var(--cyan-soft); color: var(--cyan);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  header .brand::before {
+    content: ''; width: 6px; height: 6px; border-radius: 999px; background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+  }
+  .grid {
+    display: grid; gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  .card {
+    background: linear-gradient(180deg, var(--navy-2), var(--navy-3));
+    border: 1px solid rgba(0, 212, 255, 0.08);
+    border-radius: 18px;
+    padding: 32px;
+    transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { border-color: rgba(0, 212, 255, 0.35); transform: translateY(-4px); }
+  .card::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.08), transparent 60%);
+    opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
+  }
+  .card:hover::after { opacity: 1; }
+  .canvas {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    color: var(--cyan);
+    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.25));
+    margin-bottom: 28px;
+  }
+  .canvas svg { width: 120px; height: 120px; }
+  .label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+  .card h3 { font-weight: 400; font-size: 20px; margin-bottom: 10px; letter-spacing: 0.02em; }
+  .card p { color: var(--muted); font-size: 13px; line-height: 1.7; font-weight: 300; }
+  .sizes {
+    display: flex; gap: 16px; margin-top: 24px;
+    padding-top: 20px; border-top: 1px solid rgba(230, 237, 243, 0.06);
+    align-items: center;
+  }
+  .sizes .s { display: flex; align-items: center; justify-content: center; color: var(--text); opacity: 0.8; }
+  .sizes .s svg { display: block; }
+  .sizes .note { margin-left: auto; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); }
+  footer { margin-top: 80px; text-align: center; }
+  footer p { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--dim); line-height: 2; }
+  .pick {
+    display: inline-block; padding: 2px 10px; border-radius: 4px;
+    background: var(--cyan); color: var(--navy); font-size: 9px;
+    letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+    margin-left: 8px; vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">AgentHunter Eval</div>
+    <h1 style="margin-top: 20px;">Logo Exploration</h1>
+    <div class="tag">Six directions · Dark navy #0a1628 · Electric cyan #00d4ff</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- V1 Reticle -->
+    <div class="card">
+      <div class="canvas">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="currentColor" stroke-linecap="round">
+            <circle cx="50" cy="50" r="32" stroke-width="2.5"/>
+            <circle cx="50" cy="50" r="18" stroke-width="1.5" opacity="0.55"/>
+            <path d="M 12 22 L 12 12 L 22 12" stroke-width="2.5"/>
+            <path d="M 78 12 L 88 12 L 88 22" stroke-width="2.5"/>
+            <path d="M 88 78 L 88 88 L 78 88" stroke-width="2.5"/>
+            <path d="M 22 88 L 12 88 L 12 78" stroke-width="2.5"/>
+            <line x1="50" y1="10" x2="50" y2="20" stroke-width="2"/>
+            <line x1="50" y1="80" x2="50" y2="90" stroke-width="2"/>
+            <line x1="10" y1="50" x2="20" y2="50" stroke-width="2"/>
+            <line x1="80" y1="50" x2="90" y2="50" stroke-width="2"/>
+          </g>
+          <circle cx="50" cy="50" r="4.5" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="label">Variant 01<span class="pick">Recommended</span></div>
+      <h3>Hunter Reticle</h3>
+      <p>Scope brackets + crosshair + target. Reads instantly as "precision evaluation." The corner brackets uniquely suggest "measured in-bounds" — the product's core promise.</p>
+      <div class="sizes">
+        <div class="s" style="color: var(--cyan);">
+          <svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="50" cy="50" r="32" stroke-width="2.5"/><circle cx="50" cy="50" r="18" stroke-width="1.5" opacity="0.55"/><path d="M 12 22 L 12 12 L 22 12" stroke-width="2.5"/><path d="M 78 12 L 88 12 L 88 22" stroke-width="2.5"/><path d="M 88 78 L 88 88 L 78 88" stroke-width="2.5"/><path d="M 22 88 L 12 88 L 12 78" stroke-width="2.5"/><line x1="50" y1="10" x2="50" y2="20" stroke-width="2"/><line x1="50" y1="80" x2="50" y2="90" stroke-width="2"/><line x1="10" y1="50" x2="20" y2="50" stroke-width="2"/><line x1="80" y1="50" x2="90" y2="50" stroke-width="2"/></g><circle cx="50" cy="50" r="4.5" fill="currentColor"/></svg>
+        </div>
+        <div class="s" style="color: var(--cyan);">
+          <svg viewBox="0 0 100 100" width="32" height="32"><g fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="50" cy="50" r="32" stroke-width="2.5"/><path d="M 12 22 L 12 12 L 22 12" stroke-width="2.5"/><path d="M 78 12 L 88 12 L 88 22" stroke-width="2.5"/><path d="M 88 78 L 88 88 L 78 88" stroke-width="2.5"/><path d="M 22 88 L 12 88 L 12 78" stroke-width="2.5"/><line x1="50" y1="10" x2="50" y2="20" stroke-width="2"/><line x1="50" y1="80" x2="50" y2="90" stroke-width="2"/><line x1="10" y1="50" x2="20" y2="50" stroke-width="2"/><line x1="80" y1="50" x2="90" y2="50" stroke-width="2"/></g><circle cx="50" cy="50" r="6" fill="currentColor"/></svg>
+        </div>
+        <div class="s" style="color: var(--cyan);">
+          <svg viewBox="0 0 100 100" width="16" height="16"><g fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="50" cy="50" r="30" stroke-width="4"/><path d="M 10 25 L 10 10 L 25 10" stroke-width="4"/><path d="M 75 10 L 90 10 L 90 25" stroke-width="4"/><path d="M 90 75 L 90 90 L 75 90" stroke-width="4"/><path d="M 25 90 L 10 90 L 10 75" stroke-width="4"/></g><circle cx="50" cy="50" r="10" fill="currentColor"/></svg>
+        </div>
+        <div class="note">64 · 32 · 16</div>
+      </div>
+    </div>
+
+    <!-- V2 Gauge -->
+    <div class="card">
+      <div class="canvas">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="currentColor" stroke-linecap="round">
+            <path d="M 22.4 77.6 A 35 35 0 1 1 77.6 77.6" stroke-width="3" opacity="0.25"/>
+            <path d="M 22.4 77.6 A 35 35 0 1 1 74.7 22.5" stroke-width="4"/>
+          </g>
+          <circle cx="50" cy="50" r="6" fill="currentColor"/>
+          <line x1="50" y1="50" x2="74" y2="26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="74" cy="26" r="3.5" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="label">Variant 02</div>
+      <h3>Scoring Gauge</h3>
+      <p>A meter-style arc with a needle swinging to its peak. Directly visualizes "score" — the core output of the platform. Strong when paired with a numeric score.</p>
+    </div>
+
+    <!-- V3 Bracket Check -->
+    <div class="card">
+      <div class="canvas">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 28 22 L 18 22 L 18 78 L 28 78"/>
+            <path d="M 72 22 L 82 22 L 82 78 L 72 78"/>
+            <path d="M 36 52 L 46 62 L 64 40" stroke-width="4.5"/>
+          </g>
+        </svg>
+      </div>
+      <div class="label">Variant 03</div>
+      <h3>Bracket Check</h3>
+      <p>Square brackets (code / evaluation enclosure) wrapping a checkmark. Reads as "verified inside a test harness" — clean dev-tool vocabulary.</p>
+    </div>
+
+    <!-- V4 Node -->
+    <div class="card">
+      <div class="canvas">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="currentColor">
+            <path d="M 25 70 Q 40 55, 55 45" stroke-width="2.5"/>
+            <path d="M 55 45 Q 70 35, 80 25" stroke-width="2.5"/>
+            <path d="M 55 45 Q 45 30, 35 22" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/>
+            <path d="M 25 70 Q 50 80, 75 75" stroke-width="1.5" opacity="0.35"/>
+          </g>
+          <circle cx="25" cy="70" r="5" fill="currentColor"/>
+          <circle cx="80" cy="25" r="5" fill="currentColor"/>
+          <circle cx="35" cy="22" r="3.5" fill="currentColor" opacity="0.55"/>
+          <circle cx="75" cy="75" r="3.5" fill="currentColor" opacity="0.45"/>
+          <circle cx="55" cy="45" r="11" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+          <circle cx="55" cy="45" r="7" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="label">Variant 04</div>
+      <h3>Agent Graph</h3>
+      <p>Network of agent nodes feeding into a central evaluation hub (the halo). Echoes Claude Code, Devin, Cursor as peripheral agents scored against a shared reference.</p>
+    </div>
+
+    <!-- V5 Punched -->
+    <div class="card">
+      <div class="canvas">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <mask id="punch-mask-preview">
+              <rect width="100" height="100" fill="white"/>
+              <circle cx="38" cy="38" r="2.2" fill="black"/>
+              <circle cx="50" cy="38" r="2.2" fill="black"/>
+              <circle cx="62" cy="38" r="2.2" fill="black"/>
+              <circle cx="38" cy="50" r="2.2" fill="black"/>
+              <circle cx="62" cy="50" r="2.2" fill="black"/>
+              <circle cx="38" cy="62" r="2.2" fill="black"/>
+              <circle cx="50" cy="62" r="2.2" fill="black"/>
+              <circle cx="62" cy="62" r="2.2" fill="black"/>
+              <circle cx="50" cy="26" r="1.8" fill="black"/>
+              <circle cx="74" cy="50" r="1.8" fill="black"/>
+              <circle cx="26" cy="50" r="1.8" fill="black"/>
+              <circle cx="50" cy="74" r="1.8" fill="black"/>
+              <circle cx="50" cy="50" r="4.5" fill="black"/>
+            </mask>
+          </defs>
+          <circle cx="50" cy="50" r="32" fill="currentColor" mask="url(#punch-mask-preview)"/>
+        </svg>
+      </div>
+      <div class="label">Variant 05</div>
+      <h3>Data Disc</h3>
+      <p>Solid cyan disc punched with a 3×3 data matrix plus cardinal accents. Subtraction over addition — reads as a dense dataset with a perceptible center.</p>
+    </div>
+
+    <!-- V6 Chevron -->
+    <div class="card">
+      <div class="canvas">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 22 22 L 52 50 L 22 78"/>
+            <path d="M 44 22 L 74 50 L 44 78" opacity="0.55"/>
+          </g>
+          <circle cx="82" cy="50" r="4.5" fill="currentColor"/>
+          <line x1="22" y1="86" x2="74" y2="86" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+        </svg>
+      </div>
+      <div class="label">Variant 06</div>
+      <h3>Double Chevron</h3>
+      <p>Two chevrons converging on a score dot — a shell-prompt metaphor (agent executing → result). Dev-native visual language, very compressed.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Logo Generator · 2026 · AgentHunter Eval</p>
+  </footer>
+</div>
+</body>
+</html>

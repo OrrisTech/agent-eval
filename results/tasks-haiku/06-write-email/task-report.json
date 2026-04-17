@@ -19,33 +19,39 @@
         {
           "criterion": "It explains a 2-week delay with the new March 29 deadline",
           "passed": true,
-          "reasoning": "The email explicitly states the original March 15 deadline is extended by two weeks to March 29."
+          "reasoning": "The email explicitly states a two-week extension and mentions the new deadline of March 29."
         },
         {
           "criterion": "It mentions the third-party API integration issue as the reason",
           "passed": true,
-          "reasoning": "The email clearly states the delay is due to 'unexpected integration issues with a third-party API'."
+          "reasoning": "The email clearly states 'unexpected integration issues with a third-party API' as the cause of the delay."
         },
         {
           "criterion": "It offers weekly progress calls as mitigation",
           "passed": true,
-          "reasoning": "The email proposes scheduling 'a weekly progress call' to maintain transparency and keep the client updated."
+          "reasoning": "The email proposes 'scheduling a weekly progress call beginning next week' as a mitigation measure."
         },
         {
           "criterion": "The tone is professional and apologetic but confident",
           "passed": true,
-          "reasoning": "The email maintains a professional tone, includes an apology for inconvenience, and expresses confidence in delivering a robust solution."
+          "reasoning": "The email maintains a professional tone, includes a sincere apology, and confidently outlines steps to address the situation."
         }
       ],
-      "durationMs": 4174,
+      "durationMs": 4033,
       "exitCode": 0,
-      "output": "  Created: email.txt\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=186 output=274 model=claude-haiku-4-5\n  Created: email.txt\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 186,
+      "outputTokens": 274,
+      "costUsd": 0.0015559999999999999
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 4174,
-  "avgTokens": 9,
+  "avgDurationMs": 4033,
+  "p50DurationMs": 4033,
+  "p95DurationMs": 4033,
+  "avgTokens": 22,
+  "avgCostUsd": 0.0015559999999999999,
   "totalRuns": 1,
   "totalPassed": 1
 }

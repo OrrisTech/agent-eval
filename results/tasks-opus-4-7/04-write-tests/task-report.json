@@ -1,0 +1,52 @@
+{
+  "taskName": "Write unit tests for a function",
+  "agentCommand": "/Users/james/Dev/agent-eval/tasks/agents/simple-coder.sh --file {{description_file}}",
+  "runs": [
+    {
+      "runIndex": 1,
+      "success": true,
+      "criteriaResults": [
+        {
+          "criterion": "A file calculator.test.js is created",
+          "passed": true,
+          "reasoning": "The file calculator.test.js is listed in the workspace files and its content is shown."
+        },
+        {
+          "criterion": "Tests cover all four operations",
+          "passed": true,
+          "reasoning": "The test file includes tests for addition, subtraction, multiplication, and division operations."
+        },
+        {
+          "criterion": "Tests include division by zero case",
+          "passed": true,
+          "reasoning": "There are explicit tests for 'division by zero returns null' and 'zero divided by zero returns null'."
+        },
+        {
+          "criterion": "Tests include invalid input cases",
+          "passed": true,
+          "reasoning": "The test file covers non-numeric operands, empty strings, wrong number of parts, and invalid operators."
+        },
+        {
+          "criterion": "Tests can run with node calculator.test.js without errors",
+          "passed": true,
+          "reasoning": "The file uses only the built-in assert module, follows valid Node.js syntax, and the agent exited with code 0; however the content is truncated so we cannot verify the full file, but the structure appears valid and complete enough to run."
+        }
+      ],
+      "durationMs": 13334,
+      "exitCode": 0,
+      "output": "USAGE: input=405 output=1384 model=claude-opus-4-7\n  Created: calculator.test.js\nTask completed.\n",
+      "estimatedTokens": 24,
+      "inputTokens": 405,
+      "outputTokens": 1384,
+      "costUsd": 0.109875
+    }
+  ],
+  "successRate": 1,
+  "avgDurationMs": 13334,
+  "p50DurationMs": 13334,
+  "p95DurationMs": 13334,
+  "avgTokens": 24,
+  "avgCostUsd": 0.109875,
+  "totalRuns": 1,
+  "totalPassed": 1
+}

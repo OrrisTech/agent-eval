@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { getAllAgents, getTaskSummary } from "@/lib/data";
+import { Suspense } from "react";
+import { CopyCommand } from "@/components/copy-command";
 import { RankingTable } from "@/components/ranking-table";
+import { getAllAgents, getTaskSummary } from "@/lib/data";
 import type { AgentTaskSummary } from "@/lib/types";
 
 export default function HomePage() {
@@ -16,9 +18,8 @@ export default function HomePage() {
           <span className="text-[var(--color-accent)]">Evaluation</span>
         </h1>
         <p className="text-lg text-[var(--color-text-dim)] max-w-2xl mx-auto mb-8">
-          Independent evaluation platform for AI agents and their tools.
-          Task completion scoring for agents. Quality benchmarks for MCP
-          servers.
+          Independent evaluation platform for AI agents and their tools. Task
+          completion scoring for agents. Quality benchmarks for MCP servers.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-3 text-sm">
           <a
@@ -41,28 +42,39 @@ export default function HomePage() {
       {/* Task Rankings — agents evaluated on real tasks */}
       {taskSummary.length > 0 && (
         <section>
-          <h2 className="text-xl font-semibold mb-4">
-            Agent Task Rankings
-          </h2>
-          <p className="text-sm text-[var(--color-text-dim)] mb-4">
-            Agents evaluated on 5 standardized coding tasks: CLI creation, bug
-            fixing, data analysis, test writing, and code refactoring.
-          </p>
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-4">
+            <div>
+              <h2 className="text-xl font-semibold mb-2">
+                Agent Task Rankings
+              </h2>
+              <p className="text-sm text-[var(--color-text-dim)] max-w-2xl">
+                Agents evaluated on 5 standardized coding tasks: CLI creation,
+                bug fixing, data analysis, test writing, and code refactoring.
+              </p>
+            </div>
+            <div className="w-full sm:w-auto sm:min-w-[340px]">
+              <CopyCommand
+                command="npx @agenthunter/eval task"
+                label="Reproduce Now"
+                hint="Runs all tasks against your agent locally."
+              />
+            </div>
+          </div>
           <TaskComparisonTable agents={taskSummary} />
         </section>
       )}
 
       {/* Tool Rankings — MCP servers */}
       <section>
-        <h2 className="text-xl font-semibold mb-4">
-          Tool Quality Rankings
-        </h2>
+        <h2 className="text-xl font-semibold mb-4">Tool Quality Rankings</h2>
         <p className="text-sm text-[var(--color-text-dim)] mb-4">
           {agents.length} MCP servers benchmarked across capability,
           reliability, efficiency, safety, and developer experience.
         </p>
         <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 card-hover">
-          <RankingTable agents={agents} />
+          <Suspense fallback={<RankingTableFallback />}>
+            <RankingTable agents={agents} />
+          </Suspense>
         </div>
         <p className="text-xs text-[var(--color-text-dim)] mt-3">
           Scored using{" "}
@@ -76,16 +88,21 @@ export default function HomePage() {
   );
 }
 
-function TaskComparisonTable({
-  agents,
-}: {
-  agents: AgentTaskSummary[];
-}) {
+function RankingTableFallback() {
+  return (
+    <div
+      role="status"
+      aria-label="Loading rankings"
+      className="h-40 animate-pulse rounded bg-[var(--color-surface)]/50"
+    />
+  );
+}
+
+function TaskComparisonTable({ agents }: { agents: AgentTaskSummary[] }) {
   // Sort by pass rate descending, then by speed
   const sorted = [...agents].sort(
     (a, b) =>
-      b.overallPassRate - a.overallPassRate ||
-      a.avgDuration - b.avgDuration,
+      b.overallPassRate - a.overallPassRate || a.avgDuration - b.avgDuration,
   );
 
   // Collect all unique tasks in order
@@ -99,6 +116,7 @@ function TaskComparisonTable({
             <th className="py-3 px-3 text-left">Agent</th>
             <th className="py-3 px-3 text-left">Pass Rate</th>
             <th className="py-3 px-3 text-left">Avg Time</th>
+            <th className="py-3 px-3 text-left hidden md:table-cell">Cost</th>
             {tasks.map((t) => (
               <th
                 key={t.taskId}
@@ -119,9 +137,7 @@ function TaskComparisonTable({
         </thead>
         <tbody>
           {sorted.map((agent, i) => {
-            const passCount = agent.tasks.filter(
-              (t) => t.passed,
-            ).length;
+            const passCount = agent.tasks.filter((t) => t.passed).length;
             const passColor =
               agent.overallPassRate >= 1
                 ? "text-emerald-400"
@@ -146,6 +162,11 @@ function TaskComparisonTable({
                 <td className="py-3 px-3 text-[var(--color-text-dim)]">
                   {(agent.avgDuration / 1000).toFixed(1)}s
                 </td>
+                <td className="py-3 px-3 text-[var(--color-text-dim)] hidden md:table-cell font-mono text-xs">
+                  {agent.totalCostUsd && agent.totalCostUsd > 0
+                    ? `$${agent.totalCostUsd.toFixed(3)}`
+                    : "—"}
+                </td>
                 {agent.tasks.map((task) => (
                   <td
                     key={task.taskId}
@@ -153,13 +174,9 @@ function TaskComparisonTable({
                     title={`${task.taskName}: ${task.passed ? "PASS" : "FAIL"} (${(task.avgDurationMs / 1000).toFixed(1)}s)`}
                   >
                     {task.passed ? (
-                      <span className="text-emerald-400">
-                        {"\u2713"}
-                      </span>
+                      <span className="text-emerald-400">{"\u2713"}</span>
                     ) : (
-                      <span className="text-red-400">
-                        {"\u2717"}
-                      </span>
+                      <span className="text-red-400">{"\u2717"}</span>
                     )}
                   </td>
                 ))}

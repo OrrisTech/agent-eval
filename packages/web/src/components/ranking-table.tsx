@@ -1,15 +1,39 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useMemo } from "react";
 import type { AgentSummary } from "@/lib/types";
 import { ScoreBadge } from "./score-badge";
 
 type SortKey = keyof AgentSummary;
 
+const SORTABLE_KEYS: SortKey[] = [
+  "score",
+  "name",
+  "category",
+  "capability",
+  "reliability",
+  "efficiency",
+  "safety",
+  "tools",
+  "successRate",
+];
+
+function isSortKey(value: string | null): value is SortKey {
+  return !!value && (SORTABLE_KEYS as string[]).includes(value);
+}
+
 export function RankingTable({ agents }: { agents: AgentSummary[] }) {
-  const [sortKey, setSortKey] = useState<SortKey>("score");
-  const [sortAsc, setSortAsc] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // URL is the source of truth: ?sort=score&dir=desc
+  const sortParam = searchParams.get("sort");
+  const dirParam = searchParams.get("dir");
+  const sortKey: SortKey = isSortKey(sortParam) ? sortParam : "score";
+  const sortAsc = dirParam === "asc";
 
   const sorted = useMemo(
     () =>
@@ -24,14 +48,29 @@ export function RankingTable({ agents }: { agents: AgentSummary[] }) {
     [agents, sortKey, sortAsc],
   );
 
-  function handleSort(key: SortKey) {
-    if (key === sortKey) {
-      setSortAsc(!sortAsc);
-    } else {
-      setSortKey(key);
-      setSortAsc(false);
-    }
-  }
+  const handleSort = useCallback(
+    (key: SortKey) => {
+      const params = new URLSearchParams(searchParams.toString());
+      let nextDir: "asc" | "desc";
+      if (key === sortKey) {
+        nextDir = sortAsc ? "desc" : "asc";
+      } else {
+        nextDir = "desc";
+      }
+      params.set("sort", key);
+      params.set("dir", nextDir);
+      // Default view (score desc) uses a clean URL
+      if (key === "score" && nextDir === "desc") {
+        params.delete("sort");
+        params.delete("dir");
+      }
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, {
+        scroll: false,
+      });
+    },
+    [pathname, router, searchParams, sortAsc, sortKey],
+  );
 
   const columns: { key: SortKey; label: string; hideOnMobile?: boolean }[] = [
     { key: "score", label: "Score" },
@@ -52,23 +91,23 @@ export function RankingTable({ agents }: { agents: AgentSummary[] }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm" role="grid">
+      <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-[var(--color-border)] text-[var(--color-text-dim)]">
-            <th className="py-3 px-2 text-left w-8">#</th>
+            <th scope="col" className="py-3 px-2 text-left w-8">
+              #
+            </th>
             {columns.map((col) => (
               <th
                 key={col.key}
-                role="columnheader"
+                scope="col"
                 aria-sort={ariaSort(col.key)}
                 tabIndex={0}
                 className={`py-3 px-2 text-left cursor-pointer hover:text-white select-none transition-colors ${
                   col.hideOnMobile ? "hidden md:table-cell" : ""
                 }`}
                 onClick={() => handleSort(col.key)}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && handleSort(col.key)
-                }
+                onKeyDown={(e) => e.key === "Enter" && handleSort(col.key)}
               >
                 {col.label}
                 {sortKey === col.key && (
@@ -114,12 +153,8 @@ export function RankingTable({ agents }: { agents: AgentSummary[] }) {
               <td className="py-3 px-2 hidden md:table-cell">
                 {agent.efficiency}
               </td>
-              <td className="py-3 px-2 hidden md:table-cell">
-                {agent.safety}
-              </td>
-              <td className="py-3 px-2 hidden md:table-cell">
-                {agent.tools}
-              </td>
+              <td className="py-3 px-2 hidden md:table-cell">{agent.safety}</td>
+              <td className="py-3 px-2 hidden md:table-cell">{agent.tools}</td>
               <td className="py-3 px-2">{agent.successRate}%</td>
             </tr>
           ))}

@@ -14,28 +14,34 @@
         {
           "criterion": "A helper function is extracted for table generation",
           "passed": true,
-          "reasoning": "A `generateTable(title, items)` helper function has been extracted that encapsulates the repeated table-generation logic."
+          "reasoning": "A helper function called generateTable(title, items) has been extracted that encapsulates the table generation logic."
         },
         {
           "criterion": "The three report sections use the helper instead of duplicated code",
           "passed": true,
-          "reasoning": "The `generateReport` function calls `generateTable` three times for Sales, Inventory, and Returns reports instead of duplicating the table-building code."
+          "reasoning": "All three report sections (Sales, Inventory, Returns) now call generateTable() instead of containing duplicated inline code."
         },
         {
           "criterion": "The refactored code produces the same HTML output as the original",
           "passed": true,
-          "reasoning": "The helper function generates the same HTML structure (h2 title, table with header row, and data rows) as the original repeated code, so the output is identical."
+          "reasoning": "The helper function includes the h2 heading, table header row, and data rows with the same structure, and generateReport wraps them in the same html/body tags, producing identical output."
         }
       ],
-      "durationMs": 4867,
+      "durationMs": 7166,
       "exitCode": 0,
-      "output": "  Created: report.js\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=556 output=248 model=claude-opus-4-6\n  Created: report.js\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 556,
+      "outputTokens": 248,
+      "costUsd": 0.02694
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 4867,
-  "avgTokens": 9,
+  "avgDurationMs": 7166,
+  "p50DurationMs": 7166,
+  "p95DurationMs": 7166,
+  "avgTokens": 22,
+  "avgCostUsd": 0.02694,
   "totalRuns": 1,
   "totalPassed": 1
 }

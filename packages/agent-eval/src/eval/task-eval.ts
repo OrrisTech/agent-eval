@@ -22,6 +22,7 @@ import {
 import Anthropic from "@anthropic-ai/sdk";
 import type { TaskEvalConfig } from "../config/task-schema.js";
 import { callWithRetry } from "./llm-client.js";
+import { computeCostUsd } from "./pricing.js";
 
 /** Result of evaluating a single success criterion */
 export interface CriterionResult {
@@ -40,6 +41,12 @@ export interface TaskRunResult {
   output: string;
   /** Estimated token count from agent output length (rough proxy) */
   estimatedTokens: number;
+  /** Real input tokens reported by the agent via `USAGE: input=X output=Y` (if emitted) */
+  inputTokens?: number;
+  /** Real output tokens reported by the agent (if emitted) */
+  outputTokens?: number;
+  /** Computed USD cost for this run, if pricing + real tokens are available */
+  costUsd?: number;
 }
 
 /** Aggregated result across all runs */
@@ -49,7 +56,13 @@ export interface TaskEvalResult {
   runs: TaskRunResult[];
   successRate: number;
   avgDurationMs: number;
+  /** 50th percentile duration across runs — equal to avg when runs=1 */
+  p50DurationMs: number;
+  /** 95th percentile duration — useful once runs>=3 to reveal tail latency */
+  p95DurationMs: number;
   avgTokens: number;
+  /** Average USD cost across runs — 0 if cost isn't known */
+  avgCostUsd: number;
   totalRuns: number;
   totalPassed: number;
 }
@@ -168,8 +181,19 @@ export async function runTaskEvaluation(options: {
 
     const allPassed = criteriaResults.every((c) => c.passed);
 
-    // Rough token estimate: ~4 chars per token
+    // Rough token estimate: ~4 chars per token. Used as a fallback when the
+    // agent doesn't report real token usage on its USAGE line.
     const estimatedTokens = Math.round(output.length / 4);
+
+    // Parse `USAGE: input=<n> output=<m> [model=<id>]` emitted by agent scripts
+    // so we can track real token counts and compute accurate cost.
+    const usage = parseUsageLine(output);
+
+    const costUsd = computeCostUsd(
+      usage?.model,
+      usage?.inputTokens,
+      usage?.outputTokens,
+    );
 
     runs.push({
       runIndex: i + 1,
@@ -179,20 +203,30 @@ export async function runTaskEvaluation(options: {
       exitCode,
       output: output.slice(0, 5000), // Truncate for storage
       estimatedTokens,
+      inputTokens: usage?.inputTokens,
+      outputTokens: usage?.outputTokens,
+      costUsd: costUsd > 0 ? costUsd : undefined,
     });
   }
 
   // Aggregate
   const totalPassed = runs.filter((r) => r.success).length;
+  const durations = runs.map((r) => r.durationMs);
   const avgDurationMs =
-    runs.length > 0
-      ? Math.round(runs.reduce((s, r) => s + r.durationMs, 0) / runs.length)
+    durations.length > 0
+      ? Math.round(durations.reduce((s, d) => s + d, 0) / durations.length)
       : 0;
   const avgTokens =
     runs.length > 0
       ? Math.round(
           runs.reduce((s, r) => s + r.estimatedTokens, 0) / runs.length,
         )
+      : 0;
+  const runsWithCost = runs.filter((r) => r.costUsd != null);
+  const avgCostUsd =
+    runsWithCost.length > 0
+      ? runsWithCost.reduce((s, r) => s + (r.costUsd ?? 0), 0) /
+        runsWithCost.length
       : 0;
 
   return {
@@ -201,9 +235,52 @@ export async function runTaskEvaluation(options: {
     runs,
     successRate: runs.length > 0 ? totalPassed / runs.length : 0,
     avgDurationMs,
+    p50DurationMs: percentile(durations, 50),
+    p95DurationMs: percentile(durations, 95),
     avgTokens,
+    avgCostUsd,
     totalRuns: runs.length,
     totalPassed,
+  };
+}
+
+/**
+ * Compute the requested percentile of a numeric array. Uses linear
+ * interpolation between adjacent ranks (matches numpy's default), which
+ * gives sensible results even for small sample sizes.
+ */
+export function percentile(values: number[], p: number): number {
+  if (values.length === 0) return 0;
+  if (values.length === 1) return Math.round(values[0] ?? 0);
+  const sorted = [...values].sort((a, b) => a - b);
+  const rank = (p / 100) * (sorted.length - 1);
+  const lo = Math.floor(rank);
+  const hi = Math.ceil(rank);
+  const weight = rank - lo;
+  const value = (sorted[lo] ?? 0) * (1 - weight) + (sorted[hi] ?? 0) * weight;
+  return Math.round(value);
+}
+
+/**
+ * Parse the `USAGE:` marker line that agent scripts emit after calling the
+ * model API. Accepts formats like:
+ *   USAGE: input=1234 output=567
+ *   USAGE: input=1234 output=567 model=claude-sonnet-4-6
+ * Returns null if no marker is present so callers fall back to rough estimates.
+ */
+export function parseUsageLine(output: string): {
+  inputTokens: number;
+  outputTokens: number;
+  model?: string;
+} | null {
+  const match = output.match(
+    /^USAGE:\s+input=(\d+)\s+output=(\d+)(?:\s+model=([\w.\-:]+))?/m,
+  );
+  if (!match) return null;
+  return {
+    inputTokens: Number.parseInt(match[1] ?? "0", 10),
+    outputTokens: Number.parseInt(match[2] ?? "0", 10),
+    model: match[3],
   };
 }
 

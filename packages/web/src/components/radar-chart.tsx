@@ -23,11 +23,7 @@ function getPoint(index: number, value: number): [number, number] {
   return [CENTER + r * Math.cos(angle), CENTER + r * Math.sin(angle)];
 }
 
-export function RadarChart({
-  scores,
-}: {
-  scores: Record<string, number>;
-}) {
+export function RadarChart({ scores }: { scores: Record<string, number> }) {
   // Build the data polygon path
   const points = DIMENSIONS.map((d, i) => getPoint(i, scores[d.key] ?? 0));
   const polygon = points.map((p) => p.join(",")).join(" ");
@@ -40,17 +36,17 @@ export function RadarChart({
       aria-label={`Score radar: ${DIMENSIONS.map((d) => `${d.label} ${scores[d.key] ?? 0}%`).join(", ")}`}
     >
       <title>Agent score dimensions</title>
-      {/* Background rings */}
+      {/* Background rings — each ring is keyed by the radius fraction it draws */}
       {Array.from({ length: LEVELS }, (_, level) => {
-        const r = (RADIUS * (level + 1)) / LEVELS;
+        const fraction = (level + 1) / LEVELS;
+        const r = RADIUS * fraction;
         const ringPoints = DIMENSIONS.map((_, i) => {
-          const angle =
-            (Math.PI * 2 * i) / DIMENSIONS.length - Math.PI / 2;
+          const angle = (Math.PI * 2 * i) / DIMENSIONS.length - Math.PI / 2;
           return `${CENTER + r * Math.cos(angle)},${CENTER + r * Math.sin(angle)}`;
         }).join(" ");
         return (
           <polygon
-            key={level}
+            key={`ring-r${fraction}`}
             points={ringPoints}
             fill="none"
             stroke="var(--color-border)"
@@ -60,11 +56,11 @@ export function RadarChart({
       })}
 
       {/* Axis lines */}
-      {DIMENSIONS.map((_, i) => {
+      {DIMENSIONS.map((d, i) => {
         const [x, y] = getPoint(i, 100);
         return (
           <line
-            key={i}
+            key={`axis-${d.key}`}
             x1={CENTER}
             y1={CENTER}
             x2={x}
@@ -87,7 +83,7 @@ export function RadarChart({
       {/* Data points */}
       {points.map((p, i) => (
         <circle
-          key={i}
+          key={`pt-${DIMENSIONS[i]?.key}`}
           cx={p[0]}
           cy={p[1]}
           r="3"

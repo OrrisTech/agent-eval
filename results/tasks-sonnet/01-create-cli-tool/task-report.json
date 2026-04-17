@@ -9,7 +9,7 @@
         {
           "criterion": "A file named wordcount.js is created",
           "passed": true,
-          "reasoning": "The workspace contains a file named wordcount.js as shown in the file listing."
+          "reasoning": "The workspace contains a file named wordcount.js as confirmed by the file listing and its content."
         },
         {
           "criterion": "The script is valid JavaScript or TypeScript that can run with Node.js",
@@ -19,7 +19,7 @@
         {
           "criterion": "Running the script with a text file produces word/line/character counts",
           "passed": true,
-          "reasoning": "The script reads the file, splits by newline for lines, splits by whitespace for words, and uses data.length for characters, then prints them in the required format 'Lines: X, Words: Y, Characters: Z'."
+          "reasoning": "The script reads the file, splits by newlines for line count, splits by whitespace for word count, and uses data.length for character count, then outputs in the required format 'Lines: X, Words: Y, Characters: Z'."
         },
         {
           "criterion": "Running without arguments shows a usage message",
@@ -27,15 +27,21 @@
           "reasoning": "When args.length === 0, the script prints 'Usage: node wordcount.js <file>' as required."
         }
       ],
-      "durationMs": 3949,
+      "durationMs": 4792,
       "exitCode": 0,
-      "output": "  Created: wordcount.js\nTask completed.\n",
-      "estimatedTokens": 10
+      "output": "USAGE: input=168 output=261 model=claude-sonnet-4-6\n  Created: wordcount.js\nTask completed.\n",
+      "estimatedTokens": 23,
+      "inputTokens": 168,
+      "outputTokens": 261,
+      "costUsd": 0.004419
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 3949,
-  "avgTokens": 10,
+  "avgDurationMs": 4792,
+  "p50DurationMs": 4792,
+  "p95DurationMs": 4792,
+  "avgTokens": 23,
+  "avgCostUsd": 0.004419,
   "totalRuns": 1,
   "totalPassed": 1
 }

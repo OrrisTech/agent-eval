@@ -14,33 +14,39 @@
         {
           "criterion": "Tests cover all four operations",
           "passed": true,
-          "reasoning": "The test file includes assertions for addition (+), subtraction (-), multiplication (*), and division (/) operations."
+          "reasoning": "The test file includes tests for addition (+), subtraction (-), multiplication (*), and division (/) operations."
         },
         {
           "criterion": "Tests include division by zero case",
           "passed": true,
-          "reasoning": "The test file explicitly tests division by zero with cases like '5 / 0', '0 / 0', and '-3 / 0', all expecting null."
+          "reasoning": "The test file includes multiple division by zero cases including '5 / 0', '0 / 0', and '-3 / 0', all expecting null."
         },
         {
           "criterion": "Tests include invalid input cases",
           "passed": true,
-          "reasoning": "The test file covers non-number inputs ('abc + 3'), wrong format cases (empty string, single number, too many parts), and invalid operators (%, ^, &)."
+          "reasoning": "The test file covers non-number operands (abc), wrong format (empty string, single number, missing operand, too many parts), and invalid operators."
         },
         {
           "criterion": "Tests can run with node calculator.test.js without errors",
           "passed": true,
-          "reasoning": "The agent exit code is 0, the tests use only the built-in assert module, require('./calculator') which exists, and all assertions appear correct against the calculator.js implementation."
+          "reasoning": "The test file uses only the built-in assert module, requires calculator.js which exists, and all assertions should pass based on the calculator.js implementation; the agent also exited with code 0."
         }
       ],
-      "durationMs": 16245,
+      "durationMs": 17792,
       "exitCode": 0,
-      "output": "  Created: calculator.test.js\nTask completed.\n",
-      "estimatedTokens": 12
+      "output": "USAGE: input=313 output=1284 model=claude-opus-4-6\n  Created: calculator.test.js\nTask completed.\n",
+      "estimatedTokens": 24,
+      "inputTokens": 313,
+      "outputTokens": 1284,
+      "costUsd": 0.100995
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 16245,
-  "avgTokens": 12,
+  "avgDurationMs": 17792,
+  "p50DurationMs": 17792,
+  "p95DurationMs": 17792,
+  "avgTokens": 24,
+  "avgCostUsd": 0.100995,
   "totalRuns": 1,
   "totalPassed": 1
 }

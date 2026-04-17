@@ -9,33 +9,39 @@
         {
           "criterion": "A script file is created that processes the CSV",
           "passed": true,
-          "reasoning": "The file analyze_sales.py was created and contains valid Python code that reads and processes sales.csv using the csv module."
+          "reasoning": "The file analyze_sales.py was created and contains a complete Python script that reads sales.csv using the csv module."
         },
         {
           "criterion": "Total revenue is calculated correctly ($1,589.60)",
           "passed": true,
-          "reasoning": "The script correctly calculates total revenue as sum of quantity*price for all rows, which equals (10*29.99)+(5*49.99)+(8*29.99)+(12*49.99)+(15*29.99)+(3*99.99) = $1,589.60."
+          "reasoning": "The script correctly computes revenue as quantity * price for each row and sums them, which yields (10*29.99)+(5*49.99)+(8*29.99)+(12*49.99)+(15*29.99)+(3*99.99) = $1,589.60."
         },
         {
           "criterion": "Best selling product is identified (Widget A with 33 units)",
           "passed": true,
-          "reasoning": "The script aggregates quantities by product and finds the maximum, which correctly identifies Widget A with 10+8+15=33 units."
+          "reasoning": "The script aggregates quantities per product and finds the maximum, which would correctly identify Widget A with 10+8+15=33 units."
         },
         {
           "criterion": "Average daily revenue is calculated ($529.87)",
           "passed": true,
-          "reasoning": "The script divides total revenue by number of unique days (3), yielding $1,589.60/3 = $529.87."
+          "reasoning": "The script divides total revenue by the number of unique dates (3 days), giving $1,589.60/3 = $529.87."
         }
       ],
-      "durationMs": 4439,
+      "durationMs": 4680,
       "exitCode": 0,
-      "output": "  Created: analyze_sales.py\nTask completed.\n",
-      "estimatedTokens": 11
+      "output": "USAGE: input=267 output=310 model=claude-sonnet-4-6\n  Created: analyze_sales.py\nTask completed.\n",
+      "estimatedTokens": 24,
+      "inputTokens": 267,
+      "outputTokens": 310,
+      "costUsd": 0.005450999999999999
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 4439,
-  "avgTokens": 11,
+  "avgDurationMs": 4680,
+  "p50DurationMs": 4680,
+  "p95DurationMs": 4680,
+  "avgTokens": 24,
+  "avgCostUsd": 0.005450999999999999,
   "totalRuns": 1,
   "totalPassed": 1
 }

@@ -9,33 +9,39 @@
         {
           "criterion": "The file report.js is modified",
           "passed": true,
-          "reasoning": "The report.js file exists and contains refactored code different from the original, with a new helper function added."
+          "reasoning": "The report.js file exists and contains refactored code different from the original."
         },
         {
           "criterion": "A helper function is extracted for table generation",
           "passed": true,
-          "reasoning": "A helper function called generateTable(title, items) has been extracted that encapsulates the table-generation logic."
+          "reasoning": "A `generateTable(title, items)` helper function was extracted that handles all table-generation logic."
         },
         {
           "criterion": "The three report sections use the helper instead of duplicated code",
           "passed": true,
-          "reasoning": "The generateReport function calls generateTable three times for Sales, Inventory, and Returns reports instead of duplicating the table-generation code."
+          "reasoning": "The `generateReport` function calls `generateTable` three times for Sales, Inventory, and Returns sections instead of repeating the table-building code."
         },
         {
           "criterion": "The refactored code produces the same HTML output as the original",
           "passed": true,
-          "reasoning": "The helper function generates identical HTML structure with the same h2 title and table with header row and data rows, and generateReport wraps everything in the same html/body tags, producing identical output."
+          "reasoning": "The helper function generates the same h2 heading and table structure with identical HTML tags as the original code, producing identical output when called with the same data."
         }
       ],
-      "durationMs": 3786,
+      "durationMs": 4677,
       "exitCode": 0,
-      "output": "  Created: report.js\nTask completed.\n",
-      "estimatedTokens": 9
+      "output": "USAGE: input=556 output=247 model=claude-sonnet-4-6\n  Created: report.js\nTask completed.\n",
+      "estimatedTokens": 22,
+      "inputTokens": 556,
+      "outputTokens": 247,
+      "costUsd": 0.005373
     }
   ],
   "successRate": 1,
-  "avgDurationMs": 3786,
-  "avgTokens": 9,
+  "avgDurationMs": 4677,
+  "p50DurationMs": 4677,
+  "p95DurationMs": 4677,
+  "avgTokens": 22,
+  "avgCostUsd": 0.005373,
   "totalRuns": 1,
   "totalPassed": 1
 }
