@@ -11,6 +11,8 @@ cover_image:
 
 Anthropic released **Claude Opus 4.7** on April 17, 2026. I ran it through the same 10-task evaluation I used for Opus 4.6, Sonnet 4.6, and Haiku 4.5 — this time with real token tracking so I could report dollar cost, not just pass rate.
 
+![Four Claude models on a benchmarking apparatus — Opus 4.7, Opus 4.6, Sonnet 4.6, Haiku 4.5](imgs/01-hero-four-claudes.png)
+
 ## TL;DR
 
 | Model | Tasks Passed | Avg Time | Total Cost | Cost / Task |
@@ -19,6 +21,8 @@ Anthropic released **Claude Opus 4.7** on April 17, 2026. I ran it through the s
 | Claude Opus 4.6 | 10/10 | 9.8s | $0.437 | $0.044 |
 | Claude Sonnet 4.6 | 10/10 | 9.8s | $0.110 | $0.011 |
 | Claude Haiku 4.5 | 8/10 | 4.6s | $0.030 | $0.003 |
+
+![Ranking dashboard showing pass rate and total cost per model](imgs/02-rankings-dashboard.png)
 
 **Opus 4.7 is the new accuracy king and it's also faster than 4.6.** It costs ~27% more than 4.6 in total ($0.56 vs $0.44) but finishes tasks 14% faster on average. If you were using Opus 4.6, there's no reason not to upgrade.
 
@@ -52,11 +56,15 @@ Five coding tasks, five writing tasks. All graded by an independent LLM judge ag
 
 ### 1. Opus 4.7 is faster than 4.6, not slower
 
+![Speed comparison: Opus 4.7 trail 1.16x faster than Opus 4.6](imgs/03-speed-race.png)
+
 This is the surprise. Model version bumps usually trade off speed for capability — bigger model, longer generations. Opus 4.7 is the opposite: **8.4s average vs 4.6's 9.8s**, a 14% improvement. On the README task specifically (the longest task in the suite), 4.7 finished in 20.6s vs 4.6's 22.7s.
 
 Same pass rate, less latency, ~27% more cost. For interactive agent workloads where latency matters, the upgrade is worth it.
 
 ### 2. Sonnet 4.6 is the cost-adjusted winner
+
+![Balance scale: Sonnet at $0.11 vs Opus 4.7 at $0.56, both scoring 10/10](imgs/04-cost-scale.png)
 
 Sonnet 4.6 matches Opus 4.7's 10/10 accuracy on this suite at **$0.11 total vs $0.56** — **5× cheaper**. The gap between Sonnet and Opus used to be "Sonnet is fine if you're okay with 90% accuracy." As of this benchmark, there's no accuracy gap on these 10 tasks.
 
